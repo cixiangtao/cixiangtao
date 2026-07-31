@@ -2,31 +2,35 @@
 
 <div align="center">
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=22&duration=2800&pause=900&color=38BDF8&center=true&vCenter=true&width=680&lines=Building+delightful+web+experiences;Exploring+developer+tools+and+open+source;TypeScript+%C3%97+React+%C3%97+Rust)](https://git.io/typing-svg)
+专注于 TypeScript、React、开发者工具与开源项目。
 
-<img src="https://komarev.com/ghpvc/?username=cixiangtao&label=PROFILE+VIEWS&color=7c3aed&style=for-the-badge" alt="Profile views" />
-<a href="https://github.com/cixiangtao?tab=followers"><img src="https://img.shields.io/github/followers/cixiangtao?style=for-the-badge&logo=github&label=FOLLOWERS&color=2563eb" alt="GitHub followers" /></a>
+[![GitHub followers](https://img.shields.io/github/followers/cixiangtao?style=flat-square&logo=github&label=Followers)](https://github.com/cixiangtao?tab=followers)
+![Profile views](https://komarev.com/ghpvc/?username=cixiangtao&label=Profile+views&color=7c3aed&style=flat-square)
 
 </div>
 
-## 👋 About me
+## 关于我
 
-```ts
-const cixiangtao = {
-  role: "Frontend Engineer",
-  base: "Beijing, China",
-  focus: ["Developer Experience", "TypeScript", "Open Source"],
-  now: "Contributing to oxc-project/oxc",
-  principle: "Make it work. Make it clear. Make it delightful.",
-};
-```
+我是来自北京的前端工程师，喜欢把复杂的问题整理成清晰、可靠、易用的产品和工具。
 
-- 🧩 I enjoy turning complex product ideas into clear, polished interfaces.
-- ⚡ I care about performance, maintainability, and the small details that make software feel good.
-- 🦀 Recently exploring Rust-powered JavaScript tooling through contributions to [Oxc](https://github.com/oxc-project/oxc).
-- 🌱 Always building, learning, and polishing the developer experience.
+- 关注开发者体验、类型安全、可维护性与界面细节
+- 主要使用 TypeScript、React、Vue、Vite 和 Node.js
 
-## 🛠️ Toolbox
+## 正在维护
+
+这些是我目前持续维护和投入演进的核心项目。
+
+| 项目 | 简介 | 入口 |
+| --- | --- | --- |
+| [codex-skin](https://github.com/cixiangtao/codex-skin) | 面向 macOS Codex 桌面端的主题换装与界面美化工具 | [项目主页](https://cixiangtao.github.io/codex-skin/) |
+| [nice-use-modal](https://github.com/cixiangtao/nice-use-modal) | 类型安全、无头的 React Modal 控制器，提供明确的显示、隐藏和销毁生命周期 | [在线演示](https://cixiangtao.github.io/nice-use-modal/) · [npm](https://www.npmjs.com/package/nice-use-modal) |
+| [url-join](https://github.com/cixiangtao/url-join) | TypeScript URL 拼接工具，支持空值过滤、协议保护、查询参数和零依赖构建 | [npm](https://www.npmjs.com/package/@anys/url-join) |
+| [acer-almanac](https://github.com/cixiangtao/acer-almanac) | 确定性老黄历工具集，包含 TypeScript 包、Web Component、Chrome 扩展和在线预览 | [在线预览](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
+| [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | 为 Vite 5–8 项目提供一行配置的 LocatorJS 开发环境集成 | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
+| [sticker-ui](https://github.com/cixiangtao/sticker-ui) | 基于 React 和 Tailwind CSS 的手册贴纸风组件库与源码注册表 | [组件预览](https://sticker-ui.cixiangtao.workers.dev/) |
+| [skills](https://github.com/cixiangtao/skills) | 面向日常开发工作流的个人 Agent Skills，沉淀可复用的执行流程与验证边界 | [查看仓库](https://github.com/cixiangtao/skills) |
+
+## 技术栈
 
 <div align="center">
   <a href="https://skillicons.dev">
@@ -36,7 +40,7 @@ const cixiangtao = {
 
 <div align="center">
 
-### “Stay curious. Ship thoughtfully.”
+### Stay curious. Ship thoughtfully.
 
 </div>
 
