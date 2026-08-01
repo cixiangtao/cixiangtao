@@ -1,0 +1,178 @@
+---
+import MacWindow from './MacWindow.astro';
+---
+
+<MacWindow
+	title="关于我"
+	id="about"
+	class="order-1 lg:absolute lg:left-[12%] lg:top-[7%] lg:z-20 lg:w-[34%]"
+>
+	<div class="about-panel grid grid-cols-[88px_minmax(0,1fr)] items-center gap-[18px] p-[22px] max-[760px]:grid-cols-[72px_minmax(0,1fr)] max-[760px]:p-[17px]">
+		<a class="pixel-avatar" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="打开 cixiangtao 的 GitHub 主页">
+			<img src="https://github.com/cixiangtao.png?size=176" alt="cixiangtao 的 GitHub 头像" width="176" height="176" decoding="async" fetchpriority="high" />
+		</a>
+		<div class="min-w-0">
+			<h1>cixiangtao</h1>
+			<p class="about-role">开源项目 · 技术写作</p>
+			<p class="about-copy">持续构建开源项目，也把实践过程整理成可以复用的工具和文章。</p>
+		</div>
+	</div>
+	<div class="about-status flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper)] px-4 py-[9px] text-[0.72rem] font-[750] max-[760px]:gap-2.5">
+		<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label="公开入口">
+			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i></a>
+			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
+			<a href="#projects" aria-label="代表项目"><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
+			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
+			<a href="#writing" aria-label="最近文章"><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
+		</nav>
+		<span class="inline-flex items-center gap-[7px]"><i class="status-dot" aria-hidden="true"></i>持续构建</span>
+	</div>
+</MacWindow>
+
+<style is:global>
+	.pixel-avatar {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		width: 88px;
+		aspect-ratio: 1;
+		padding: 6px;
+		border: 1px dashed var(--ink);
+		background:
+			radial-gradient(var(--line-strong) 0.7px, transparent 0.7px),
+			var(--accent-yellow);
+		background-size: 3px 3px;
+	}
+
+	.pixel-avatar::after {
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		width: 11px;
+		height: 11px;
+		background: var(--accent-cyan);
+		box-shadow: -11px 11px 0 var(--ink);
+		content: "";
+	}
+
+	.pixel-avatar img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 1px solid var(--ink);
+		object-fit: cover;
+	}
+
+	.about-panel h1 {
+		margin: 0;
+		font-family: var(--font-data);
+		font-size: clamp(1.45rem, 2.5vw, 2rem);
+		font-weight: 900;
+		letter-spacing: -0.03em;
+	}
+
+	.about-role {
+		margin: 5px 0 12px;
+		color: var(--accent-blue-dark);
+		font-size: 0.78rem;
+		font-weight: 800;
+	}
+
+	.about-copy {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.82rem;
+		line-height: 1.65;
+	}
+
+	.about-shortcuts a {
+		display: grid;
+		width: 24px;
+		height: 24px;
+		place-items: center;
+	}
+
+	.about-shortcuts a:hover,
+	.about-shortcuts a:focus-visible {
+		background: var(--accent-yellow);
+		outline: 1px dashed var(--ink);
+		outline-offset: 1px;
+	}
+
+	.shortcut-icon {
+		position: relative;
+		display: block;
+		width: 18px;
+		height: 16px;
+	}
+
+	.shortcut-icon--github {
+		border: 1px solid var(--ink);
+		border-radius: 50%;
+		background: var(--ink);
+	}
+
+	.shortcut-icon--github::after {
+		position: absolute;
+		right: 4px;
+		bottom: -3px;
+		width: 4px;
+		height: 6px;
+		background: var(--ink);
+		content: "";
+	}
+
+	.shortcut-icon--folder {
+		margin-top: 3px;
+		border: 1px solid var(--ink);
+		background: var(--accent-yellow);
+	}
+
+	.shortcut-icon--folder::before {
+		position: absolute;
+		top: -4px;
+		left: -1px;
+		width: 8px;
+		height: 4px;
+		border: 1px solid var(--ink);
+		border-bottom: 0;
+		background: var(--accent-yellow);
+		content: "";
+	}
+
+	.shortcut-icon--mail {
+		border: 1px solid var(--ink);
+		background: var(--paper);
+	}
+
+	.shortcut-icon--mail::before,
+	.shortcut-icon--mail::after {
+		position: absolute;
+		top: 4px;
+		width: 10px;
+		height: 1px;
+		background: var(--ink);
+		content: "";
+	}
+
+	.shortcut-icon--mail::before {
+		left: 0;
+		transform: rotate(30deg);
+	}
+
+	.shortcut-icon--mail::after {
+		right: 0;
+		transform: rotate(-30deg);
+	}
+
+	.about-status a {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	@media (max-width: 760px) {
+		.pixel-avatar {
+			width: 72px;
+		}
+	}
+</style>

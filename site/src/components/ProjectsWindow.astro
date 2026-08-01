@@ -1,0 +1,199 @@
+---
+import MacWindow from './MacWindow.astro';
+
+const projects = [
+	{
+		name: 'codex-skin',
+		description: '为 macOS 上的 Codex 桌面端提供主题与界面定制。',
+		href: 'https://github.com/cixiangtao/codex-skin',
+		color: 'cyan',
+	},
+	{
+		name: 'vite-plugin-locator',
+		description: '一行配置，为 Vite 5–8 接入 LocatorJS。',
+		href: 'https://github.com/cixiangtao/vite-plugin-locator',
+		color: 'yellow',
+	},
+	{
+		name: 'sticker-ui',
+		description: '手册贴纸风格的 React 与 Tailwind CSS 组件库。',
+		href: 'https://github.com/cixiangtao/sticker-ui',
+		color: 'coral',
+	},
+];
+---
+
+<MacWindow
+	title="代表项目"
+	id="projects"
+	tone="yellow"
+	scrollbars
+	class="order-3 lg:absolute lg:right-[2%] lg:top-[14%] lg:z-30 lg:w-[46%]"
+>
+	<div class="project-toolbar flex items-center justify-between border-b border-[var(--ink)] bg-[var(--paper)] px-[13px] py-[9px] text-[0.7rem] font-extrabold max-[760px]:gap-2.5 max-[760px]:text-[0.64rem]">
+		<div class="inline-flex items-center gap-[9px]"><span class="mini-folder" aria-hidden="true"></span><strong class="[font-family:var(--font-data)] text-[0.68rem] max-[760px]:text-[0.61rem]">cixiangtao / projects</strong></div>
+		<a href="https://github.com/cixiangtao?tab=repositories" target="_blank" rel="noreferrer">{projects.length} 项 · 全部打开 ↗</a>
+	</div>
+	<ul class="project-list m-0 list-none p-2">
+		{projects.map((project) => (
+			<li>
+				<a class="grid grid-cols-[52px_minmax(0,1fr)_28px] items-center gap-[13px] px-[9px] py-[11px] max-[760px]:grid-cols-[44px_minmax(0,1fr)_22px]" href={project.href} target="_blank" rel="noreferrer">
+					<span class:list={['project-icon', `project-icon--${project.color}`]} aria-hidden="true"><i></i></span>
+					<span class="project-info block min-w-0">
+						<strong>{project.name}</strong>
+						<small>{project.description}</small>
+					</span>
+					<span class="project-actions inline-flex items-center justify-end gap-2" aria-hidden="true"><i>☆</i><b></b><em>↗</em></span>
+				</a>
+			</li>
+		))}
+	</ul>
+</MacWindow>
+
+<style is:global>
+	.project-toolbar a {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.mini-folder {
+		position: relative;
+		display: block;
+		width: 24px;
+		height: 16px;
+		margin-top: 3px;
+		border: 1px solid var(--ink);
+		background: var(--accent-yellow);
+	}
+
+	.mini-folder::before {
+		position: absolute;
+		top: -5px;
+		left: -1px;
+		width: 10px;
+		height: 5px;
+		border: 1px solid var(--ink);
+		border-bottom: 0;
+		background: var(--accent-yellow);
+		content: "";
+	}
+
+	.project-list li + li {
+		border-top: 1px solid var(--line-strong);
+	}
+
+	.project-list a:hover,
+	.project-list a:focus-visible {
+		background: var(--selection);
+		color: white;
+	}
+
+	.project-icon {
+		position: relative;
+		display: grid;
+		width: 48px;
+		height: 42px;
+		border: 1px solid var(--ink);
+		background: var(--accent-cyan);
+		box-shadow: inset -7px -7px 0 rgb(0 0 0 / 12%);
+		place-items: center;
+	}
+
+	.project-icon::before,
+	.project-icon::after,
+	.project-icon i {
+		position: absolute;
+		background: var(--ink);
+		content: "";
+	}
+
+	.project-icon::before {
+		width: 19px;
+		height: 3px;
+		transform: rotate(45deg);
+	}
+
+	.project-icon::after {
+		width: 19px;
+		height: 3px;
+		transform: rotate(-45deg);
+	}
+
+	.project-icon i {
+		width: 3px;
+		height: 25px;
+	}
+
+	.project-icon--yellow {
+		background: var(--accent-yellow);
+	}
+
+	.project-icon--coral {
+		background: var(--accent-coral);
+	}
+
+	.project-info strong,
+	.project-info small {
+		display: block;
+	}
+
+	.project-info strong {
+		font-size: 0.86rem;
+		font-weight: 900;
+	}
+
+	.project-info small {
+		overflow: hidden;
+		margin-top: 3px;
+		color: var(--muted);
+		font-size: 0.7rem;
+		line-height: 1.45;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.project-list a:hover small,
+	.project-list a:focus-visible small {
+		color: #eefcff;
+	}
+
+	.project-actions i,
+	.project-actions em {
+		font-size: 0.95rem;
+		font-style: normal;
+		font-weight: 900;
+	}
+
+	.project-actions b {
+		position: relative;
+		display: block;
+		width: 12px;
+		height: 15px;
+		border: 1px solid currentColor;
+	}
+
+	.project-actions b::before,
+	.project-actions b::after {
+		position: absolute;
+		right: 2px;
+		left: 2px;
+		height: 1px;
+		background: currentColor;
+		content: "";
+	}
+
+	.project-actions b::before {
+		top: 4px;
+	}
+
+	.project-actions b::after {
+		top: 8px;
+	}
+
+	@media (max-width: 760px) {
+		.project-icon {
+			width: 42px;
+			height: 38px;
+		}
+	}
+</style>
