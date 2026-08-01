@@ -1,7 +1,7 @@
 ---
 /** Shared pixel icon for system navigation and Mac window title bars. */
 interface Props {
-	name: 'folder' | 'document' | 'grid' | 'github';
+	name: 'folder' | 'document' | 'profile' | 'github';
 	size?: 'toolbar' | 'window' | 'desktop';
 }
 
@@ -9,7 +9,13 @@ const { name, size = 'toolbar' } = Astro.props;
 ---
 
 <span class:list={['module-icon', `module-icon--${name}`, `module-icon--${size}`]} aria-hidden="true">
-	<i></i>
+	{name === 'github' ? (
+		<svg viewBox="0 0 16 16" focusable="false">
+			<path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.49c-2.23.49-2.7-.94-2.7-.94-.36-.93-.89-1.18-.89-1.18-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.23 1.88.87 2.34.67.07-.52.28-.87.51-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.83-2.15-.09-.2-.36-1.02.07-2.12 0 0 .68-.22 2.2.82A7.7 7.7 0 0 1 8 3.98c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.14.46.55.38A8 8 0 0 0 8 0Z"></path>
+		</svg>
+	) : (
+		<i></i>
+	)}
 </span>
 
 <style>
@@ -171,98 +177,69 @@ const { name, size = 'toolbar' } = Astro.props;
 		background: var(--accent-coral);
 	}
 
-	.module-icon--grid i {
+	.module-icon--profile i {
 		position: absolute;
-		background: var(--ink);
-	}
-
-	.module-icon--grid.module-icon--toolbar i {
-		top: 2px;
-		left: 2px;
-		width: 5px;
-		height: 5px;
-		box-shadow:
-			9px 0 0 var(--ink),
-			18px 0 0 var(--ink),
-			0 9px 0 var(--ink),
-			9px 9px 0 var(--accent-cyan),
-			18px 9px 0 var(--ink),
-			0 18px 0 var(--ink),
-			9px 18px 0 var(--ink),
-			18px 18px 0 var(--ink);
-	}
-
-	.module-icon--grid.module-icon--window i {
-		top: 2px;
-		left: 2px;
-		width: 2px;
-		height: 2px;
-		box-shadow:
-			5px 0 0 var(--ink),
-			10px 0 0 var(--ink),
-			0 5px 0 var(--ink),
-			5px 5px 0 var(--accent-cyan),
-			10px 5px 0 var(--ink),
-			0 10px 0 var(--ink),
-			5px 10px 0 var(--ink),
-			10px 10px 0 var(--ink);
-	}
-
-	.module-icon--grid.module-icon--desktop i {
-		position: absolute;
-		inset: 0 3px;
 		border: 1px solid var(--ink);
 		background: var(--paper);
-		box-shadow: none;
 	}
 
-	.module-icon--grid.module-icon--desktop i::before {
+	.module-icon--profile i::before,
+	.module-icon--profile i::after {
 		position: absolute;
-		top: 8px;
-		left: 8px;
-		width: 5px;
-		height: 5px;
 		background: var(--ink);
-		box-shadow:
-			10px 0 0 var(--ink),
-			20px 0 0 var(--ink),
-			0 10px 0 var(--ink),
-			10px 10px 0 var(--accent-cyan),
-			20px 10px 0 var(--ink),
-			0 20px 0 var(--ink),
-			10px 20px 0 var(--ink),
-			20px 20px 0 var(--ink);
 		content: '';
 	}
 
-	.module-icon--github.module-icon--toolbar i {
-		position: absolute;
-		top: 5px;
+	.module-icon--profile.module-icon--window i {
+		inset: 1px;
+	}
+
+	.module-icon--profile.module-icon--window i::before {
+		top: 2px;
 		left: 4px;
-		width: 20px;
-		height: 19px;
-		background: var(--ink);
+		width: 4px;
+		height: 4px;
 	}
 
-	.module-icon--github.module-icon--toolbar i::before {
-		position: absolute;
-		top: -4px;
-		left: 0;
-		width: 6px;
-		height: 6px;
-		background: var(--ink);
-		box-shadow: 14px 0 0 var(--ink);
-		content: '';
+	.module-icon--profile.module-icon--window i::after {
+		bottom: 2px;
+		left: 2px;
+		width: 8px;
+		height: 4px;
 	}
 
-	.module-icon--github.module-icon--toolbar i::after {
-		position: absolute;
+	.module-icon--profile.module-icon--desktop i {
+		inset: 0 3px;
+	}
+
+	.module-icon--profile.module-icon--desktop i::before {
 		top: 6px;
-		left: 5px;
-		width: 3px;
-		height: 3px;
+		left: 13px;
+		width: 12px;
+		height: 11px;
+		clip-path: polygon(25% 0, 75% 0, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0 75%, 0 25%);
+	}
+
+	.module-icon--profile.module-icon--desktop i::after {
+		bottom: 5px;
+		left: 8px;
+		width: 22px;
+		height: 12px;
+		clip-path: polygon(18% 0, 82% 0, 100% 40%, 100% 100%, 0 100%, 0 40%);
+	}
+
+	.module-icon--github.module-icon--toolbar {
+		display: grid;
+		border: 1px solid var(--ink);
 		background: var(--paper);
-		box-shadow: 7px 0 0 var(--paper), 3px 6px 0 var(--paper), 7px 6px 0 var(--paper);
-		content: '';
+		box-shadow: 2px 2px 0 var(--ink);
+		place-items: center;
+	}
+
+	.module-icon--github svg {
+		display: block;
+		width: 18px;
+		height: 18px;
+		fill: var(--ink);
 	}
 </style>

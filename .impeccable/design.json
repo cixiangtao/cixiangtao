@@ -110,7 +110,7 @@
       "name": "系统工具栏",
       "kind": "nav",
       "refersTo": "system-toolbar",
-      "description": "固定在桌面顶部；左侧组合首页头像与当前位置，右侧只保留 GitHub 外链和在线状态，中间留白形成清晰的系统栏分区。",
+      "description": "固定在桌面顶部；左侧组合首页头像与当前位置，右侧以黑白应用图标框内的 GitHub 轮廓连接外链，并与在线状态组成工具组。",
       "html": "<header class=\"ds-system-toolbar\"><div><a class=\"ds-tool ds-avatar\" href=\"#\">首页</a><i></i><strong>最近文章</strong></div><aside><a class=\"ds-tool\" href=\"https://github.com/cixiangtao\">GitHub</a><i></i><span>在线</span></aside></header>",
       "css": ".ds-system-toolbar,.ds-system-toolbar nav,.ds-system-toolbar aside { display:flex; align-items:center; } .ds-system-toolbar { justify-content:space-between; min-height:44px; padding:4px 14px; border-bottom:1px solid var(--ink); background:var(--paper); color:var(--ink); box-shadow:0 3px 0 rgb(23 23 27 / 22%); } .ds-system-toolbar nav { gap:12px; } .ds-system-toolbar aside { gap:10px; font:800 .66rem/1 Monaco,monospace; } .ds-system-toolbar i { width:1px; height:22px; background:var(--ink); } .ds-tool { display:grid; width:32px; height:32px; border:1px solid transparent; color:inherit; font:900 .65rem/1 Monaco,monospace; place-items:center; text-decoration:none; } .ds-tool:hover,.ds-tool:focus-visible,.ds-tool[aria-current] { border-style:dashed; border-color:var(--ink); background:var(--accent-yellow); outline:none; }"
     },
@@ -126,7 +126,7 @@
       "name": "桌面快捷图标",
       "kind": "nav",
       "refersTo": "desktop-shortcut",
-      "description": "在紫蓝桌面左上轨道承载关于我、项目和文章三个站内窗口入口的白字像素快捷图标。",
+      "description": "在紫蓝桌面左上轨道使用个人资料、文件夹和文稿三个语义图标承载关于我、项目和文章入口。",
       "html": "<a class=\"ds-desktop-shortcut\" href=\"#\"><span class=\"ds-desktop-icon\"></span><strong>文章</strong></a>",
       "css": ".ds-desktop-shortcut { display:grid; width:68px; gap:6px; justify-items:center; color:#fff; font:800 .68rem/1.5 Monaco,monospace; text-decoration:none; text-shadow:1px 1px 0 var(--ink); } .ds-desktop-icon { display:block; width:48px; height:42px; border:1px solid var(--ink); background:var(--paper); box-shadow:3px 4px 0 rgb(21 23 29 / 28%); } .ds-desktop-shortcut:hover,.ds-desktop-shortcut:focus-visible { background:var(--selection); outline:1px dashed var(--accent-yellow); }"
     },
