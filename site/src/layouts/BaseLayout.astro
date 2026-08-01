@@ -28,21 +28,21 @@ const base = import.meta.env.BASE_URL;
 	<body class="flex min-h-svh min-w-80 flex-col antialiased">
 		<header class="system-bar">
 			<nav class="system-tools" aria-label="主导航">
-				<a class="system-tool system-tool--avatar" href={base} aria-label="首页" data-label="首页">
+				<a class="system-tool system-tool--avatar" href={base} aria-label="首页" data-label="首页" data-nav="home">
 					<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
 				</a>
 				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool system-tool--folder" href={`${base}#projects`} aria-label="项目" data-label="项目"><i aria-hidden="true"></i></a>
+				<a class="system-tool system-tool--folder" href={`${base}#projects`} aria-label="项目" data-label="项目" data-nav="projects"><i aria-hidden="true"></i></a>
 				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool system-tool--document" href={`${base}#writing`} aria-label="文章" data-label="文章"><i aria-hidden="true"></i></a>
+				<a class="system-tool system-tool--document" href={`${base}#writing`} aria-label="文章" data-label="文章" data-nav="writing"><i aria-hidden="true"></i></a>
 				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool system-tool--terminal" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="GitHub" data-label="GitHub"><i aria-hidden="true">›_</i></a>
-				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool system-tool--grid" href={`${base}#about`} aria-label="关于我" data-label="关于我"><i aria-hidden="true"></i></a>
+				<a class="system-tool system-tool--grid" href={`${base}#about`} aria-label="关于我" data-label="关于我" data-nav="about"><i aria-hidden="true"></i></a>
 			</nav>
 
 			<div class="system-status" aria-label="系统状态">
-				<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer"><span class="status-dot" aria-hidden="true"></span>在线</a>
+				<span class="system-context">当前位置：<strong data-nav-context aria-live="polite">首页</strong></span>
+				<span class="system-separator" aria-hidden="true"></span>
+				<span class="system-presence"><span class="status-dot" aria-hidden="true"></span>在线</span>
 				<span class="system-separator" aria-hidden="true"></span>
 				<i class="system-status-icon system-status-icon--square" aria-hidden="true"></i>
 				<i class="system-status-icon system-status-icon--line" aria-hidden="true"></i>
@@ -58,5 +58,44 @@ const base = import.meta.env.BASE_URL;
 			<p>持续好奇，认真交付。</p>
 			<p>内容来自 GitHub Issues，由 Astro 构建。</p>
 		</footer>
+
+		<script>
+			const navigationLabels = {
+				home: '首页',
+				projects: '代表项目',
+				writing: '最近文章',
+				about: '关于我',
+			} as const;
+			type NavigationKey = keyof typeof navigationLabels;
+
+			function resolveNavigationKey(): NavigationKey {
+				if (window.location.pathname.includes('/posts/')) return 'writing';
+
+				const hash = window.location.hash.slice(1);
+				return hash in navigationLabels ? (hash as NavigationKey) : 'home';
+			}
+
+			function syncInternalNavigation(key = resolveNavigationKey()) {
+				document.querySelectorAll<HTMLElement>('[data-nav]').forEach((link) => {
+					if (link.dataset.nav === key) {
+						link.setAttribute('aria-current', 'page');
+					} else {
+						link.removeAttribute('aria-current');
+					}
+				});
+
+				const context = document.querySelector<HTMLElement>('[data-nav-context]');
+				if (context) context.textContent = navigationLabels[key];
+			}
+
+			window.addEventListener('hashchange', () => syncInternalNavigation());
+			window.addEventListener('workspace:navigate', (event) => {
+				const id = event instanceof CustomEvent ? event.detail?.id : null;
+				syncInternalNavigation(
+					typeof id === 'string' && id in navigationLabels ? (id as NavigationKey) : resolveNavigationKey(),
+				);
+			});
+			syncInternalNavigation();
+		</script>
 	</body>
 </html>

@@ -95,7 +95,8 @@ a:focus-visible {
 }
 
 .system-tool:hover,
-.system-tool:focus-visible {
+.system-tool:focus-visible,
+.system-tool[aria-current] {
 	background: var(--accent-yellow);
 	outline: 1px dashed var(--ink);
 	outline-offset: 2px;
@@ -195,19 +196,6 @@ a:focus-visible {
 	box-shadow: none;
 }
 
-.system-tool--terminal {
-	border: 1px solid var(--ink);
-	background: var(--ink);
-	color: white;
-}
-
-.system-tool--terminal i {
-	font-family: var(--font-data);
-	font-size: 0.78rem;
-	font-style: normal;
-	font-weight: 900;
-}
-
 .system-tool--grid i {
 	width: 5px;
 	height: 5px;
@@ -226,10 +214,16 @@ a:focus-visible {
 	font-weight: 800;
 }
 
-.system-status a {
+.system-context,
+.system-presence {
 	display: flex;
 	gap: 6px;
 	align-items: center;
+	white-space: nowrap;
+}
+
+.system-context strong {
+	color: var(--accent-blue-dark);
 }
 
 .system-status-icon {
@@ -691,7 +685,7 @@ a:focus-visible {
 		gap: 5px;
 	}
 
-	.system-status a,
+	.system-context,
 	.system-status .system-separator {
 		display: none;
 	}

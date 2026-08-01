@@ -79,6 +79,7 @@ const {
 		const url = new URL(window.location.href);
 		url.hash = selectedWindow.id;
 		window.history.replaceState(window.history.state, '', url);
+		window.dispatchEvent(new CustomEvent('workspace:navigate', { detail: { id: selectedWindow.id } }));
 	}
 
 	function beginWindowDrag(event: PointerEvent) {

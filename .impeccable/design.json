@@ -110,9 +110,9 @@
       "name": "系统工具栏",
       "kind": "nav",
       "refersTo": "system-toolbar",
-      "description": "固定在桌面顶部、以头像和文件工具图标组织入口的系统工具栏。",
-      "html": "<nav class=\"ds-system-toolbar\"><a class=\"ds-tool ds-avatar\" href=\"#\">头像</a><i></i><a class=\"ds-tool\" href=\"#projects\">文件夹</a><i></i><a class=\"ds-tool\" href=\"#writing\">文稿</a><i></i><a class=\"ds-tool\" href=\"#about\">九宫格</a></nav>",
-      "css": ".ds-system-toolbar { display:flex; gap:12px; align-items:center; min-height:44px; padding:4px 14px; border-bottom:1px solid var(--ink); background:var(--paper); color:var(--ink); box-shadow:0 3px 0 rgb(23 23 27 / 22%); } .ds-system-toolbar>i { width:1px; height:22px; background:var(--ink); } .ds-tool { display:grid; width:32px; height:32px; border:1px solid transparent; color:inherit; font:900 .65rem/1 Monaco,monospace; place-items:center; text-decoration:none; } .ds-tool:hover,.ds-tool:focus-visible { border-style:dashed; border-color:var(--ink); background:var(--accent-yellow); outline:none; }"
+      "description": "固定在桌面顶部，以像素图标承载站内导航，并在右侧反馈当前栏目和在线状态的信息工具栏。",
+      "html": "<header class=\"ds-system-toolbar\"><nav><a class=\"ds-tool ds-avatar\" href=\"#\" aria-current=\"page\">头像</a><i></i><a class=\"ds-tool\" href=\"#projects\">文件夹</a><i></i><a class=\"ds-tool\" href=\"#writing\">文稿</a><i></i><a class=\"ds-tool\" href=\"#about\">九宫格</a></nav><aside><strong>首页</strong><i></i><span>在线</span></aside></header>",
+      "css": ".ds-system-toolbar,.ds-system-toolbar nav,.ds-system-toolbar aside { display:flex; align-items:center; } .ds-system-toolbar { justify-content:space-between; min-height:44px; padding:4px 14px; border-bottom:1px solid var(--ink); background:var(--paper); color:var(--ink); box-shadow:0 3px 0 rgb(23 23 27 / 22%); } .ds-system-toolbar nav { gap:12px; } .ds-system-toolbar aside { gap:10px; font:800 .66rem/1 Monaco,monospace; } .ds-system-toolbar i { width:1px; height:22px; background:var(--ink); } .ds-tool { display:grid; width:32px; height:32px; border:1px solid transparent; color:inherit; font:900 .65rem/1 Monaco,monospace; place-items:center; text-decoration:none; } .ds-tool:hover,.ds-tool:focus-visible,.ds-tool[aria-current] { border-style:dashed; border-color:var(--ink); background:var(--accent-yellow); outline:none; }"
     },
     {
       "name": "MacWindow",
