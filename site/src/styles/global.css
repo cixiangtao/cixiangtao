@@ -1,8 +1,8 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-	--font-sans: Geneva, Verdana, "PingFang SC", "Microsoft YaHei", sans-serif;
-	--font-mono: Monaco, "SFMono-Regular", Consolas, monospace;
+	--font-sans: Geneva, Verdana, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+	--font-mono: Monaco, 'SFMono-Regular', Consolas, monospace;
 }
 
 :root {
@@ -25,7 +25,7 @@
 	--accent-cyan: #43dce6;
 	--accent-yellow: #ffda45;
 	--accent-coral: #ff705e;
-	--font-data: Monaco, "SFMono-Regular", Consolas, monospace;
+	--font-data: Monaco, 'SFMono-Regular', Consolas, monospace;
 }
 
 * {
@@ -163,7 +163,7 @@ a:focus-visible {
 	border: 1px solid var(--ink);
 	border-bottom: 0;
 	background: var(--accent-yellow);
-	content: "";
+	content: '';
 }
 
 .system-tool--document i {
@@ -182,8 +182,10 @@ a:focus-visible {
 	left: 4px;
 	height: 2px;
 	background: var(--ink);
-	box-shadow: 0 5px 0 var(--ink), 0 10px 0 var(--ink);
-	content: "";
+	box-shadow:
+		0 5px 0 var(--ink),
+		0 10px 0 var(--ink);
+	content: '';
 }
 
 .system-tool--document i::before {
@@ -201,9 +203,14 @@ a:focus-visible {
 	height: 5px;
 	background: var(--ink);
 	box-shadow:
-		9px 0 0 var(--ink), 18px 0 0 var(--ink),
-		0 9px 0 var(--ink), 9px 9px 0 var(--accent-cyan), 18px 9px 0 var(--ink),
-		0 18px 0 var(--ink), 9px 18px 0 var(--ink), 18px 18px 0 var(--ink);
+		9px 0 0 var(--ink),
+		18px 0 0 var(--ink),
+		0 9px 0 var(--ink),
+		9px 9px 0 var(--accent-cyan),
+		18px 9px 0 var(--ink),
+		0 18px 0 var(--ink),
+		9px 18px 0 var(--ink),
+		18px 18px 0 var(--ink);
 	transform: translate(-9px, -9px);
 }
 
@@ -245,7 +252,7 @@ a:focus-visible {
 	left: 1px;
 	height: 2px;
 	background: var(--ink);
-	content: "";
+	content: '';
 }
 
 .system-status-icon--dots::before {
@@ -255,8 +262,10 @@ a:focus-visible {
 	width: 3px;
 	height: 3px;
 	background: var(--ink);
-	box-shadow: 6px 0 0 var(--ink), 12px 0 0 var(--ink);
-	content: "";
+	box-shadow:
+		6px 0 0 var(--ink),
+		12px 0 0 var(--ink);
+	content: '';
 }
 
 .status-dot {
@@ -278,11 +287,15 @@ a:focus-visible {
 
 .mac-window[data-selected] {
 	z-index: 80;
-	box-shadow: 0 0 0 3px var(--accent-yellow), 5px 5px 0 rgb(23 23 27 / 46%);
+	box-shadow:
+		0 0 0 3px var(--accent-yellow),
+		5px 5px 0 rgb(23 23 27 / 46%);
 }
 
 .mac-window[data-dragging] {
-	box-shadow: 0 0 0 3px var(--accent-yellow), 8px 8px 0 rgb(23 23 27 / 52%);
+	box-shadow:
+		0 0 0 3px var(--accent-yellow),
+		8px 8px 0 rgb(23 23 27 / 52%);
 }
 
 .mac-titlebar {
@@ -332,7 +345,7 @@ a:focus-visible {
 	position: absolute;
 	inset: 3px;
 	background: var(--accent-coral);
-	content: "";
+	content: '';
 }
 
 .mac-window-controls {
@@ -359,7 +372,7 @@ a:focus-visible {
 .mac-control--close::after {
 	position: absolute;
 	background: var(--ink);
-	content: "";
+	content: '';
 }
 
 .mac-control--minimize::before {
@@ -455,7 +468,7 @@ a:focus-visible {
 	width: 0;
 	height: 0;
 	border: 4px solid transparent;
-	content: "";
+	content: '';
 }
 
 .mac-scroll-arrow--up::before {
@@ -518,8 +531,7 @@ a:focus-visible {
 .mac-resize-grip {
 	border-right: 0;
 	background:
-		linear-gradient(135deg, transparent 46%, var(--ink) 47% 53%, transparent 54%),
-		var(--paper);
+		linear-gradient(135deg, transparent 46%, var(--ink) 47% 53%, transparent 54%), var(--paper);
 }
 
 .site-footer {
