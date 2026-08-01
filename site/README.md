@@ -14,6 +14,19 @@ content source.
 Astro fetches the Issues during the build and generates static HTML. The
 published site does not call the GitHub API at runtime.
 
+## Deployment
+
+GitHub Actions builds and deploys the site to GitHub Pages when:
+
+- a commit is pushed to `main`;
+- an Issue is opened, edited, deleted, closed, reopened, labeled, or unlabeled;
+- an Issue comment is created, edited, or deleted;
+- the deployment workflow is started manually.
+
+The build receives the workflow's short-lived `GITHUB_TOKEN`, fetches the
+current open Issues carrying the `blog` label, and packages them into the
+static site. No long-lived personal access token is required.
+
 ## Commands
 
 Run these commands from this directory:
