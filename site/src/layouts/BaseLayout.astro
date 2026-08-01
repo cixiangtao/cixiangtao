@@ -28,31 +28,24 @@ const base = import.meta.env.BASE_URL;
 	</head>
 	<body class="flex min-h-svh min-w-80 flex-col antialiased">
 		<header class="system-bar">
-			<nav class="system-tools" aria-label="主导航">
-				<a class="system-tool system-tool--avatar" href={base} aria-label="首页" data-label="首页" data-nav="home">
-					<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
-				</a>
+			<div class="system-context-group">
+				<nav class="system-home" aria-label="主页">
+					<a class="system-tool system-tool--avatar" href={base} aria-label="首页" data-label="首页" data-nav="home">
+						<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
+					</a>
+				</nav>
 				<span class="system-separator" aria-hidden="true"></span>
-				<span class="system-tools-global">
-					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="在新窗口打开 GitHub" data-label="GitHub"><ModuleIcon name="github" /></a>
-					<span class="system-separator" aria-hidden="true"></span>
-					<a class="system-tool" href="https://github.com/cixiangtao/cixiangtao" target="_blank" rel="noreferrer" aria-label="在新窗口打开源码仓库" data-label="源码"><ModuleIcon name="folder" /></a>
-					<span class="system-separator" aria-hidden="true"></span>
-					<a class="system-tool" href="https://github.com/cixiangtao/cixiangtao/issues?q=is%3Aissue%20label%3Ablog" target="_blank" rel="noreferrer" aria-label="在新窗口打开文章档案" data-label="文章档案"><ModuleIcon name="document" /></a>
-				</span>
-				<span class="system-tools-local">
-					<a class="system-tool" href={`${base}#projects`} aria-label="项目" data-label="项目" data-nav="projects"><ModuleIcon name="folder" /></a>
-					<span class="system-separator" aria-hidden="true"></span>
-					<a class="system-tool" href={`${base}#writing`} aria-label="文章" data-label="文章" data-nav="writing"><ModuleIcon name="document" /></a>
-					<span class="system-separator" aria-hidden="true"></span>
-					<a class="system-tool" href={`${base}#about`} aria-label="关于我" data-label="关于我" data-nav="about"><ModuleIcon name="grid" /></a>
-				</span>
-			</nav>
-
-			<div class="system-status" aria-label="系统状态">
 				<span class="system-context">当前位置：<strong data-nav-context aria-live="polite">首页</strong></span>
+			</div>
+
+			<div class="system-actions">
+				<nav class="system-external" aria-label="外部链接">
+					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="在新窗口打开 GitHub" data-label="GitHub"><ModuleIcon name="github" /></a>
+				</nav>
 				<span class="system-separator" aria-hidden="true"></span>
-				<span class="system-presence"><span class="status-dot" aria-hidden="true"></span>在线</span>
+				<div class="system-status" aria-label="系统状态">
+					<span class="system-presence"><span class="status-dot" aria-hidden="true"></span>在线</span>
+				</div>
 			</div>
 		</header>
 
