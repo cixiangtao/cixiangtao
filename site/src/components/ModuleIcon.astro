@@ -1,0 +1,167 @@
+---
+/** Shared pixel icon for system navigation and Mac window title bars. */
+interface Props {
+	name: 'folder' | 'document' | 'grid';
+	size?: 'toolbar' | 'window';
+}
+
+const { name, size = 'toolbar' } = Astro.props;
+---
+
+<span class:list={['module-icon', `module-icon--${name}`, `module-icon--${size}`]} aria-hidden="true">
+	<i></i>
+</span>
+
+<style>
+	.module-icon {
+		position: relative;
+		display: block;
+		flex: none;
+	}
+
+	.module-icon--toolbar {
+		width: 28px;
+		height: 28px;
+	}
+
+	.module-icon--window {
+		width: 16px;
+		height: 16px;
+	}
+
+	.module-icon--folder i {
+		position: absolute;
+		border: 1px solid var(--ink);
+		background: var(--accent-yellow);
+	}
+
+	.module-icon--folder i::before {
+		position: absolute;
+		border: 1px solid var(--ink);
+		border-bottom: 0;
+		background: var(--accent-yellow);
+		content: '';
+	}
+
+	.module-icon--folder.module-icon--toolbar i {
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 19px;
+	}
+
+	.module-icon--folder.module-icon--toolbar i::before {
+		top: -7px;
+		left: -2px;
+		width: 13px;
+		height: 7px;
+	}
+
+	.module-icon--folder.module-icon--window i {
+		right: 1px;
+		bottom: 1px;
+		left: 1px;
+		height: 10px;
+	}
+
+	.module-icon--folder.module-icon--window i::before {
+		top: -4px;
+		left: -1px;
+		width: 7px;
+		height: 4px;
+	}
+
+	.module-icon--document i {
+		position: absolute;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+	}
+
+	.module-icon--document i::before,
+	.module-icon--document i::after {
+		position: absolute;
+		background: var(--ink);
+		content: '';
+	}
+
+	.module-icon--document.module-icon--toolbar i {
+		top: 0;
+		left: 3px;
+		width: 22px;
+		height: 28px;
+	}
+
+	.module-icon--document.module-icon--toolbar i::before {
+		top: 5px;
+		right: 4px;
+		left: 4px;
+		height: 2px;
+		box-shadow: 0 5px 0 var(--ink), 0 10px 0 var(--ink);
+	}
+
+	.module-icon--document.module-icon--toolbar i::after {
+		top: 20px;
+		right: 9px;
+		left: 4px;
+		height: 2px;
+	}
+
+	.module-icon--document.module-icon--window i {
+		top: 1px;
+		left: 3px;
+		width: 10px;
+		height: 14px;
+	}
+
+	.module-icon--document.module-icon--window i::before {
+		top: 3px;
+		right: 2px;
+		left: 2px;
+		height: 1px;
+		box-shadow: 0 3px 0 var(--ink), 0 6px 0 var(--accent-cyan);
+	}
+
+	.module-icon--document.module-icon--window i::after {
+		right: 4px;
+		bottom: 1px;
+		left: 2px;
+		height: 1px;
+	}
+
+	.module-icon--grid i {
+		position: absolute;
+		background: var(--ink);
+	}
+
+	.module-icon--grid.module-icon--toolbar i {
+		top: 2px;
+		left: 2px;
+		width: 5px;
+		height: 5px;
+		box-shadow:
+			9px 0 0 var(--ink),
+			18px 0 0 var(--ink),
+			0 9px 0 var(--ink),
+			9px 9px 0 var(--accent-cyan),
+			18px 9px 0 var(--ink),
+			0 18px 0 var(--ink),
+			9px 18px 0 var(--ink),
+			18px 18px 0 var(--ink);
+	}
+
+	.module-icon--grid.module-icon--window i {
+		top: 2px;
+		left: 2px;
+		width: 2px;
+		height: 2px;
+		box-shadow:
+			5px 0 0 var(--ink),
+			10px 0 0 var(--ink),
+			0 5px 0 var(--ink),
+			5px 5px 0 var(--accent-cyan),
+			10px 5px 0 var(--ink),
+			0 10px 0 var(--ink),
+			5px 10px 0 var(--ink),
+			10px 10px 0 var(--ink);
+	}
+</style>

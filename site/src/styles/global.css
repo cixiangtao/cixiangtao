@@ -144,76 +144,6 @@ a:focus-visible {
 	background: var(--ink);
 }
 
-.system-tool--folder i {
-	position: relative;
-	display: block;
-	width: 28px;
-	height: 19px;
-	margin-top: 5px;
-	border: 1px solid var(--ink);
-	background: var(--accent-yellow);
-}
-
-.system-tool--folder i::before {
-	position: absolute;
-	top: -7px;
-	left: -2px;
-	width: 13px;
-	height: 7px;
-	border: 1px solid var(--ink);
-	border-bottom: 0;
-	background: var(--accent-yellow);
-	content: '';
-}
-
-.system-tool--document i {
-	position: relative;
-	display: block;
-	width: 22px;
-	height: 28px;
-	border: 1px solid var(--ink);
-	background: var(--paper);
-}
-
-.system-tool--document i::before,
-.system-tool--document i::after {
-	position: absolute;
-	right: 4px;
-	left: 4px;
-	height: 2px;
-	background: var(--ink);
-	box-shadow:
-		0 5px 0 var(--ink),
-		0 10px 0 var(--ink);
-	content: '';
-}
-
-.system-tool--document i::before {
-	top: 5px;
-}
-
-.system-tool--document i::after {
-	top: 20px;
-	right: 9px;
-	box-shadow: none;
-}
-
-.system-tool--grid i {
-	width: 5px;
-	height: 5px;
-	background: var(--ink);
-	box-shadow:
-		9px 0 0 var(--ink),
-		18px 0 0 var(--ink),
-		0 9px 0 var(--ink),
-		9px 9px 0 var(--accent-cyan),
-		18px 9px 0 var(--ink),
-		0 18px 0 var(--ink),
-		9px 18px 0 var(--ink),
-		18px 18px 0 var(--ink);
-	transform: translate(-9px, -9px);
-}
-
 .system-status {
 	gap: 10px;
 	font-family: var(--font-data);
@@ -296,7 +226,6 @@ a:focus-visible {
 	white-space: nowrap;
 }
 
-.mac-window-icon,
 .mac-control {
 	position: relative;
 	display: block;
@@ -304,13 +233,6 @@ a:focus-visible {
 	height: 16px;
 	border: 1px solid var(--ink);
 	background: var(--paper);
-}
-
-.mac-window-icon::after {
-	position: absolute;
-	inset: 3px;
-	background: var(--accent-coral);
-	content: '';
 }
 
 .mac-window-controls {

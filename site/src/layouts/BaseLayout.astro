@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ModuleIcon from '../components/ModuleIcon.astro';
 
 interface Props {
 	title?: string;
@@ -32,11 +33,11 @@ const base = import.meta.env.BASE_URL;
 					<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
 				</a>
 				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool system-tool--folder" href={`${base}#projects`} aria-label="项目" data-label="项目" data-nav="projects"><i aria-hidden="true"></i></a>
+				<a class="system-tool" href={`${base}#projects`} aria-label="项目" data-label="项目" data-nav="projects"><ModuleIcon name="folder" /></a>
 				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool system-tool--document" href={`${base}#writing`} aria-label="文章" data-label="文章" data-nav="writing"><i aria-hidden="true"></i></a>
+				<a class="system-tool" href={`${base}#writing`} aria-label="文章" data-label="文章" data-nav="writing"><ModuleIcon name="document" /></a>
 				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool system-tool--grid" href={`${base}#about`} aria-label="关于我" data-label="关于我" data-nav="about"><i aria-hidden="true"></i></a>
+				<a class="system-tool" href={`${base}#about`} aria-label="关于我" data-label="关于我" data-nav="about"><ModuleIcon name="grid" /></a>
 			</nav>
 
 			<div class="system-status" aria-label="系统状态">
