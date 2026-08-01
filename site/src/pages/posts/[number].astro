@@ -1,0 +1,281 @@
+---
+import MacWindow from '../../components/MacWindow.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, getBlogPosts, type BlogPost } from '../../lib/github';
+
+export async function getStaticPaths() {
+	const posts = await getBlogPosts();
+
+	return posts.map((post) => ({
+		params: { number: String(post.number) },
+		props: { post },
+	}));
+}
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={post.title} description={post.excerpt}>
+	<div class="article-desktop mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 lg:py-10">
+		<MacWindow title={`文章 #${post.number}`} tone="cyan" class="article-window">
+			<nav class="article-toolbar" aria-label="文章导航">
+				<a href={`${base}#writing`}>← 返回文章目录</a>
+				<a href={post.githubUrl} target="_blank" rel="noreferrer">在 GitHub 中打开 ↗</a>
+			</nav>
+
+			<article class="article-sheet">
+				<header class="article-header">
+					<div class="article-tags">
+						<span class="issue-badge">ISSUE {String(post.number).padStart(3, '0')}</span>
+						{post.labels.map((label) => <span>#{label.name}</span>)}
+					</div>
+					<h1>{post.title}</h1>
+					<p>{post.excerpt}</p>
+					<div class="article-meta">
+						<span>发布于 <time datetime={post.createdAt}>{formatDate(post.createdAt)}</time></span>
+						<span>约 {post.readingMinutes} 分钟阅读</span>
+						<span>{post.comments} 条讨论</span>
+					</div>
+				</header>
+
+				<div class="article-layout">
+					<aside class="article-aside" aria-label="作者信息">
+						<img class="author-avatar" src="https://github.com/cixiangtao.png?size=116" alt="" width="58" height="58" decoding="async" />
+						<strong>cixiangtao</strong>
+						<p>在这里公开记录项目实践、设计取舍与阶段复盘。</p>
+						<span class="article-file-info">格式：GitHub Issue<br />状态：公开</span>
+					</aside>
+
+					<div class="article-body markdown-body" set:html={post.bodyHtml} />
+				</div>
+
+				<footer class="article-footer">
+					<div>
+						<strong>想继续讨论？</strong>
+						<span>评论与修订记录都保存在原始 GitHub Issue 中。</span>
+					</div>
+					<a href={post.githubUrl} target="_blank" rel="noreferrer">前往讨论区 →</a>
+				</footer>
+			</article>
+		</MacWindow>
+	</div>
+</BaseLayout>
+
+<style is:global>
+	.article-window {
+		width: 100%;
+	}
+
+	.article-toolbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 14px;
+		border-bottom: 1px solid var(--ink);
+		background: var(--paper);
+		font-size: 0.72rem;
+		font-weight: 850;
+	}
+
+	.article-toolbar a {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.article-sheet {
+		padding: clamp(26px, 6vw, 72px);
+		background: var(--paper);
+	}
+
+	.article-header {
+		max-width: 880px;
+		margin: 0 auto;
+		padding-bottom: clamp(32px, 5vw, 56px);
+		border-bottom: 1px solid var(--ink);
+	}
+
+	.article-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		align-items: center;
+		margin-bottom: 22px;
+		color: var(--accent-blue-dark);
+		font-family: var(--font-data);
+		font-size: 0.68rem;
+		font-weight: 800;
+	}
+
+	.issue-badge {
+		padding: 5px 7px;
+		border: 1px solid var(--ink);
+		background: var(--accent-yellow);
+		color: var(--ink);
+	}
+
+	.article-header h1 {
+		max-width: 18ch;
+		margin: 0;
+		font-size: clamp(2.35rem, 7vw, 5.2rem);
+		font-weight: 950;
+		letter-spacing: -0.04em;
+		line-height: 1.08;
+		text-wrap: balance;
+	}
+
+	.article-header > p {
+		max-width: 62ch;
+		margin: 24px 0 0;
+		color: var(--muted);
+		font-size: 0.94rem;
+		line-height: 1.75;
+	}
+
+	.article-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 9px 20px;
+		margin-top: 24px;
+		color: var(--muted);
+		font-size: 0.7rem;
+		font-weight: 750;
+	}
+
+	.article-layout {
+		display: grid;
+		grid-template-columns: 155px minmax(0, 70ch);
+		gap: clamp(38px, 7vw, 82px);
+		justify-content: center;
+		padding: clamp(42px, 7vw, 76px) 0 24px;
+	}
+
+	.article-aside {
+		position: sticky;
+		top: 78px;
+		align-self: start;
+		color: var(--muted);
+		font-size: 0.72rem;
+		line-height: 1.65;
+	}
+
+	.author-avatar {
+		display: block;
+		width: 58px;
+		height: 58px;
+		margin-bottom: 14px;
+		border: 1px solid var(--ink);
+		background: var(--accent-yellow);
+		object-fit: cover;
+	}
+
+	.article-aside strong {
+		display: block;
+		color: var(--ink);
+		font-size: 0.8rem;
+		font-weight: 900;
+	}
+
+	.article-aside p {
+		margin: 8px 0 18px;
+	}
+
+	.article-file-info {
+		display: block;
+		padding-top: 13px;
+		border-top: 1px solid var(--line-strong);
+		font-family: var(--font-data);
+		font-size: 0.62rem;
+		line-height: 1.7;
+	}
+
+	.article-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		max-width: 880px;
+		margin: 62px auto 0;
+		padding: 20px 22px;
+		border: 1px solid var(--ink);
+		background: var(--accent-yellow);
+		box-shadow: 4px 4px 0 rgb(23 23 27 / 22%);
+	}
+
+	.article-footer strong,
+	.article-footer span {
+		display: block;
+	}
+
+	.article-footer strong {
+		font-size: 0.88rem;
+		font-weight: 900;
+	}
+
+	.article-footer span {
+		margin-top: 4px;
+		font-size: 0.68rem;
+		line-height: 1.5;
+	}
+
+	.article-footer a {
+		flex: none;
+		padding: 10px 13px;
+		border: 1px solid var(--ink);
+		background: var(--selection);
+		color: white;
+		font-size: 0.72rem;
+		font-weight: 900;
+	}
+
+	.article-footer a:hover,
+	.article-footer a:focus-visible {
+		background: var(--ink);
+	}
+
+	@media (max-width: 760px) {
+		.article-toolbar,
+		.article-footer {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		.article-sheet {
+			padding-inline: 18px;
+		}
+
+		.article-layout {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+
+		.article-aside {
+			position: static;
+			display: grid;
+			grid-template-columns: 48px minmax(0, 1fr);
+			gap: 0 12px;
+			padding-bottom: 22px;
+			border-bottom: 1px solid var(--line-strong);
+		}
+
+		.author-avatar {
+			grid-row: span 3;
+			width: 48px;
+			height: 48px;
+			margin: 0;
+			font-size: 1.3rem;
+		}
+
+		.article-aside p {
+			margin: 4px 0 0;
+		}
+
+		.article-file-info {
+			display: none;
+		}
+	}
+</style>
