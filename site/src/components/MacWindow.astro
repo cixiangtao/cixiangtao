@@ -54,6 +54,11 @@ const {
 
 <script>
 	const selectableWindows = '.mac-window[id]';
+	const desktopWindowQuery = window.matchMedia('(min-width: 1024px)');
+
+	function clamp(value: number, min: number, max: number) {
+		return Math.min(Math.max(value, min), max);
+	}
 
 	function selectWindow(selectedWindow: Element | null) {
 		document.querySelectorAll(selectableWindows).forEach((panel) => {
@@ -68,6 +73,87 @@ const {
 		selectWindow(selectedWindow?.matches(selectableWindows) ? selectedWindow : null);
 	}
 
+	function syncWindowHash(selectedWindow: Element) {
+		if (window.location.hash === `#${selectedWindow.id}`) return;
+
+		const url = new URL(window.location.href);
+		url.hash = selectedWindow.id;
+		window.history.replaceState(window.history.state, '', url);
+	}
+
+	function beginWindowDrag(event: PointerEvent) {
+		if (
+			event.button !== 0 ||
+			!desktopWindowQuery.matches ||
+			!(event.currentTarget instanceof HTMLElement) ||
+			!(event.target instanceof Element) ||
+			event.target.closest('.mac-window-controls')
+		) return;
+
+		const handle = event.currentTarget;
+		const panel = handle.closest<HTMLElement>(selectableWindows);
+		if (!panel) return;
+		const dragPanel = panel;
+
+		const stage = dragPanel.closest<HTMLElement>('.desktop-stage');
+		if (!stage) return;
+
+		event.preventDefault();
+		selectWindow(dragPanel);
+		syncWindowHash(dragPanel);
+
+		const panelRect = dragPanel.getBoundingClientRect();
+		const stageRect = stage.getBoundingClientRect();
+		const originLeft = panelRect.left - stageRect.left;
+		const originTop = panelRect.top - stageRect.top;
+		const maxLeft = Math.max(0, stage.clientWidth - panelRect.width);
+		const maxTop = Math.max(0, stage.clientHeight - panelRect.height);
+		const pointerId = event.pointerId;
+		const startX = event.clientX;
+		const startY = event.clientY;
+		let finalLeft = originLeft;
+		let finalTop = originTop;
+		let dragging = true;
+
+		dragPanel.style.left = `${originLeft}px`;
+		dragPanel.style.top = `${originTop}px`;
+		dragPanel.style.right = 'auto';
+		dragPanel.style.bottom = 'auto';
+		dragPanel.toggleAttribute('data-dragging', true);
+
+		function moveWindow(moveEvent: PointerEvent) {
+			if (moveEvent.pointerId !== pointerId) return;
+
+			finalLeft = clamp(originLeft + moveEvent.clientX - startX, 0, maxLeft);
+			finalTop = clamp(originTop + moveEvent.clientY - startY, 0, maxTop);
+			dragPanel.style.transform = `translate3d(${finalLeft - originLeft}px, ${finalTop - originTop}px, 0)`;
+		}
+
+		function finishWindowDrag(finishEvent?: PointerEvent) {
+			if (!dragging || (finishEvent && finishEvent.pointerId !== pointerId)) return;
+			dragging = false;
+
+			window.removeEventListener('pointermove', moveWindow);
+			window.removeEventListener('pointerup', finishWindowDrag);
+			window.removeEventListener('pointercancel', finishWindowDrag);
+			window.removeEventListener('blur', finishWindowDragOnBlur);
+
+			dragPanel.style.left = `${finalLeft}px`;
+			dragPanel.style.top = `${finalTop}px`;
+			dragPanel.style.transform = '';
+			dragPanel.removeAttribute('data-dragging');
+		}
+
+		function finishWindowDragOnBlur() {
+			finishWindowDrag();
+		}
+
+		window.addEventListener('pointermove', moveWindow);
+		window.addEventListener('pointerup', finishWindowDrag);
+		window.addEventListener('pointercancel', finishWindowDrag);
+		window.addEventListener('blur', finishWindowDragOnBlur);
+	}
+
 	document.addEventListener('pointerdown', (event) => {
 		if (event.button !== 0 || !(event.target instanceof Element)) return;
 
@@ -75,12 +161,11 @@ const {
 		if (!selectedWindow) return;
 
 		selectWindow(selectedWindow);
+		syncWindowHash(selectedWindow);
+	});
 
-		if (window.location.hash !== `#${selectedWindow.id}`) {
-			const url = new URL(window.location.href);
-			url.hash = selectedWindow.id;
-			window.history.replaceState(window.history.state, '', url);
-		}
+	document.querySelectorAll<HTMLElement>(`${selectableWindows} > .mac-titlebar`).forEach((handle) => {
+		handle.addEventListener('pointerdown', beginWindowDrag);
 	});
 
 	window.addEventListener('hashchange', syncSelectedWindow);
