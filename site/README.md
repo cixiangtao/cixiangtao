@@ -18,10 +18,12 @@ published site does not call the GitHub API at runtime.
 
 Run these commands from this directory:
 
-| Command | Action |
-| --- | --- |
-| `pnpm install` | Install dependencies |
-| `pnpm dev` | Start the development server |
-| `pnpm astro check` | Check Astro and TypeScript files |
-| `pnpm build` | Generate the production site in `dist/` |
-| `pnpm preview` | Preview the production build |
+| Command        | Action                                                  |
+| -------------- | ------------------------------------------------------- |
+| `pnpm install` | Install dependencies                                    |
+| `pnpm dev`     | Start the development server                            |
+| `pnpm check`   | Run formatting, lint, Astro, and TypeScript checks      |
+| `pnpm lint`    | Lint scripts, including scripts embedded in Astro files |
+| `pnpm format`  | Format supported source and configuration files         |
+| `pnpm build`   | Generate the production site in `dist/`                 |
+| `pnpm preview` | Preview the production build                            |

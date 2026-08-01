@@ -87,14 +87,14 @@ async function fetchBlogPosts() {
 			page: String(page),
 		}).toString();
 
+		// oxlint-disable-next-line no-await-in-loop -- Each page determines whether another request is needed.
 		const response = await fetch(url, { headers });
 
 		if (!response.ok) {
-			throw new Error(
-				`GitHub Issues request failed: ${response.status} ${response.statusText}`,
-			);
+			throw new Error(`GitHub Issues request failed: ${response.status} ${response.statusText}`);
 		}
 
+		// oxlint-disable-next-line no-await-in-loop -- Parse the current page before deciding whether to continue.
 		const pageIssues = (await response.json()) as GitHubIssue[];
 		issues.push(...pageIssues);
 
@@ -103,9 +103,7 @@ async function fetchBlogPosts() {
 		}
 	}
 
-	return issues
-		.filter((issue) => !issue.pull_request)
-		.map(toBlogPost);
+	return issues.filter((issue) => !issue.pull_request).map(toBlogPost);
 }
 
 export function getBlogPosts() {

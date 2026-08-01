@@ -1,23 +1,30 @@
 {
-  "name": "cixiangtao-blog",
-  "type": "module",
-  "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.1.6",
-    "tailwindcss": "^4.3.3"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.10",
-    "typescript": "^6.0.3"
-  }
+	"name": "cixiangtao-blog",
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"lint": "oxlint .",
+		"lint:fix": "oxlint . --fix",
+		"format": "oxfmt .",
+		"format:check": "oxfmt --check .",
+		"check": "pnpm format:check && pnpm lint && pnpm astro check"
+	},
+	"dependencies": {
+		"@tailwindcss/vite": "^4.3.3",
+		"astro": "^7.1.6",
+		"tailwindcss": "^4.3.3"
+	},
+	"devDependencies": {
+		"@astrojs/check": "^0.9.10",
+		"oxfmt": "0.61.0",
+		"oxlint": "1.76.0",
+		"typescript": "^6.0.3"
+	},
+	"engines": {
+		"node": ">=22.12.0"
+	}
 }
