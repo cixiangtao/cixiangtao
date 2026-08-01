@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-31T09:59:33Z",
+  "title": "Design System: cixiangtao 彩色个人工作台",
+  "extensions": {
+    "colorMeta": {
+      "desktop": {
+        "role": "primary",
+        "displayName": "工作台紫蓝",
+        "canonical": "#6670c9",
+        "tonalRamp": ["#17172d", "#272953", "#383b7c", "#4b50a5", "#6670c9", "#8c94da", "#bdc1ec", "#f0f0fb"]
+      },
+      "desktop-dot": {
+        "role": "primary",
+        "displayName": "桌面点阵紫",
+        "canonical": "#5962b1",
+        "tonalRamp": ["#16162a", "#25264c", "#34386d", "#464b91", "#5962b1", "#8189cc", "#b4b8e3", "#efeff9"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "文稿白",
+        "canonical": "#fffefa",
+        "tonalRamp": ["#1c1b19", "#383632", "#57534d", "#76716a", "#99938b", "#bdb8b1", "#dedbd5", "#fffefa"]
+      },
+      "paper-soft": {
+        "role": "neutral",
+        "displayName": "系统灰白",
+        "canonical": "#efeee8",
+        "tonalRamp": ["#1a1a18", "#34332f", "#514f49", "#706d66", "#928f87", "#b6b3ab", "#d6d4cd", "#f7f6f1"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "像素墨黑",
+        "canonical": "#17171b",
+        "tonalRamp": ["#17171b", "#303037", "#4b4b53", "#686870", "#898990", "#acacb2", "#d1d1d5", "#f5f5f6"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "档案灰",
+        "canonical": "#5a5b64",
+        "tonalRamp": ["#18191d", "#303138", "#484951", "#5a5b64", "#7e7f88", "#a4a5ac", "#cdced2", "#f5f5f6"]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "结构线",
+        "canonical": "rgb(23 23 27 / 22%)",
+        "tonalRamp": ["#17171b", "#303037", "#4b4b53", "#686870", "#898990", "#acacb2", "#d1d1d5", "#f5f5f6"]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "强调结构线",
+        "canonical": "rgb(23 23 27 / 48%)",
+        "tonalRamp": ["#17171b", "#303037", "#4b4b53", "#686870", "#898990", "#acacb2", "#d1d1d5", "#f5f5f6"]
+      },
+      "selection": {
+        "role": "primary",
+        "displayName": "选择蓝",
+        "canonical": "#3156d9",
+        "tonalRamp": ["#07133d", "#0b246f", "#17389d", "#244bc5", "#3156d9", "#6680e7", "#a2b0f1", "#edf0ff"]
+      },
+      "accent-blue-dark": {
+        "role": "primary",
+        "displayName": "深链接蓝",
+        "canonical": "#2442b6",
+        "tonalRamp": ["#071034", "#0b1d5d", "#122c87", "#1c3aaa", "#2442b6", "#5e73d2", "#9da9e8", "#edf0fb"]
+      },
+      "accent-cyan": {
+        "role": "secondary",
+        "displayName": "信号青",
+        "canonical": "#43dce6",
+        "tonalRamp": ["#082c30", "#0b5359", "#117980", "#22a4ad", "#43dce6", "#76e8ee", "#b3f3f5", "#effcfc"]
+      },
+      "accent-yellow": {
+        "role": "secondary",
+        "displayName": "文件黄",
+        "canonical": "#ffda45",
+        "tonalRamp": ["#302705", "#5b4806", "#856a09", "#b58f12", "#ffda45", "#ffe575", "#ffefad", "#fffbea"]
+      },
+      "accent-coral": {
+        "role": "tertiary",
+        "displayName": "像素珊瑚",
+        "canonical": "#ff705e",
+        "tonalRamp": ["#35100d", "#651b16", "#942820", "#c63a30", "#ff705e", "#ff9b8d", "#ffc2b9", "#fff1ee"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "文章大标题", "purpose": "文章详情页的单一主标题。" },
+      "headline": { "displayName": "身份标题", "purpose": "作者名等短而明确的身份信息。" },
+      "body": { "displayName": "中文正文", "purpose": "不超过 70ch 的长文阅读。" },
+      "title": { "displayName": "窗口标题", "purpose": "窗口栏与主要界面标签。" },
+      "label": { "displayName": "档案标签", "purpose": "Issue 编号、日期、时长和文件元信息。" }
+    },
+    "shadows": [
+      { "name": "desktop-window", "value": "5px 5px 0 rgb(23 23 27 / 46%)", "purpose": "首页及文章页主窗口的硬偏移层级。" },
+      { "name": "mobile-window", "value": "3px 3px 0 rgb(23 23 27 / 42%)", "purpose": "窄屏窗口的较轻硬偏移层级。" },
+      { "name": "archive-lift", "value": "4px 4px 0 rgb(23 23 27 / 22%)", "purpose": "讨论操作区的局部层级。" }
+    ],
+    "motion": [
+      { "name": "row-state", "value": "background 120ms ease, color 120ms ease", "purpose": "文章列表的悬停与键盘聚焦反馈。" },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "用户偏好减少动态时近乎关闭所有过渡。" }
+    ],
+    "breakpoints": [
+      { "name": "navigation-compact", "value": "720px" },
+      { "name": "document-flow", "value": "760px" },
+      { "name": "desktop-stage", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "系统工具栏",
+      "kind": "nav",
+      "refersTo": "system-toolbar",
+      "description": "固定在桌面顶部、以头像和文件工具图标组织入口的系统工具栏。",
+      "html": "<nav class=\"ds-system-toolbar\"><a class=\"ds-tool ds-avatar\" href=\"#\">头像</a><i></i><a class=\"ds-tool\" href=\"#projects\">文件夹</a><i></i><a class=\"ds-tool\" href=\"#writing\">文稿</a><i></i><a class=\"ds-tool\" href=\"#about\">九宫格</a></nav>",
+      "css": ".ds-system-toolbar { display:flex; gap:12px; align-items:center; min-height:44px; padding:4px 14px; border-bottom:1px solid var(--ink); background:var(--paper); color:var(--ink); box-shadow:0 3px 0 rgb(23 23 27 / 22%); } .ds-system-toolbar>i { width:1px; height:22px; background:var(--ink); } .ds-tool { display:grid; width:32px; height:32px; border:1px solid transparent; color:inherit; font:900 .65rem/1 Monaco,monospace; place-items:center; text-decoration:none; } .ds-tool:hover,.ds-tool:focus-visible { border-style:dashed; border-color:var(--ink); background:var(--accent-yellow); outline:none; }"
+    },
+    {
+      "name": "MacWindow",
+      "kind": "card",
+      "refersTo": "mac-window",
+      "description": "承载文章、项目和作者信息的核心直角窗口。",
+      "html": "<section class=\"ds-mac-window\"><header><span class=\"ds-window-icon\"></span><i></i><strong>最近文章</strong><i></i><span class=\"ds-window-controls\"><b class=\"ds-minimize\"></b><b class=\"ds-maximize\"></b><b class=\"ds-close\"></b></span></header><div class=\"ds-window-body\">窗口内容</div></section>",
+      "css": ".ds-mac-window { overflow:hidden; border:1px solid var(--ink); border-radius:0; background:var(--paper); color:var(--ink); box-shadow:5px 5px 0 rgb(23 23 27 / 46%); font-family:Geneva,Verdana,\"PingFang SC\",sans-serif; } .ds-mac-window header { display:grid; grid-template-columns:18px minmax(20px,1fr) auto minmax(20px,1fr) auto; gap:8px; align-items:center; min-height:30px; padding:4px 6px; border-bottom:1px solid var(--ink); background:color-mix(in srgb,var(--accent-cyan) 22%,var(--paper-soft)); } .ds-mac-window header>i { height:4px; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); } .ds-mac-window strong { font:900 .68rem/1 Monaco,monospace; white-space:nowrap; } .ds-window-icon,.ds-window-controls b { position:relative; display:block; width:16px; height:16px; border:1px solid var(--ink); background:var(--paper); } .ds-window-icon::after { position:absolute; inset:3px; background:var(--accent-coral); content:\"\"; } .ds-window-controls { display:flex; gap:3px; } .ds-window-controls b::before,.ds-close::after { position:absolute; background:var(--ink); content:\"\"; } .ds-minimize { background:var(--accent-yellow)!important; } .ds-minimize::before { right:2px; bottom:2px; left:2px; height:2px; } .ds-maximize { background:var(--accent-cyan)!important; } .ds-maximize::before { inset:2px; border:1px solid var(--ink); background:transparent!important; } .ds-close { background:var(--accent-coral)!important; } .ds-close::before,.ds-close::after { top:5px; left:1px; width:10px; height:2px; } .ds-close::before { transform:rotate(45deg); } .ds-close::after { transform:rotate(-45deg); } .ds-window-body { min-height:88px; } .ds-mac-window:target { z-index:80; box-shadow:0 0 0 3px var(--accent-yellow),5px 5px 0 rgb(23 23 27 / 46%); }"
+    },
+    {
+      "name": "文章文件行",
+      "kind": "custom",
+      "refersTo": "article-file-row",
+      "description": "用点阵文件图标和档案信息把最新文章提升为首页主内容。",
+      "html": "<a class=\"ds-article-selected\" href=\"#\"><span class=\"ds-index\">001</span><span><strong>第一篇文章的标题</strong><small>来自 GitHub Issue 的文章摘要。</small></span><span class=\"ds-arrow\">→</span></a>",
+      "css": ".ds-article-selected { display:grid; grid-template-columns:70px minmax(0,1fr) 52px; gap:14px; align-items:center; min-height:180px; padding:15px; background:var(--paper); color:var(--ink); text-decoration:none; transition:background 120ms ease,color 120ms ease; font-family:Geneva,Verdana,\"PingFang SC\",sans-serif; } .ds-index { font:900 .64rem/1.5 Monaco,monospace; color:var(--accent-blue-dark); } .ds-article-selected strong,.ds-article-selected small { display:block; } .ds-article-selected strong { font-size:1.55rem; line-height:1.35; } .ds-article-selected small { margin-top:7px; color:var(--muted); font-size:.8rem; line-height:1.7; } .ds-arrow { border:1px dashed currentColor; font:900 .64rem/1 Monaco,monospace; } .ds-article-selected:hover,.ds-article-selected:focus-visible { background:var(--selection); color:#fff; outline:none; }"
+    },
+    {
+      "name": "项目列表行",
+      "kind": "custom",
+      "refersTo": "project-list-row",
+      "description": "用彩色像素图标与真实项目摘要组成的紧凑作品入口。",
+      "html": "<a class=\"ds-project-row\" href=\"#\"><span class=\"ds-project-icon\">×</span><span><strong>vite-plugin-locator</strong><small>一行配置，为 Vite 接入 LocatorJS。</small></span><b>↗</b></a>",
+      "css": ".ds-project-row { display:grid; grid-template-columns:48px minmax(0,1fr) 28px; gap:13px; align-items:center; padding:11px 9px; background:var(--paper); color:var(--ink); text-decoration:none; font-family:Geneva,Verdana,\"PingFang SC\",sans-serif; } .ds-project-icon { display:grid; width:48px; height:42px; border:1px solid var(--ink); background:var(--accent-yellow); box-shadow:inset -7px -7px 0 rgb(0 0 0 / 12%); font-size:1.5rem; font-weight:900; place-items:center; } .ds-project-row strong,.ds-project-row small { display:block; } .ds-project-row strong { font-size:.86rem; font-weight:900; } .ds-project-row small { margin-top:3px; color:var(--muted); font-size:.7rem; line-height:1.45; } .ds-project-row b { font-size:1.05rem; } .ds-project-row:hover,.ds-project-row:focus-visible { background:var(--selection); color:#fff; outline:none; } .ds-project-row:hover small,.ds-project-row:focus-visible small { color:#eefcff; }"
+    },
+    {
+      "name": "Issue 标签",
+      "kind": "chip",
+      "refersTo": "issue-label",
+      "description": "标记文章真实 GitHub Issue 编号的文件黄标签。",
+      "html": "<span class=\"ds-issue-label\">ISSUE 001</span>",
+      "css": ".ds-issue-label { display:inline-block; padding:5px 7px; border:1px solid var(--ink); border-radius:0; background:var(--accent-yellow); color:var(--ink); font:800 .68rem/1.5 Monaco,\"SFMono-Regular\",Consolas,monospace; } .ds-issue-label:hover { background:var(--accent-cyan); } .ds-issue-label:focus-visible { outline:3px solid var(--selection); outline-offset:3px; }"
+    },
+    {
+      "name": "讨论按钮",
+      "kind": "button",
+      "refersTo": "discussion-button",
+      "description": "从静态文章进入原始 GitHub Issue 讨论区的主要操作。",
+      "html": "<a class=\"ds-discussion-button\" href=\"#\">前往讨论区 →</a>",
+      "css": ".ds-discussion-button { display:inline-block; padding:10px 13px; border:1px solid var(--ink); border-radius:0; background:var(--selection); color:#fff; font:900 .72rem/1 Geneva,Verdana,\"PingFang SC\",sans-serif; text-decoration:none; } .ds-discussion-button:hover,.ds-discussion-button:focus-visible { background:var(--ink); } .ds-discussion-button:focus-visible { outline:3px solid var(--accent-yellow); outline-offset:3px; } .ds-discussion-button:active { transform:translate(1px,1px); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "彩色个人工作台",
+    "overview": "这个视觉系统把个人网站呈现为一台持续工作的彩色桌面。早期图形系统的工具栏、重叠窗口、文件目录、点阵纹理和装饰性滚动条提供触感；紫蓝桌面与少量功能色建立自己的身份，清楚的技术档案排版让文章、项目与作者信息保持真实、可靠、可阅读。\n\n整体气质清楚、可靠、鲜明，但不喧闹。首页允许多窗口重叠形成主次，文章详情则把窗口最大化为安静文稿；色彩承担状态和定位，不代替信息层级。视觉上明确拒绝米白紫色的 Claude 风、暖色衬线编辑风、现代毛玻璃 macOS 仿制和无意义英文装饰。",
+    "keyCharacteristics": [
+      "文章窗口最大并处于前景，项目居后，关于我保持小而明确。",
+      "一像素深色轮廓、直角窗口、硬偏移阴影、条纹标题栏和像素图形形成经典桌面触感。",
+      "顶部使用图标工具栏；窗口内部使用目录栏、文件行、滚动轨道和缩放角。",
+      "紫蓝桌面承载窗口，青、黄、珊瑚只用于功能状态和关键识别。",
+      "中文内容优先，项目名、技术名词和 GitHub Issue 标识保留其固有写法。",
+      "桌面端使用重叠构图，窄屏改为清楚的纵向文档流。"
+    ],
+    "rules": [
+      { "name": "The 状态色规则", "body": "青、黄、珊瑚必须表达频道、选择、标签或识别状态，不能铺成无语义的装饰渐变。", "section": "colors" },
+      { "name": "The 纸面优先规则", "body": "长文始终落在文稿白表面上；紫蓝只属于桌面环境，不进入正文阅读底色。", "section": "colors" },
+      { "name": "The 中文界面规则", "body": "导航、状态和说明使用中文；不要为了营造技术感加入无语义英文。", "section": "typography" },
+      { "name": "The 等宽数据规则", "body": "Monaco 只标记可被理解为数据或文件元信息的内容，不能成为大段正文或装饰标题。", "section": "typography" },
+      { "name": "The 内容主次规则", "body": "最近写作永远是首页最大窗口；项目次之，作者身份窗口最小。", "section": "layout" },
+      { "name": "The 窄屏文档规则", "body": "小屏不模拟可拖拽桌面，不保留窗口重叠，只保留标题栏、边框和色彩语法。", "section": "layout" },
+      { "name": "The 结构阴影规则", "body": "阴影只说明窗口或操作区的层级，不创造漂浮卡片，更不能替换一像素结构边框。", "section": "elevation" },
+      { "name": "The 直角窗口规则", "body": "内容容器不使用圆角；只有真实状态点可以使用圆形。", "section": "shapes" },
+      { "name": "The 发丝线轮廓规则", "body": "需要被理解为窗口、按钮、标签或图标的独立对象，优先用一像素墨黑边框明确其边界。", "section": "shapes" }
+    ],
+    "dos": [
+      "Do 让文章承担首屏最大面积，并让色彩帮助访客识别写作、项目和作者窗口。",
+      "Do 在长文中保留文稿白、深色正文、70ch 阅读列和充足行高。",
+      "Do 使用发丝线边框、硬阴影、直角窗口和少量像素图形保持早期桌面系统的触感。",
+      "Do 在 760px 以下把桌面重排为清楚的纵向内容流。",
+      "Do 只展示真实项目、真实 Issue 数据和可到达的 GitHub 操作。"
+    ],
+    "donts": [
+      "Don't 回到米白紫色 Claude 风或暖色衬线编辑风。",
+      "Don't 使用毛玻璃、半透明模糊、现代 macOS 红黄绿按钮或照搬系统品牌资产。",
+      "Don't 把青、黄、珊瑚铺成无功能含义的大面积装饰。",
+      "Don't 用同尺寸卡片网格替代窗口之间明确的内容主次。",
+      "Don't 添加无意义英文标题、状态或装饰标签。"
+    ]
+  }
+}
