@@ -33,11 +33,20 @@ const base = import.meta.env.BASE_URL;
 					<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
 				</a>
 				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool" href={`${base}#projects`} aria-label="项目" data-label="项目" data-nav="projects"><ModuleIcon name="folder" /></a>
-				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool" href={`${base}#writing`} aria-label="文章" data-label="文章" data-nav="writing"><ModuleIcon name="document" /></a>
-				<span class="system-separator" aria-hidden="true"></span>
-				<a class="system-tool" href={`${base}#about`} aria-label="关于我" data-label="关于我" data-nav="about"><ModuleIcon name="grid" /></a>
+				<span class="system-tools-global">
+					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="在新窗口打开 GitHub" data-label="GitHub"><ModuleIcon name="github" /></a>
+					<span class="system-separator" aria-hidden="true"></span>
+					<a class="system-tool" href="https://github.com/cixiangtao/cixiangtao" target="_blank" rel="noreferrer" aria-label="在新窗口打开源码仓库" data-label="源码"><ModuleIcon name="folder" /></a>
+					<span class="system-separator" aria-hidden="true"></span>
+					<a class="system-tool" href="https://github.com/cixiangtao/cixiangtao/issues?q=is%3Aissue%20label%3Ablog" target="_blank" rel="noreferrer" aria-label="在新窗口打开文章档案" data-label="文章档案"><ModuleIcon name="document" /></a>
+				</span>
+				<span class="system-tools-local">
+					<a class="system-tool" href={`${base}#projects`} aria-label="项目" data-label="项目" data-nav="projects"><ModuleIcon name="folder" /></a>
+					<span class="system-separator" aria-hidden="true"></span>
+					<a class="system-tool" href={`${base}#writing`} aria-label="文章" data-label="文章" data-nav="writing"><ModuleIcon name="document" /></a>
+					<span class="system-separator" aria-hidden="true"></span>
+					<a class="system-tool" href={`${base}#about`} aria-label="关于我" data-label="关于我" data-nav="about"><ModuleIcon name="grid" /></a>
+				</span>
 			</nav>
 
 			<div class="system-status" aria-label="系统状态">

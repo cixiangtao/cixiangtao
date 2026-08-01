@@ -1,8 +1,8 @@
 ---
 /** Shared pixel icon for system navigation and Mac window title bars. */
 interface Props {
-	name: 'folder' | 'document' | 'grid';
-	size?: 'toolbar' | 'window';
+	name: 'folder' | 'document' | 'grid' | 'github';
+	size?: 'toolbar' | 'window' | 'desktop';
 }
 
 const { name, size = 'toolbar' } = Astro.props;
@@ -27,6 +27,12 @@ const { name, size = 'toolbar' } = Astro.props;
 	.module-icon--window {
 		width: 16px;
 		height: 16px;
+	}
+
+	.module-icon--desktop {
+		width: 48px;
+		height: 42px;
+		filter: drop-shadow(3px 4px 0 rgb(21 23 29 / 28%));
 	}
 
 	.module-icon--folder i {
@@ -69,6 +75,20 @@ const { name, size = 'toolbar' } = Astro.props;
 		left: -1px;
 		width: 7px;
 		height: 4px;
+	}
+
+	.module-icon--folder.module-icon--desktop i {
+		right: 1px;
+		bottom: 1px;
+		left: 1px;
+		height: 28px;
+	}
+
+	.module-icon--folder.module-icon--desktop i::before {
+		top: -10px;
+		left: -1px;
+		width: 21px;
+		height: 10px;
 	}
 
 	.module-icon--document i {
@@ -128,6 +148,29 @@ const { name, size = 'toolbar' } = Astro.props;
 		height: 1px;
 	}
 
+	.module-icon--document.module-icon--desktop i {
+		top: 1px;
+		left: 9px;
+		width: 30px;
+		height: 40px;
+	}
+
+	.module-icon--document.module-icon--desktop i::before {
+		top: 8px;
+		right: 5px;
+		left: 5px;
+		height: 2px;
+		box-shadow: 0 7px 0 var(--ink), 0 14px 0 var(--accent-cyan);
+	}
+
+	.module-icon--document.module-icon--desktop i::after {
+		right: 12px;
+		bottom: 5px;
+		left: 5px;
+		height: 2px;
+		background: var(--accent-coral);
+	}
+
 	.module-icon--grid i {
 		position: absolute;
 		background: var(--ink);
@@ -163,5 +206,63 @@ const { name, size = 'toolbar' } = Astro.props;
 			0 10px 0 var(--ink),
 			5px 10px 0 var(--ink),
 			10px 10px 0 var(--ink);
+	}
+
+	.module-icon--grid.module-icon--desktop i {
+		position: absolute;
+		inset: 0 3px;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+		box-shadow: none;
+	}
+
+	.module-icon--grid.module-icon--desktop i::before {
+		position: absolute;
+		top: 8px;
+		left: 8px;
+		width: 5px;
+		height: 5px;
+		background: var(--ink);
+		box-shadow:
+			10px 0 0 var(--ink),
+			20px 0 0 var(--ink),
+			0 10px 0 var(--ink),
+			10px 10px 0 var(--accent-cyan),
+			20px 10px 0 var(--ink),
+			0 20px 0 var(--ink),
+			10px 20px 0 var(--ink),
+			20px 20px 0 var(--ink);
+		content: '';
+	}
+
+	.module-icon--github.module-icon--toolbar i {
+		position: absolute;
+		top: 5px;
+		left: 4px;
+		width: 20px;
+		height: 19px;
+		background: var(--ink);
+	}
+
+	.module-icon--github.module-icon--toolbar i::before {
+		position: absolute;
+		top: -4px;
+		left: 0;
+		width: 6px;
+		height: 6px;
+		background: var(--ink);
+		box-shadow: 14px 0 0 var(--ink);
+		content: '';
+	}
+
+	.module-icon--github.module-icon--toolbar i::after {
+		position: absolute;
+		top: 6px;
+		left: 5px;
+		width: 3px;
+		height: 3px;
+		background: var(--paper);
+		box-shadow: 7px 0 0 var(--paper), 3px 6px 0 var(--paper), 7px 6px 0 var(--paper);
+		content: '';
 	}
 </style>

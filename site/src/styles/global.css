@@ -77,13 +77,21 @@ a:focus-visible {
 }
 
 .system-tools,
+.system-tools-global,
+.system-tools-local,
 .system-status {
 	display: flex;
 	align-items: center;
 }
 
-.system-tools {
+.system-tools,
+.system-tools-global,
+.system-tools-local {
 	gap: 12px;
+}
+
+.system-tools-global {
+	display: none;
 }
 
 .system-tool {
@@ -556,6 +564,14 @@ a:focus-visible {
 }
 
 @media (min-width: 1024px) {
+	.system-tools-global {
+		display: flex;
+	}
+
+	.system-tools-local {
+		display: none;
+	}
+
 	.mac-window[id] > .mac-titlebar {
 		cursor: grab;
 		touch-action: none;
@@ -576,7 +592,8 @@ a:focus-visible {
 		padding-inline: 8px;
 	}
 
-	.system-tools {
+	.system-tools,
+	.system-tools-local {
 		gap: 7px;
 	}
 
