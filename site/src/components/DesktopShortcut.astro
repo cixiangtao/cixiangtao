@@ -9,12 +9,48 @@ interface Props {
 }
 
 const { href, label, icon } = Astro.props;
+const windowId = href.startsWith('#') ? href.slice(1) : href;
 ---
 
 <a
-	class="grid w-17 justify-items-center gap-1.5 text-[0.68rem] font-extrabold !text-white [text-shadow:1px_1px_0_var(--ink)] focus-visible:bg-[var(--selection)]"
+	class="desktop-shortcut grid w-17 justify-items-center gap-1.5 text-[0.68rem] font-extrabold !text-white [text-shadow:1px_1px_0_var(--ink)]"
 	href={href}
+	aria-controls={windowId}
+	aria-label={`切换到${label}窗口`}
+	title={`双击打开或置顶“${label}”窗口`}
+	data-window-label={label}
+	data-window-open="true"
+	data-window-shortcut
+	data-window-target={windowId}
 >
 	<ModuleIcon name={icon} size="desktop" />
-	{label}
+	<span class="desktop-shortcut-label">{label}</span>
 </a>
+
+<style is:global>
+	.desktop-shortcut {
+		cursor: default;
+		user-select: none;
+		-webkit-user-drag: none;
+	}
+
+	.desktop-shortcut-label {
+		padding: 1px 4px;
+	}
+
+	.desktop-shortcut[data-selected] .desktop-shortcut-label,
+	.desktop-shortcut:focus-visible .desktop-shortcut-label {
+		background: var(--selection);
+		outline: 1px dotted white;
+		outline-offset: -2px;
+	}
+
+	.desktop-shortcut:focus-visible {
+		outline: none;
+	}
+
+	.desktop-shortcut[data-window-open="false"] .module-icon {
+		filter: grayscale(0.25) drop-shadow(2px 3px 0 rgb(21 23 29 / 24%));
+		opacity: 0.88;
+	}
+</style>

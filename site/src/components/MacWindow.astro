@@ -28,10 +28,20 @@ const {
 		<div class="mac-title-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 		<h2>{title}</h2>
 		<div class="mac-title-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-		<div class="mac-window-controls" aria-hidden="true">
-			<span class="mac-control mac-control--minimize"></span>
-			<span class="mac-control mac-control--maximize"></span>
-			<span class="mac-control mac-control--close"></span>
+		<div class="mac-window-controls">
+			<span class="mac-control mac-control--minimize" aria-hidden="true"></span>
+			<span class="mac-control mac-control--maximize" aria-hidden="true"></span>
+			{id ? (
+				<button
+					class="mac-control mac-control--close"
+					type="button"
+					aria-label={`关闭“${title}”窗口`}
+					title={`关闭“${title}”窗口`}
+					data-window-close
+				></button>
+			) : (
+				<span class="mac-control mac-control--close" aria-hidden="true"></span>
+			)}
 		</div>
 	</header>
 	<div class:list={['mac-window-content', { 'mac-window-content--scrollable': scrollbars }]}>
@@ -59,22 +69,60 @@ const {
 <script>
 	const selectableWindows = '.mac-window[id]';
 	const desktopWindowQuery = window.matchMedia('(min-width: 1024px)');
+	const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+	const closeTimers = new WeakMap<HTMLElement, number>();
 
 	function clamp(value: number, min: number, max: number) {
 		return Math.min(Math.max(value, min), max);
 	}
 
-	function selectWindow(selectedWindow: Element | null) {
-		document.querySelectorAll(selectableWindows).forEach((panel) => {
-			panel.toggleAttribute('data-selected', panel === selectedWindow);
+	function getWindow(id: string) {
+		const panel = document.getElementById(id);
+		return panel?.matches(selectableWindows) ? panel : null;
+	}
+
+	function getShortcut(id: string) {
+		return document.querySelector<HTMLElement>(`[data-window-shortcut][data-window-target="${id}"]`);
+	}
+
+	function selectShortcut(selectedShortcut: Element | null) {
+		document.querySelectorAll('[data-window-shortcut]').forEach((shortcut) => {
+			shortcut.toggleAttribute('data-selected', shortcut === selectedShortcut);
 		});
+	}
+
+	function syncShortcutState(panel: HTMLElement) {
+		const shortcut = getShortcut(panel.id);
+		if (!shortcut) return;
+
+		const isOpen = !panel.hidden && !panel.hasAttribute('data-closing');
+		const label = shortcut.dataset.windowLabel ?? panel.id;
+		shortcut.dataset.windowOpen = String(isOpen);
+		shortcut.setAttribute('aria-label', isOpen ? `切换到${label}窗口` : `打开${label}窗口`);
+		shortcut.setAttribute(
+			'title',
+			desktopWindowQuery.matches ? `双击打开或置顶“${label}”窗口` : `点按打开或置顶“${label}”窗口`,
+		);
+	}
+
+	function syncAllShortcutStates() {
+		document.querySelectorAll<HTMLElement>(selectableWindows).forEach(syncShortcutState);
+	}
+
+	function selectWindow(selectedWindow: HTMLElement | null) {
+		const visibleWindow = selectedWindow && !selectedWindow.hidden ? selectedWindow : null;
+		document.querySelectorAll<HTMLElement>(selectableWindows).forEach((panel) => {
+			panel.toggleAttribute('data-selected', panel === visibleWindow);
+		});
+		selectShortcut(visibleWindow ? getShortcut(visibleWindow.id) : null);
 	}
 
 	function syncSelectedWindow() {
 		const id = window.location.hash.slice(1);
-		const selectedWindow = id ? document.getElementById(id) : null;
+		const selectedWindow = id ? getWindow(id) : null;
 
-		selectWindow(selectedWindow?.matches(selectableWindows) ? selectedWindow : null);
+		if (selectedWindow) revealWindow(selectedWindow);
+		selectWindow(selectedWindow);
 	}
 
 	function syncWindowHash(selectedWindow: Element) {
@@ -84,6 +132,80 @@ const {
 		url.hash = selectedWindow.id;
 		window.history.replaceState(window.history.state, '', url);
 		window.dispatchEvent(new CustomEvent('workspace:navigate', { detail: { id: selectedWindow.id } }));
+	}
+
+	function syncHomeHash() {
+		const url = new URL(window.location.href);
+		url.hash = '';
+		window.history.replaceState(window.history.state, '', url);
+		window.dispatchEvent(new CustomEvent('workspace:navigate', { detail: { id: 'home' } }));
+	}
+
+	function revealWindow(panel: HTMLElement) {
+		const timer = closeTimers.get(panel);
+		if (timer !== undefined) {
+			window.clearTimeout(timer);
+			closeTimers.delete(panel);
+		}
+
+		const wasHidden = panel.hidden || panel.hasAttribute('data-closing');
+		panel.hidden = false;
+		panel.removeAttribute('data-closing');
+		if (wasHidden && !reducedMotionQuery.matches) {
+			panel.toggleAttribute('data-opening', true);
+			window.setTimeout(() => panel.removeAttribute('data-opening'), 160);
+		}
+		syncShortcutState(panel);
+	}
+
+	function activateWindow(id: string) {
+		const panel = getWindow(id);
+		if (!panel) return;
+
+		revealWindow(panel);
+		selectWindow(panel);
+		syncWindowHash(panel);
+	}
+
+	function getFrontmostVisibleWindow(excludedWindow: HTMLElement) {
+		return [...document.querySelectorAll<HTMLElement>(selectableWindows)]
+			.filter((panel) => panel !== excludedWindow && !panel.hidden && !panel.hasAttribute('data-closing'))
+			.toSorted((a, b) => {
+				const aIndex = Number.parseInt(window.getComputedStyle(a).zIndex, 10) || 0;
+				const bIndex = Number.parseInt(window.getComputedStyle(b).zIndex, 10) || 0;
+				return bIndex - aIndex;
+			})[0] ?? null;
+	}
+
+	function closeWindow(panel: HTMLElement) {
+		if (panel.hidden || panel.hasAttribute('data-closing')) return;
+
+		const wasSelected = panel.hasAttribute('data-selected') || window.location.hash === `#${panel.id}`;
+		panel.toggleAttribute('data-closing', true);
+		panel.removeAttribute('data-selected');
+		syncShortcutState(panel);
+
+		if (wasSelected) {
+			const fallbackWindow = getFrontmostVisibleWindow(panel);
+			selectWindow(fallbackWindow);
+			if (fallbackWindow) syncWindowHash(fallbackWindow);
+			else syncHomeHash();
+		}
+
+		const finishClose = () => {
+			panel.hidden = true;
+			panel.removeAttribute('data-closing');
+			panel.removeAttribute('data-opening');
+			closeTimers.delete(panel);
+			syncShortcutState(panel);
+			getShortcut(panel.id)?.focus({ preventScroll: true });
+		};
+
+		if (reducedMotionQuery.matches) {
+			finishClose();
+		} else {
+			closeTimers.set(panel, window.setTimeout(finishClose, 120));
+		}
 	}
 
 	function beginWindowDrag(event: PointerEvent) {
@@ -162,11 +284,48 @@ const {
 	document.addEventListener('pointerdown', (event) => {
 		if (event.button !== 0 || !(event.target instanceof Element)) return;
 
-		const selectedWindow = event.target.closest(selectableWindows);
+		const selectedWindow = event.target.closest<HTMLElement>(selectableWindows);
 		if (!selectedWindow) return;
 
 		selectWindow(selectedWindow);
 		syncWindowHash(selectedWindow);
+	});
+
+	document.addEventListener('click', (event) => {
+		if (!(event.target instanceof Element)) return;
+
+		const closeButton = event.target.closest<HTMLElement>('[data-window-close]');
+		if (closeButton) {
+			event.preventDefault();
+			event.stopPropagation();
+			const panel = closeButton.closest<HTMLElement>(selectableWindows);
+			if (panel) closeWindow(panel);
+			return;
+		}
+
+		const shortcut = event.target.closest<HTMLElement>('[data-window-shortcut]');
+		if (!shortcut) return;
+
+		event.preventDefault();
+		const id = shortcut.dataset.windowTarget;
+		if (!id) return;
+
+		if (!desktopWindowQuery.matches || event instanceof MouseEvent && event.detail === 0) {
+			activateWindow(id);
+		} else {
+			selectShortcut(shortcut);
+		}
+	});
+
+	document.addEventListener('dblclick', (event) => {
+		if (!desktopWindowQuery.matches || !(event.target instanceof Element)) return;
+
+		const shortcut = event.target.closest<HTMLElement>('[data-window-shortcut]');
+		if (!shortcut) return;
+
+		event.preventDefault();
+		const id = shortcut.dataset.windowTarget;
+		if (id) activateWindow(id);
 	});
 
 	document.querySelectorAll<HTMLElement>(`${selectableWindows} > .mac-titlebar`).forEach((handle) => {
@@ -174,5 +333,7 @@ const {
 	});
 
 	window.addEventListener('hashchange', syncSelectedWindow);
+	desktopWindowQuery.addEventListener('change', syncAllShortcutStates);
+	syncAllShortcutStates();
 	syncSelectedWindow();
 </script>
