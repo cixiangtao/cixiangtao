@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'cixiangtao 的个人工作台',
+	description = '慈祥涛的个人主页、开源作品集与中文技术博客。',
+} = Astro.props;
+const pageTitle = title === 'cixiangtao 的个人工作台' ? title : `${title} · cixiangtao`;
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#6670c9" />
+		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+		<title>{pageTitle}</title>
+	</head>
+	<body class="min-w-80 antialiased">
+		<header class="system-bar">
+			<nav class="system-tools" aria-label="主导航">
+				<a class="system-tool system-tool--avatar" href={base} aria-label="首页" data-label="首页">
+					<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
+				</a>
+				<span class="system-separator" aria-hidden="true"></span>
+				<a class="system-tool system-tool--folder" href={`${base}#projects`} aria-label="项目" data-label="项目"><i aria-hidden="true"></i></a>
+				<span class="system-separator" aria-hidden="true"></span>
+				<a class="system-tool system-tool--document" href={`${base}#writing`} aria-label="文章" data-label="文章"><i aria-hidden="true"></i></a>
+				<span class="system-separator" aria-hidden="true"></span>
+				<a class="system-tool system-tool--terminal" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="GitHub" data-label="GitHub"><i aria-hidden="true">›_</i></a>
+				<span class="system-separator" aria-hidden="true"></span>
+				<a class="system-tool system-tool--grid" href={`${base}#about`} aria-label="关于我" data-label="关于我"><i aria-hidden="true"></i></a>
+			</nav>
+
+			<div class="system-status" aria-label="系统状态">
+				<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer"><span class="status-dot" aria-hidden="true"></span>在线</a>
+				<span class="system-separator" aria-hidden="true"></span>
+				<i class="system-status-icon system-status-icon--square" aria-hidden="true"></i>
+				<i class="system-status-icon system-status-icon--line" aria-hidden="true"></i>
+				<i class="system-status-icon system-status-icon--dots" aria-hidden="true"></i>
+			</div>
+		</header>
+
+		<main>
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<p>持续好奇，认真交付。</p>
+			<p>内容来自 GitHub Issues，由 Astro 构建。</p>
+		</footer>
+	</body>
+</html>

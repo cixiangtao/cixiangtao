@@ -1,0 +1,53 @@
+---
+interface Props {
+	id?: string;
+	title: string;
+	class?: string;
+	tone?: 'paper' | 'cyan' | 'yellow' | 'coral';
+	label?: string;
+	scrollbars?: boolean;
+}
+
+const {
+	id,
+	title,
+	class: className = '',
+	tone = 'paper',
+	label = title,
+	scrollbars = false,
+} = Astro.props;
+---
+
+<section id={id} class:list={['mac-window', `mac-window--${tone}`, className]} aria-label={label}>
+	<header class="mac-titlebar">
+		<span class="mac-window-icon" aria-hidden="true"></span>
+		<div class="mac-title-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+		<h2>{title}</h2>
+		<div class="mac-title-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+		<div class="mac-window-controls" aria-hidden="true">
+			<span class="mac-control mac-control--minimize"></span>
+			<span class="mac-control mac-control--maximize"></span>
+			<span class="mac-control mac-control--close"></span>
+		</div>
+	</header>
+	<div class:list={['mac-window-content', { 'mac-window-content--scrollable': scrollbars }]}>
+		<div class="mac-window-body">
+			<slot />
+		</div>
+		{scrollbars && (
+			<div class="mac-scrollbar mac-scrollbar--vertical" aria-hidden="true">
+				<span class="mac-scroll-arrow mac-scroll-arrow--up"></span>
+				<i class="mac-scroll-track"><b></b></i>
+				<span class="mac-scroll-arrow mac-scroll-arrow--down"></span>
+			</div>
+		)}
+	</div>
+	{scrollbars && (
+		<div class="mac-scrollbar mac-scrollbar--horizontal" aria-hidden="true">
+			<span class="mac-scroll-arrow mac-scroll-arrow--left"></span>
+			<i class="mac-scroll-track"><b></b></i>
+			<span class="mac-scroll-arrow mac-scroll-arrow--right"></span>
+			<span class="mac-resize-grip"></span>
+		</div>
+	)}
+</section>
