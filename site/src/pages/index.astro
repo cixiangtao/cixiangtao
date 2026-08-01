@@ -39,12 +39,12 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 <BaseLayout>
 	<section class="desktop-stage relative mx-auto flex w-full max-w-[1480px] flex-1 flex-col gap-5 px-4 py-6 sm:px-6 lg:block lg:min-h-[850px] lg:px-8 lg:py-8" aria-label="cixiangtao 的个人工作台">
-		<div class="desktop-icons" style="top: 7%; left: 2.5%;" aria-label="快捷入口">
-			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer">
+		<div class="desktop-icons hidden lg:absolute lg:left-[2.5%] lg:top-[7%] lg:z-10 lg:grid lg:gap-6" aria-label="快捷入口">
+			<a class="grid w-17 justify-items-center gap-1.5 text-[0.68rem] font-extrabold text-white [text-shadow:1px_1px_0_var(--ink)] focus-visible:bg-[var(--selection)]" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer">
 				<span class="desktop-icon desktop-icon--computer" aria-hidden="true"><i></i></span>
 				GitHub
 			</a>
-			<a href="#writing">
+			<a class="grid w-17 justify-items-center gap-1.5 text-[0.68rem] font-extrabold text-white [text-shadow:1px_1px_0_var(--ink)] focus-visible:bg-[var(--selection)]" href="#writing">
 				<span class="desktop-icon desktop-icon--document" aria-hidden="true"><i></i></span>
 				文章
 			</a>
@@ -55,7 +55,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 			id="about"
 			class="order-1 lg:absolute lg:left-[12%] lg:top-[7%] lg:z-20 lg:w-[34%]"
 		>
-			<div class="about-panel">
+			<div class="about-panel grid grid-cols-[88px_minmax(0,1fr)] items-center gap-[18px] p-[22px] max-[760px]:grid-cols-[72px_minmax(0,1fr)] max-[760px]:p-[17px]">
 				<a class="pixel-avatar" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="打开 cixiangtao 的 GitHub 主页">
 					<img src="https://github.com/cixiangtao.png?size=176" alt="cixiangtao 的 GitHub 头像" width="176" height="176" decoding="async" fetchpriority="high" />
 				</a>
@@ -65,15 +65,15 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 					<p class="about-copy">持续构建开源项目，也把实践过程整理成可以复用的工具和文章。</p>
 				</div>
 			</div>
-			<div class="about-status">
-				<nav class="about-shortcuts" aria-label="公开入口">
+			<div class="about-status flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper)] px-4 py-[9px] text-[0.72rem] font-[750] max-[760px]:gap-2.5">
+				<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label="公开入口">
 					<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i></a>
-					<span aria-hidden="true"></span>
+					<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
 					<a href="#projects" aria-label="代表项目"><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
-					<span aria-hidden="true"></span>
+					<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
 					<a href="#writing" aria-label="最近文章"><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
 				</nav>
-				<span><i class="status-dot" aria-hidden="true"></i>持续构建</span>
+				<span class="inline-flex items-center gap-[7px]"><i class="status-dot" aria-hidden="true"></i>持续构建</span>
 			</div>
 		</MacWindow>
 
@@ -84,20 +84,20 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 			scrollbars
 			class="order-3 lg:absolute lg:right-[2%] lg:top-[14%] lg:z-30 lg:w-[46%]"
 		>
-			<div class="project-toolbar">
-				<div><span class="mini-folder" aria-hidden="true"></span><strong>cixiangtao / projects</strong></div>
+			<div class="project-toolbar flex items-center justify-between border-b border-[var(--ink)] bg-[var(--paper)] px-[13px] py-[9px] text-[0.7rem] font-extrabold max-[760px]:gap-2.5 max-[760px]:text-[0.64rem]">
+				<div class="inline-flex items-center gap-[9px]"><span class="mini-folder" aria-hidden="true"></span><strong class="[font-family:var(--font-data)] text-[0.68rem] max-[760px]:text-[0.61rem]">cixiangtao / projects</strong></div>
 				<a href="https://github.com/cixiangtao?tab=repositories" target="_blank" rel="noreferrer">{projects.length} 项 · 全部打开 ↗</a>
 			</div>
-			<ul class="project-list">
+			<ul class="project-list m-0 list-none p-2">
 				{projects.map((project) => (
 					<li>
-						<a href={project.href} target="_blank" rel="noreferrer">
+						<a class="grid grid-cols-[52px_minmax(0,1fr)_28px] items-center gap-[13px] px-[9px] py-[11px] max-[760px]:grid-cols-[44px_minmax(0,1fr)_22px]" href={project.href} target="_blank" rel="noreferrer">
 							<span class:list={['project-icon', `project-icon--${project.color}`]} aria-hidden="true"><i></i></span>
-							<span class="project-info">
+							<span class="project-info block min-w-0">
 								<strong>{project.name}</strong>
 								<small>{project.description}</small>
 							</span>
-							<span class="project-actions" aria-hidden="true"><i>☆</i><b></b><em>↗</em></span>
+							<span class="project-actions inline-flex items-center justify-end gap-2" aria-hidden="true"><i>☆</i><b></b><em>↗</em></span>
 						</a>
 					</li>
 				))}
@@ -111,42 +111,42 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 			scrollbars
 			class="order-2 lg:absolute lg:bottom-[7%] lg:left-[16%] lg:z-40 lg:min-h-[470px] lg:w-[72%]"
 		>
-			<div class="writing-toolbar">
-				<div>
+			<div class="writing-toolbar flex items-center justify-between border-b border-[var(--ink)] bg-[var(--paper)] px-[13px] py-[9px] text-[0.72rem] font-extrabold max-[760px]:gap-2.5 max-[760px]:text-[0.64rem]">
+				<div class="inline-flex items-center gap-2.5">
 					<span class="mini-document" aria-hidden="true"></span>
-					<strong>cixiangtao / writing</strong>
+					<strong class="[font-family:var(--font-data)] text-[0.68rem] max-[760px]:text-[0.61rem]">cixiangtao / writing</strong>
 				</div>
 				<span>{posts.length} 个文件</span>
 			</div>
 
-			<div class="article-list" aria-labelledby="writing">
+			<div class="article-list flex flex-1 flex-col bg-[var(--paper)]" aria-labelledby="writing">
 				{posts.slice(0, 5).map((post, index) => (
 					<article class:list={['article-row', { 'article-row--featured': index === 0 }]}>
-						<a href={`${base}posts/${post.number}/`} aria-label={`阅读：${post.title}`}>
+						<a class="grid grid-cols-[70px_minmax(0,1fr)_104px_52px] items-center gap-3.5 p-[15px] [transition:background_120ms_ease,color_120ms_ease] max-[760px]:grid-cols-[52px_minmax(0,1fr)] max-[760px]:gap-2.5 max-[760px]:px-3 max-[760px]:py-3.5" href={`${base}posts/${post.number}/`} aria-label={`阅读：${post.title}`}>
 							<span class="article-file-icon" aria-hidden="true"><i></i></span>
 							<span class="article-copy">
 								<span class="article-index">ISSUE {String(post.number).padStart(3, '0')}</span>
 								<strong>{post.title}</strong>
 								<small>{post.excerpt}</small>
 							</span>
-							<span class="article-meta">
+							<span class="article-meta max-[760px]:!hidden">
 								<time datetime={post.createdAt}>{formatDate(post.createdAt)}</time>
 								<small>{post.readingMinutes} 分钟</small>
 							</span>
-							<span class="article-open" aria-hidden="true">打开</span>
+							<span class="article-open max-[760px]:hidden" aria-hidden="true">打开</span>
 						</a>
 					</article>
 				))}
 			</div>
 
 			{posts.length === 0 && (
-				<div class="empty-state">
+				<div class="empty-state flex min-h-40 items-center justify-between p-7">
 					<strong>文章文件夹暂时为空。</strong>
 					<a href="https://github.com/cixiangtao/cixiangtao/issues">前往 GitHub Issues ↗</a>
 				</div>
 			)}
 
-			<div class="writing-footer">
+			<div class="writing-footer flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper-soft)] px-[15px] py-[11px] text-[0.68rem] font-bold text-[var(--muted)] max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-[7px]">
 				<span>文章源自带有 blog 标签的 GitHub Issues</span>
 				<a href="https://github.com/cixiangtao/cixiangtao/issues?q=is%3Aissue%20label%3Ablog" target="_blank" rel="noreferrer">打开文章档案 ↗</a>
 			</div>
@@ -155,18 +155,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 </BaseLayout>
 
 <style is:global>
-	.desktop-icons {
-		display: none;
-	}
-
-	.about-panel {
-		display: grid;
-		grid-template-columns: 88px minmax(0, 1fr);
-		gap: 18px;
-		align-items: center;
-		padding: 22px;
-	}
-
 	.pixel-avatar {
 		position: relative;
 		display: block;
@@ -220,34 +208,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		color: var(--muted);
 		font-size: 0.82rem;
 		line-height: 1.65;
-	}
-
-	.about-status {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 9px 16px;
-		border-top: 1px solid var(--ink);
-		background: var(--paper);
-		font-size: 0.72rem;
-		font-weight: 750;
-	}
-
-	.about-status > span,
-	.about-shortcuts {
-		display: inline-flex;
-		gap: 7px;
-		align-items: center;
-	}
-
-	.about-shortcuts {
-		gap: 14px;
-	}
-
-	.about-shortcuts > span {
-		width: 1px;
-		height: 20px;
-		background: var(--line-strong);
 	}
 
 	.about-shortcuts a {
@@ -337,34 +297,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		text-underline-offset: 3px;
 	}
 
-	.project-toolbar,
-	.writing-toolbar,
-	.writing-footer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.project-toolbar {
-		padding: 9px 13px;
-		border-bottom: 1px solid var(--ink);
-		background: var(--paper);
-		font-size: 0.7rem;
-		font-weight: 800;
-	}
-
-	.project-toolbar > div {
-		display: inline-flex;
-		gap: 9px;
-		align-items: center;
-	}
-
-	.project-toolbar strong,
-	.writing-toolbar strong {
-		font-family: var(--font-data);
-		font-size: 0.68rem;
-	}
-
 	.mini-folder {
 		position: relative;
 		display: block;
@@ -387,22 +319,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		content: "";
 	}
 
-	.project-list {
-		margin: 0;
-		padding: 8px;
-		list-style: none;
-	}
-
 	.project-list li + li {
 		border-top: 1px solid var(--line-strong);
-	}
-
-	.project-list a {
-		display: grid;
-		grid-template-columns: 52px minmax(0, 1fr) 28px;
-		gap: 13px;
-		align-items: center;
-		padding: 11px 9px;
 	}
 
 	.project-list a:hover,
@@ -455,11 +373,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		background: var(--accent-coral);
 	}
 
-	.project-info {
-		display: block;
-		min-width: 0;
-	}
-
 	.project-info strong,
 	.project-info small {
 		display: block;
@@ -483,13 +396,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 	.project-list a:hover small,
 	.project-list a:focus-visible small {
 		color: #eefcff;
-	}
-
-	.project-actions {
-		display: inline-flex;
-		gap: 8px;
-		align-items: center;
-		justify-content: flex-end;
 	}
 
 	.project-actions i,
@@ -525,20 +431,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		top: 8px;
 	}
 
-	.writing-toolbar {
-		padding: 9px 13px;
-		border-bottom: 1px solid var(--ink);
-		background: var(--paper);
-		font-size: 0.72rem;
-		font-weight: 800;
-	}
-
-	.writing-toolbar > div {
-		display: inline-flex;
-		gap: 10px;
-		align-items: center;
-	}
-
 	.mini-document {
 		position: relative;
 		display: block;
@@ -557,13 +449,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		background: var(--ink);
 		box-shadow: 0 4px 0 var(--ink), 0 8px 0 var(--accent-cyan);
 		content: "";
-	}
-
-	.article-list {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		background: var(--paper);
 	}
 
 	.article-row--featured:only-child {
@@ -592,15 +477,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 	.article-row + .article-row {
 		border-top: 1px solid var(--line-strong);
-	}
-
-	.article-row a {
-		display: grid;
-		grid-template-columns: 70px minmax(0, 1fr) 104px 52px;
-		gap: 14px;
-		align-items: center;
-		padding: 15px;
-		transition: background 120ms ease, color 120ms ease;
 	}
 
 	.article-row--featured a {
@@ -727,50 +603,11 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 		text-align: center;
 	}
 
-	.writing-footer {
-		padding: 11px 15px;
-		border-top: 1px solid var(--ink);
-		background: var(--paper-soft);
-		color: var(--muted);
-		font-size: 0.68rem;
-		font-weight: 700;
-	}
-
 	.writing-footer a {
 		color: var(--ink);
 	}
 
-	.empty-state {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		min-height: 160px;
-		padding: 28px;
-	}
-
 	@media (min-width: 1024px) {
-		.desktop-icons {
-			position: absolute;
-			display: grid;
-			z-index: 10;
-			gap: 24px;
-		}
-
-		.desktop-icons a {
-			display: grid;
-			gap: 6px;
-			justify-items: center;
-			width: 68px;
-			color: white;
-			font-size: 0.68rem;
-			font-weight: 800;
-			text-shadow: 1px 1px 0 var(--ink);
-		}
-
-		.desktop-icons a:focus-visible {
-			background: var(--selection);
-		}
-
 		.desktop-icon {
 			position: relative;
 			display: block;
@@ -819,49 +656,12 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 	}
 
 	@media (max-width: 760px) {
-		#writing {
-			min-height: auto;
-		}
-
 		.article-row--featured a {
 			min-height: 150px;
 		}
 
-		.about-panel {
-			grid-template-columns: 72px minmax(0, 1fr);
-			padding: 17px;
-		}
-
 		.pixel-avatar {
 			width: 72px;
-		}
-
-		.writing-footer {
-			align-items: flex-start;
-			flex-direction: column;
-			gap: 7px;
-		}
-
-		.about-status,
-		.project-toolbar,
-		.writing-toolbar {
-			gap: 10px;
-		}
-
-		.project-toolbar,
-		.writing-toolbar {
-			font-size: 0.64rem;
-		}
-
-		.project-toolbar strong,
-		.writing-toolbar strong {
-			font-size: 0.61rem;
-		}
-
-		.article-row a {
-			grid-template-columns: 52px minmax(0, 1fr);
-			gap: 10px;
-			padding: 14px 12px;
 		}
 
 		.article-file-icon {
@@ -880,18 +680,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 			top: 7px;
 			height: 1px;
 			box-shadow: 0 5px 0 var(--ink), 0 10px 0 var(--accent-coral);
-		}
-
-		.article-open {
-			display: none;
-		}
-
-		.article-meta {
-			display: none;
-		}
-
-		.project-list a {
-			grid-template-columns: 44px minmax(0, 1fr) 22px;
 		}
 
 		.project-icon {
