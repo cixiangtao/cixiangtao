@@ -51,3 +51,38 @@ const {
 		</div>
 	)}
 </section>
+
+<script>
+	const selectableWindows = '.mac-window[id]';
+
+	function selectWindow(selectedWindow: Element | null) {
+		document.querySelectorAll(selectableWindows).forEach((panel) => {
+			panel.toggleAttribute('data-selected', panel === selectedWindow);
+		});
+	}
+
+	function syncSelectedWindow() {
+		const id = window.location.hash.slice(1);
+		const selectedWindow = id ? document.getElementById(id) : null;
+
+		selectWindow(selectedWindow?.matches(selectableWindows) ? selectedWindow : null);
+	}
+
+	document.addEventListener('pointerdown', (event) => {
+		if (event.button !== 0 || !(event.target instanceof Element)) return;
+
+		const selectedWindow = event.target.closest(selectableWindows);
+		if (!selectedWindow) return;
+
+		selectWindow(selectedWindow);
+
+		if (window.location.hash !== `#${selectedWindow.id}`) {
+			const url = new URL(window.location.href);
+			url.hash = selectedWindow.id;
+			window.history.replaceState(window.history.state, '', url);
+		}
+	});
+
+	window.addEventListener('hashchange', syncSelectedWindow);
+	syncSelectedWindow();
+</script>

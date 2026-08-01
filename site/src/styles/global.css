@@ -282,7 +282,7 @@ a:focus-visible {
 	box-shadow: 5px 5px 0 rgb(23 23 27 / 46%);
 }
 
-.mac-window:target {
+.mac-window[data-selected] {
 	z-index: 80;
 	box-shadow: 0 0 0 3px var(--accent-yellow), 5px 5px 0 rgb(23 23 27 / 46%);
 }
