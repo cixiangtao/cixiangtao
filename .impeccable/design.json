@@ -123,6 +123,14 @@
       "css": ".ds-mac-window { overflow:hidden; border:1px solid var(--ink); border-radius:0; background:var(--paper); color:var(--ink); box-shadow:5px 5px 0 rgb(23 23 27 / 46%); font-family:Geneva,Verdana,\"PingFang SC\",sans-serif; } .ds-mac-window header { display:grid; grid-template-columns:18px minmax(20px,1fr) auto minmax(20px,1fr) auto; gap:8px; align-items:center; min-height:30px; padding:4px 6px; border-bottom:1px solid var(--ink); background:color-mix(in srgb,var(--accent-cyan) 22%,var(--paper-soft)); } .ds-mac-window header>i { height:4px; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); } .ds-mac-window strong { font:900 .68rem/1 Monaco,monospace; white-space:nowrap; } .ds-window-icon,.ds-window-controls b { position:relative; display:block; width:16px; height:16px; border:1px solid var(--ink); background:var(--paper); } .ds-window-icon::after { position:absolute; inset:3px; background:var(--accent-coral); content:\"\"; } .ds-window-controls { display:flex; gap:3px; } .ds-window-controls b::before,.ds-close::after { position:absolute; background:var(--ink); content:\"\"; } .ds-minimize { background:var(--accent-yellow)!important; } .ds-minimize::before { right:2px; bottom:2px; left:2px; height:2px; } .ds-maximize { background:var(--accent-cyan)!important; } .ds-maximize::before { inset:2px; border:1px solid var(--ink); background:transparent!important; } .ds-close { background:var(--accent-coral)!important; } .ds-close::before,.ds-close::after { top:5px; left:1px; width:10px; height:2px; } .ds-close::before { transform:rotate(45deg); } .ds-close::after { transform:rotate(-45deg); } .ds-window-body { min-height:88px; } .ds-mac-window[data-selected] { z-index:80; box-shadow:0 0 0 3px var(--accent-yellow),5px 5px 0 rgb(23 23 27 / 46%); } .ds-mac-window[data-draggable]>header { cursor:grab; touch-action:none; user-select:none; } .ds-mac-window[data-dragging] { box-shadow:0 0 0 3px var(--accent-yellow),8px 8px 0 rgb(23 23 27 / 52%); cursor:grabbing; }"
     },
     {
+      "name": "桌面快捷图标",
+      "kind": "nav",
+      "refersTo": "desktop-shortcut",
+      "description": "在紫蓝桌面左上轨道承载第三方与站内入口的白字像素快捷图标。",
+      "html": "<a class=\"ds-desktop-shortcut\" href=\"#\"><span class=\"ds-desktop-icon\"></span><strong>文章</strong></a>",
+      "css": ".ds-desktop-shortcut { display:grid; width:68px; gap:6px; justify-items:center; color:#fff; font:800 .68rem/1.5 Monaco,monospace; text-decoration:none; text-shadow:1px 1px 0 var(--ink); } .ds-desktop-icon { display:block; width:48px; height:42px; border:1px solid var(--ink); background:var(--paper); box-shadow:3px 4px 0 rgb(21 23 29 / 28%); } .ds-desktop-shortcut:hover,.ds-desktop-shortcut:focus-visible { background:var(--selection); outline:1px dashed var(--accent-yellow); }"
+    },
+    {
       "name": "文章文件行",
       "kind": "custom",
       "refersTo": "article-file-row",

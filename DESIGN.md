@@ -61,6 +61,11 @@ components:
     rounded: "{rounded.square}"
     padding: "0 14px"
     height: "44px"
+  desktop-shortcut:
+    backgroundColor: "{colors.paper}"
+    textColor: "#ffffff"
+    typography: "{typography.label}"
+    rounded: "{rounded.square}"
   mac-window:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
@@ -215,6 +220,17 @@ components:
 - **标题栏：** 五列网格容纳窗口图标、条纹、居中标题、条纹和右侧三控件组；最小化、最大化、关闭分别使用黄、青、珊瑚色，青、黄、珊瑚 tone 只淡染标题栏。
 - **窗口细节：** 项目与文章窗口显示点阵滚动轨道、方向箭头、滑块和右下缩放角；这些细节承担桌面语义，不接管页面真实滚动。
 - **状态：** 锚点命中或直接点击面板时，窗口提升到所有内容窗口之上并增加文件黄外框，同时以无滚动的方式同步地址栏锚点；1024px 以上可按住标题栏在桌面范围内拖动，拖动时使用抓取光标和更深的硬阴影反馈，窄屏仍保持稳定文档流；系统工具栏始终保持最高层。
+
+### Desktop Shortcut
+
+- **形态：** 48px 直角像素图标配合居中标签，图标使用文稿白表面与硬阴影，标签固定为白色并使用一像素深色文字阴影，以便在紫蓝桌面上保持清晰。
+- **用途：** 承载 GitHub 等第三方入口与文章等桌面快捷入口；只在 1024px 以上的独立图标轨道显示。
+- **实现：** `DesktopShortcut` 统一链接行为、外链属性、图标类型和标签样式，避免页面重复维护像素图标结构。
+
+### Homepage Window Compositions
+
+- **实现：** `AboutWindow`、`ProjectsWindow` 与 `WritingWindow` 分别封装各自的内容、数据和局部图形样式，并统一复用 `MacWindow` 的标题栏、滚动轨道、选中和拖动能力。
+- **边界：** 首页只负责工作台构图和数据装配；窗口内容变化不应回流为页面级样式。
 
 ### Article File Row
 
