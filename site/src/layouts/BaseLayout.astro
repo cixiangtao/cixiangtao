@@ -36,6 +36,27 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={pageDescription} />
 		<meta name="theme-color" content="#6670c9" />
+		<script is:inline>
+			(() => {
+				const wallpapers = ['classic', 'aqua', 'midnight'];
+				const themeColors = {
+					classic: '#6670c9',
+					aqua: '#1f7f8b',
+					midnight: '#152047',
+				};
+				let wallpaper = 'classic';
+
+				try {
+					const storedWallpaper = window.localStorage.getItem('cixiangtao-wallpaper');
+					if (wallpapers.includes(storedWallpaper)) wallpaper = storedWallpaper;
+				} catch {
+					// Keep the default wallpaper when storage is unavailable.
+				}
+
+				document.documentElement.dataset.wallpaper = wallpaper;
+				document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColors[wallpaper]);
+			})();
+		</script>
 		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 		<link rel="canonical" href={currentAbsoluteUrl} />
 		<link rel="alternate" hreflang={locale} href={currentAbsoluteUrl} />
@@ -63,6 +84,22 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 
 			<div class="system-actions">
 				<nav class="system-external" aria-label={copy.nav.externalLinks}>
+					<button
+						class="system-tool system-wallpaper-button"
+						type="button"
+						aria-label={`${copy.wallpaper.switchTo} ${copy.wallpaper.names.aqua}`}
+						data-label={`${copy.wallpaper.current} ${copy.wallpaper.names.classic}`}
+						data-wallpaper-aqua={copy.wallpaper.names.aqua}
+						data-wallpaper-changed={copy.wallpaper.changed}
+						data-wallpaper-classic={copy.wallpaper.names.classic}
+						data-wallpaper-current={copy.wallpaper.current}
+						data-wallpaper-midnight={copy.wallpaper.names.midnight}
+						data-wallpaper-switch={copy.wallpaper.switchTo}
+						data-wallpaper-toggle
+					>
+						<span class="wallpaper-swatch" aria-hidden="true"></span>
+					</button>
+					<span class="sr-only" aria-live="polite" data-wallpaper-announcer></span>
 					<a class="system-language-link" href={alternateHref} hreflang={alternateLocale} aria-label={copy.nav.languageName} title={copy.nav.languageName}>{copy.nav.languageShort}</a>
 					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.nav.openGitHub} data-label="GitHub"><ModuleIcon name="github" /></a>
 				</nav>
@@ -83,6 +120,61 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 		</footer>
 
 		<script>
+			const wallpapers = ['classic', 'aqua', 'midnight'] as const;
+			type Wallpaper = (typeof wallpapers)[number];
+			const wallpaperButton = document.querySelector<HTMLButtonElement>('[data-wallpaper-toggle]');
+			const wallpaperAnnouncer = document.querySelector<HTMLElement>('[data-wallpaper-announcer]');
+			const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+			const wallpaperNames: Record<Wallpaper, string> = {
+				classic: wallpaperButton?.dataset.wallpaperClassic ?? 'Classic',
+				aqua: wallpaperButton?.dataset.wallpaperAqua ?? 'Aqua',
+				midnight: wallpaperButton?.dataset.wallpaperMidnight ?? 'Midnight',
+			};
+			const themeColors: Record<Wallpaper, string> = {
+				classic: '#6670c9',
+				aqua: '#1f7f8b',
+				midnight: '#152047',
+			};
+
+			function getCurrentWallpaper(): Wallpaper {
+				const wallpaper = document.documentElement.dataset.wallpaper;
+				return wallpapers.includes(wallpaper as Wallpaper) ? (wallpaper as Wallpaper) : 'classic';
+			}
+
+			function applyWallpaper(wallpaper: Wallpaper, announce = false) {
+				document.documentElement.dataset.wallpaper = wallpaper;
+				themeColor?.setAttribute('content', themeColors[wallpaper]);
+
+				const index = wallpapers.indexOf(wallpaper);
+				const nextWallpaper = wallpapers[(index + 1) % wallpapers.length];
+				const currentName = wallpaperNames[wallpaper];
+				const nextName = wallpaperNames[nextWallpaper];
+
+				if (wallpaperButton) {
+					wallpaperButton.dataset.label = `${wallpaperButton.dataset.wallpaperCurrent} ${currentName}`;
+					wallpaperButton.title = `${wallpaperButton.dataset.wallpaperCurrent} ${currentName}`;
+					wallpaperButton.setAttribute('aria-label', `${wallpaperButton.dataset.wallpaperSwitch} ${nextName}`);
+				}
+
+				if (announce && wallpaperAnnouncer) {
+					wallpaperAnnouncer.textContent = `${wallpaperButton?.dataset.wallpaperChanged} ${currentName}`;
+				}
+			}
+
+			wallpaperButton?.addEventListener('click', () => {
+				const currentWallpaper = getCurrentWallpaper();
+				const nextWallpaper = wallpapers[(wallpapers.indexOf(currentWallpaper) + 1) % wallpapers.length];
+
+				try {
+					window.localStorage.setItem('cixiangtao-wallpaper', nextWallpaper);
+				} catch {
+					// The in-memory selection still works when storage is unavailable.
+				}
+
+				applyWallpaper(nextWallpaper, true);
+			});
+			applyWallpaper(getCurrentWallpaper());
+
 			const body = document.body;
 			const navigationLabels = {
 				home: body.dataset.navHome ?? 'Home',

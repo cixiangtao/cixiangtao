@@ -26,6 +26,27 @@
 	--accent-yellow: #ffda45;
 	--accent-coral: #ff705e;
 	--font-data: Monaco, 'SFMono-Regular', Consolas, monospace;
+	--wallpaper-image: radial-gradient(var(--desktop-dot) 1px, transparent 1px);
+	--wallpaper-size: 4px 4px;
+}
+
+html[data-wallpaper='aqua'] {
+	--desktop: #1f7f8b;
+	--desktop-dot: #155d68;
+	--wallpaper-image:
+		radial-gradient(circle at 1px 1px, rgb(255 255 255 / 18%) 1px, transparent 1px),
+		linear-gradient(135deg, transparent 0 45%, rgb(12 75 83 / 32%) 46% 54%, transparent 55%);
+	--wallpaper-size: 6px 6px, 24px 24px;
+}
+
+html[data-wallpaper='midnight'] {
+	--desktop: #152047;
+	--desktop-dot: #0e1737;
+	--wallpaper-image:
+		radial-gradient(circle at 3px 3px, rgb(255 255 255 / 68%) 1px, transparent 1px),
+		radial-gradient(circle at 11px 8px, rgb(255 218 69 / 78%) 1px, transparent 1px),
+		radial-gradient(circle at 7px 13px, rgb(67 220 230 / 58%) 1px, transparent 1px);
+	--wallpaper-size: 23px 23px, 41px 41px, 59px 59px;
 }
 
 * {
@@ -42,8 +63,9 @@ body {
 	min-height: 100vh;
 	background-color: var(--desktop);
 	/* impeccable-disable-next-line codex-grid-background: authentic classic Macintosh desktop dither */
-	background-image: radial-gradient(var(--desktop-dot) 1px, transparent 1px);
-	background-size: 4px 4px;
+	background-image: var(--wallpaper-image);
+	background-size: var(--wallpaper-size);
+	transition: background-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 a {
@@ -136,6 +158,48 @@ a:focus-visible {
 	right: 0;
 	left: auto;
 	transform: none;
+}
+
+.system-wallpaper-button {
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+.wallpaper-swatch {
+	position: relative;
+	display: block;
+	width: 22px;
+	height: 17px;
+	margin-top: -2px;
+	border: 1px solid var(--ink);
+	background-color: var(--desktop);
+	background-image: var(--wallpaper-image);
+	background-size: var(--wallpaper-size);
+	box-shadow: inset -2px -2px 0 rgb(0 0 0 / 18%);
+}
+
+.wallpaper-swatch::before,
+.wallpaper-swatch::after {
+	position: absolute;
+	background: var(--ink);
+	content: '';
+}
+
+.wallpaper-swatch::before {
+	bottom: -4px;
+	left: 8px;
+	width: 5px;
+	height: 3px;
+}
+
+.wallpaper-swatch::after {
+	bottom: -5px;
+	left: 5px;
+	width: 11px;
+	height: 1px;
 }
 
 .system-tool--avatar {

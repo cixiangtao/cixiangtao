@@ -38,6 +38,16 @@ export const messages = {
 		window: {
 			close: (title: string) => `Close “${title}” window`,
 		},
+		wallpaper: {
+			current: 'Current wallpaper:',
+			switchTo: 'Switch wallpaper to',
+			changed: 'Wallpaper changed to',
+			names: {
+				classic: 'Classic',
+				aqua: 'Aqua',
+				midnight: 'Midnight',
+			},
+		},
 		about: {
 			title: 'About me',
 			role: 'Open source · Technical writing',
@@ -122,6 +132,16 @@ export const messages = {
 		},
 		window: {
 			close: (title: string) => `关闭“${title}”窗口`,
+		},
+		wallpaper: {
+			current: '当前桌面背景：',
+			switchTo: '切换桌面背景为',
+			changed: '桌面背景已切换为',
+			names: {
+				classic: '经典紫蓝',
+				aqua: '水色波纹',
+				midnight: '午夜星点',
+			},
 		},
 		about: {
 			title: '关于我',

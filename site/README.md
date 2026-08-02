@@ -25,6 +25,12 @@ is available under `/zh/`. Language switches preserve the current home or post
 route. GitHub Issue titles and article bodies remain in their original authored
 language instead of being machine-translated.
 
+## Desktop wallpapers
+
+The system bar cycles between Classic, Aqua, and Midnight desktop wallpapers.
+Classic remains the default, and the selected wallpaper is stored only in the
+visitor's browser. Window and content colors do not change.
+
 ## Deployment
 
 GitHub Actions builds and deploys the site to GitHub Pages when:
