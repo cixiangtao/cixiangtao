@@ -161,11 +161,18 @@ a:focus-visible {
 }
 
 .system-wallpaper-button {
+	display: none;
 	padding: 0;
 	border: 0;
 	background: transparent;
 	color: inherit;
 	cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+	.system-wallpaper-button {
+		display: grid;
+	}
 }
 
 .wallpaper-swatch {

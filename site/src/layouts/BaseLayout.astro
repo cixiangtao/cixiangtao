@@ -1,7 +1,9 @@
 ---
 import '../styles/global.css';
+import ContextMenu from '../components/ContextMenu.astro';
 import ModuleIcon from '../components/ModuleIcon.astro';
 import { defaultLocale, getAlternateLocale, getLocalizedPath, getMessages, type Locale } from '../i18n';
+import { wallpaperIds, wallpaperThemeColors } from '../wallpapers';
 
 interface Props {
 	title?: string;
@@ -25,11 +27,16 @@ const homeHref = getLocalizedPath(base, locale);
 const currentAbsoluteUrl = new URL(Astro.url.pathname, Astro.site);
 const alternateAbsoluteUrl = new URL(alternateHref, Astro.site);
 const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alternateAbsoluteUrl;
+const wallpaperOptions = wallpaperIds.map((id) => ({ id, label: copy.wallpaper.names[id] }));
 ---
 
 <!doctype html>
 
-<html lang={copy.htmlLang}>
+<html
+	lang={copy.htmlLang}
+	data-wallpaper-ids={wallpaperIds.join(',')}
+	data-wallpaper-theme-colors={JSON.stringify(wallpaperThemeColors)}
+>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -38,22 +45,21 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 		<meta name="theme-color" content="#6670c9" />
 		<script is:inline>
 			(() => {
-				const wallpapers = ['classic', 'aqua', 'midnight'];
-				const themeColors = {
-					classic: '#6670c9',
-					aqua: '#1f7f8b',
-					midnight: '#152047',
-				};
+				const root = document.documentElement;
+				const availableWallpapers = root.dataset.wallpaperIds?.split(',') ?? [];
+				const themeColors = JSON.parse(root.dataset.wallpaperThemeColors ?? '{}');
 				let wallpaper = 'classic';
 
 				try {
 					const storedWallpaper = window.localStorage.getItem('cixiangtao-wallpaper');
-					if (wallpapers.includes(storedWallpaper)) wallpaper = storedWallpaper;
+					if (storedWallpaper && availableWallpapers.includes(storedWallpaper)) wallpaper = storedWallpaper;
 				} catch {
 					// Keep the default wallpaper when storage is unavailable.
 				}
 
-				document.documentElement.dataset.wallpaper = wallpaper;
+				root.dataset.wallpaper = wallpaper;
+				root.removeAttribute('data-wallpaper-ids');
+				root.removeAttribute('data-wallpaper-theme-colors');
 				document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColors[wallpaper]);
 			})();
 		</script>
@@ -87,14 +93,13 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 					<button
 						class="system-tool system-wallpaper-button"
 						type="button"
-						aria-label={`${copy.wallpaper.switchTo} ${copy.wallpaper.names.aqua}`}
+						aria-controls="desktop-context-menu"
+						aria-haspopup="menu"
+						aria-label={copy.wallpaper.openMenu}
 						data-label={`${copy.wallpaper.current} ${copy.wallpaper.names.classic}`}
-						data-wallpaper-aqua={copy.wallpaper.names.aqua}
 						data-wallpaper-changed={copy.wallpaper.changed}
-						data-wallpaper-classic={copy.wallpaper.names.classic}
 						data-wallpaper-current={copy.wallpaper.current}
-						data-wallpaper-midnight={copy.wallpaper.names.midnight}
-						data-wallpaper-switch={copy.wallpaper.switchTo}
+						data-wallpaper-open-menu={copy.wallpaper.openMenu}
 						data-wallpaper-toggle
 					>
 						<span class="wallpaper-swatch" aria-hidden="true"></span>
@@ -123,6 +128,37 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 			</div>
 		</header>
 
+		<ContextMenu id="desktop-context-menu" label={copy.wallpaper.menuLabel}>
+			<button
+				class="context-menu-item"
+				type="button"
+				role="menuitem"
+				aria-controls="desktop-skin-menu"
+				aria-expanded="false"
+				aria-haspopup="menu"
+			>
+				<span>{copy.wallpaper.skin}</span>
+				<span class="context-menu-arrow" aria-hidden="true">▶</span>
+			</button>
+			<div id="desktop-skin-menu" class="context-submenu" role="menu" aria-label={copy.wallpaper.skin} data-context-submenu hidden>
+				{
+					wallpaperOptions.map((option) => (
+						<button
+							class="context-menu-item"
+							type="button"
+							role="menuitemradio"
+							aria-checked="false"
+							data-wallpaper-name={option.label}
+							data-wallpaper-option={option.id}
+						>
+							<span class="context-menu-check" aria-hidden="true">✓</span>
+							<span>{option.label}</span>
+						</button>
+					))
+				}
+			</div>
+		</ContextMenu>
+
 		<main class="flex flex-1 flex-col">
 			<slot />
 		</main>
@@ -133,6 +169,8 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 		</footer>
 
 		<script>
+			import { wallpaperIds, wallpaperThemeColors, type Wallpaper } from '../wallpapers';
+
 			const languageCacheParam = '_language';
 			const currentUrl = new URL(window.location.href);
 			if (currentUrl.searchParams.has(languageCacheParam)) {
@@ -150,58 +188,76 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 				window.location.assign(destination);
 			});
 
-			const wallpapers = ['classic', 'aqua', 'midnight'] as const;
-			type Wallpaper = (typeof wallpapers)[number];
 			const wallpaperButton = document.querySelector<HTMLButtonElement>('[data-wallpaper-toggle]');
 			const wallpaperAnnouncer = document.querySelector<HTMLElement>('[data-wallpaper-announcer]');
+			const wallpaperOptionButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-wallpaper-option]'));
 			const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-			const wallpaperNames: Record<Wallpaper, string> = {
-				classic: wallpaperButton?.dataset.wallpaperClassic ?? 'Classic',
-				aqua: wallpaperButton?.dataset.wallpaperAqua ?? 'Aqua',
-				midnight: wallpaperButton?.dataset.wallpaperMidnight ?? 'Midnight',
-			};
-			const themeColors: Record<Wallpaper, string> = {
-				classic: '#6670c9',
-				aqua: '#1f7f8b',
-				midnight: '#152047',
-			};
+			const desktopMedia = window.matchMedia('(min-width: 1024px)');
+			const wallpaperNames = Object.fromEntries(
+				wallpaperOptionButtons.map((button) => [button.dataset.wallpaperOption, button.dataset.wallpaperName]),
+			) as Record<Wallpaper, string>;
 
 			function getCurrentWallpaper(): Wallpaper {
 				const wallpaper = document.documentElement.dataset.wallpaper;
-				return wallpapers.includes(wallpaper as Wallpaper) ? (wallpaper as Wallpaper) : 'classic';
+				return wallpaperIds.includes(wallpaper as Wallpaper) ? (wallpaper as Wallpaper) : 'classic';
 			}
 
 			function applyWallpaper(wallpaper: Wallpaper, announce = false) {
 				document.documentElement.dataset.wallpaper = wallpaper;
-				themeColor?.setAttribute('content', themeColors[wallpaper]);
-
-				const index = wallpapers.indexOf(wallpaper);
-				const nextWallpaper = wallpapers[(index + 1) % wallpapers.length];
+				themeColor?.setAttribute('content', wallpaperThemeColors[wallpaper]);
 				const currentName = wallpaperNames[wallpaper];
-				const nextName = wallpaperNames[nextWallpaper];
 
 				if (wallpaperButton) {
 					wallpaperButton.dataset.label = `${wallpaperButton.dataset.wallpaperCurrent} ${currentName}`;
-					wallpaperButton.title = `${wallpaperButton.dataset.wallpaperCurrent} ${currentName}`;
-					wallpaperButton.setAttribute('aria-label', `${wallpaperButton.dataset.wallpaperSwitch} ${nextName}`);
+					wallpaperButton.title = `${wallpaperButton.dataset.label}`;
+					wallpaperButton.setAttribute('aria-label', wallpaperButton.dataset.wallpaperOpenMenu ?? 'Open desktop menu');
 				}
+				wallpaperOptionButtons.forEach((button) => {
+					button.setAttribute('aria-checked', String(button.dataset.wallpaperOption === wallpaper));
+				});
 
 				if (announce && wallpaperAnnouncer) {
 					wallpaperAnnouncer.textContent = `${wallpaperButton?.dataset.wallpaperChanged} ${currentName}`;
 				}
 			}
 
+			function openDesktopMenu(x: number, y: number, returnFocus?: HTMLElement | null) {
+				if (!desktopMedia.matches) return;
+				document.dispatchEvent(
+					new CustomEvent('context-menu:open', {
+						detail: { id: 'desktop-context-menu', x, y, returnFocus },
+					}),
+				);
+			}
+
 			wallpaperButton?.addEventListener('click', () => {
-				const currentWallpaper = getCurrentWallpaper();
-				const nextWallpaper = wallpapers[(wallpapers.indexOf(currentWallpaper) + 1) % wallpapers.length];
+				const bounds = wallpaperButton.getBoundingClientRect();
+				openDesktopMenu(bounds.left, bounds.bottom + 6, wallpaperButton);
+			});
 
-				try {
-					window.localStorage.setItem('cixiangtao-wallpaper', nextWallpaper);
-				} catch {
-					// The in-memory selection still works when storage is unavailable.
-				}
+			wallpaperOptionButtons.forEach((button) => {
+				button.addEventListener('click', () => {
+					const wallpaper = button.dataset.wallpaperOption as Wallpaper;
+					if (!wallpaperIds.includes(wallpaper)) return;
 
-				applyWallpaper(nextWallpaper, true);
+					try {
+						window.localStorage.setItem('cixiangtao-wallpaper', wallpaper);
+					} catch {
+						// The in-memory selection still works when storage is unavailable.
+					}
+
+					applyWallpaper(wallpaper, true);
+				});
+			});
+
+			document.addEventListener('contextmenu', (event) => {
+				if (!desktopMedia.matches || !(event.target instanceof HTMLElement)) return;
+				const stage = event.target.closest<HTMLElement>('.desktop-stage');
+				if (!stage) return;
+				if (event.target.closest('.mac-window, .desktop-icons, a, button, input, select, textarea, [contenteditable]')) return;
+
+				event.preventDefault();
+				openDesktopMenu(event.clientX, event.clientY);
 			});
 			applyWallpaper(getCurrentWallpaper());
 

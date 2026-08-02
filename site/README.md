@@ -30,11 +30,13 @@ module-name source: About, Projects, and Writing in English; 关于、项目、�
 GitHub Issue titles and article bodies remain in their original authored language
 instead of being machine-translated.
 
-## Desktop wallpapers
+## Desktop skins
 
-The system bar cycles between Classic, Aqua, and Midnight desktop wallpapers.
-Classic remains the default, and the selected wallpaper is stored only in the
-visitor's browser. Window and content colors do not change.
+On viewports at least 1024px wide, right-clicking empty desktop space or using
+the system-bar monitor opens the same context menu. Skin is the first-level item,
+with Classic, Aqua, and Midnight as checked second-level choices. Classic remains
+the default, and the selection is stored only in the visitor's browser. Mobile
+layouts expose no skin controls; window and content colors do not change.
 
 ## Deployment
 

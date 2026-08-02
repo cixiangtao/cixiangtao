@@ -1,0 +1,279 @@
+---
+interface Props {
+	id: string;
+	label: string;
+}
+
+const { id, label } = Astro.props;
+---
+
+<div id={id} class="context-menu" role="menu" aria-label={label} data-context-menu hidden>
+	<slot />
+</div>
+
+<script>
+	interface ContextMenuOpenDetail {
+		id: string;
+		x: number;
+		y: number;
+		returnFocus?: HTMLElement | null;
+	}
+
+	let activeMenu: HTMLElement | null = null;
+	let returnFocus: HTMLElement | null = null;
+
+	function getMenuItems(menu: HTMLElement) {
+		return Array.from(menu.children).filter(
+			(child): child is HTMLButtonElement =>
+				child instanceof HTMLButtonElement &&
+				(child.getAttribute('role') === 'menuitem' || child.getAttribute('role') === 'menuitemradio') &&
+				!child.disabled,
+		);
+	}
+
+	function getSubmenu(trigger: HTMLElement) {
+		const submenu = trigger.nextElementSibling;
+		return submenu instanceof HTMLElement && submenu.getAttribute('role') === 'menu' ? submenu : null;
+	}
+
+	function closeSubmenus(menu: HTMLElement) {
+		menu.querySelectorAll<HTMLElement>('[data-context-submenu]').forEach((submenu) => {
+			submenu.hidden = true;
+			submenu.style.removeProperty('left');
+			submenu.style.removeProperty('top');
+		});
+		menu.querySelectorAll<HTMLElement>('[aria-haspopup="menu"]').forEach((trigger) => {
+			trigger.setAttribute('aria-expanded', 'false');
+		});
+	}
+
+	function closeMenu(restoreFocus = false) {
+		if (!activeMenu) return;
+
+		closeSubmenus(activeMenu);
+		activeMenu.hidden = true;
+		activeMenu.style.removeProperty('left');
+		activeMenu.style.removeProperty('top');
+		activeMenu = null;
+
+		if (restoreFocus) returnFocus?.focus();
+		returnFocus = null;
+	}
+
+	function positionRootMenu(menu: HTMLElement, x: number, y: number) {
+		menu.hidden = false;
+		menu.style.visibility = 'hidden';
+		menu.style.left = '0';
+		menu.style.top = '0';
+
+		const margin = 8;
+		const bounds = menu.getBoundingClientRect();
+		menu.style.left = `${Math.max(margin, Math.min(x, window.innerWidth - bounds.width - margin))}px`;
+		menu.style.top = `${Math.max(margin, Math.min(y, window.innerHeight - bounds.height - margin))}px`;
+		menu.style.removeProperty('visibility');
+	}
+
+	function openSubmenu(trigger: HTMLElement, focusFirst = false) {
+		const submenu = getSubmenu(trigger);
+		if (!submenu || !activeMenu) return;
+
+		activeMenu.querySelectorAll<HTMLElement>('[data-context-submenu]').forEach((candidate) => {
+			if (candidate !== submenu) candidate.hidden = true;
+		});
+		activeMenu.querySelectorAll<HTMLElement>('[aria-haspopup="menu"]').forEach((candidate) => {
+			candidate.setAttribute('aria-expanded', String(candidate === trigger));
+		});
+
+		submenu.hidden = false;
+		submenu.style.left = 'calc(100% - 2px)';
+		submenu.style.top = `${trigger.offsetTop - 3}px`;
+		const bounds = submenu.getBoundingClientRect();
+		const rootBounds = activeMenu.getBoundingClientRect();
+
+		if (bounds.right > window.innerWidth - 8) {
+			submenu.style.left = `${-bounds.width + 2}px`;
+		}
+		if (bounds.bottom > window.innerHeight - 8) {
+			submenu.style.top = `${Math.max(0, window.innerHeight - rootBounds.top - bounds.height - 8)}px`;
+		}
+
+		if (focusFirst) getMenuItems(submenu)[0]?.focus();
+	}
+
+	function openMenu(detail: ContextMenuOpenDetail) {
+		const menu = document.getElementById(detail.id);
+		if (!(menu instanceof HTMLElement) || menu.dataset.contextMenu === undefined) return;
+
+		closeMenu();
+		activeMenu = menu;
+		returnFocus = detail.returnFocus ?? null;
+		positionRootMenu(menu, detail.x, detail.y);
+		getMenuItems(menu)[0]?.focus();
+	}
+
+	document.addEventListener('context-menu:open', (event) => {
+		if (!(event instanceof CustomEvent)) return;
+		openMenu(event.detail as ContextMenuOpenDetail);
+	});
+
+	document.addEventListener('pointerdown', (event) => {
+		if (activeMenu && event.target instanceof Node && !activeMenu.contains(event.target)) closeMenu();
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (!activeMenu) return;
+		const target = event.target;
+		if (!(target instanceof HTMLElement) || !activeMenu.contains(target)) return;
+
+		const currentMenu = target.closest<HTMLElement>('[role="menu"]');
+		if (!currentMenu) return;
+		const items = getMenuItems(currentMenu);
+		const index = Math.max(0, items.indexOf(target as HTMLButtonElement));
+
+		switch (event.key) {
+			case 'ArrowDown':
+			case 'ArrowUp': {
+				event.preventDefault();
+				const direction = event.key === 'ArrowDown' ? 1 : -1;
+				items[(index + direction + items.length) % items.length]?.focus();
+				break;
+			}
+			case 'Home':
+				event.preventDefault();
+				items[0]?.focus();
+				break;
+			case 'End':
+				event.preventDefault();
+				items.at(-1)?.focus();
+				break;
+			case 'ArrowRight':
+				if (target.getAttribute('aria-haspopup') === 'menu') {
+					event.preventDefault();
+					openSubmenu(target, true);
+				}
+				break;
+			case 'ArrowLeft': {
+				const parentTrigger = activeMenu.querySelector<HTMLElement>(`[aria-controls="${currentMenu.id}"]`);
+				if (parentTrigger) {
+					event.preventDefault();
+					currentMenu.hidden = true;
+					parentTrigger.setAttribute('aria-expanded', 'false');
+					parentTrigger.focus();
+				}
+				break;
+			}
+			case 'Enter':
+			case ' ':
+				event.preventDefault();
+				if (target.getAttribute('aria-haspopup') === 'menu') openSubmenu(target, true);
+				else target.click();
+				break;
+			case 'Escape':
+				event.preventDefault();
+				closeMenu(true);
+				break;
+			case 'Tab':
+				closeMenu();
+				break;
+		}
+	});
+
+	document.addEventListener('click', (event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLElement) || !activeMenu?.contains(target)) return;
+
+		const submenuTrigger = target.closest<HTMLElement>('[aria-haspopup="menu"]');
+		if (submenuTrigger) {
+			openSubmenu(submenuTrigger, false);
+			return;
+		}
+
+		if (target.closest('[role="menuitemradio"]')) closeMenu(true);
+	});
+
+	document.addEventListener('pointerover', (event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLElement) || !activeMenu?.contains(target)) return;
+		const submenuTrigger = target.closest<HTMLElement>('[aria-haspopup="menu"]');
+		if (submenuTrigger) openSubmenu(submenuTrigger, false);
+	});
+
+	window.addEventListener('blur', () => closeMenu());
+	window.addEventListener('resize', () => closeMenu());
+	window.addEventListener('scroll', () => closeMenu(), true);
+</script>
+
+<style is:global>
+	.context-menu {
+		position: fixed;
+		z-index: 160;
+		min-width: 154px;
+		padding: 3px;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+		box-shadow: 3px 3px 0 rgb(23 23 27 / 48%);
+		font-family: var(--font-data);
+		font-size: 0.68rem;
+		font-weight: 800;
+	}
+
+	.context-menu[hidden],
+	.context-submenu[hidden] {
+		display: none;
+	}
+
+	.context-menu-item {
+		display: flex;
+		width: 100%;
+		min-height: 28px;
+		align-items: center;
+		gap: 7px;
+		padding: 5px 8px;
+		border: 0;
+		background: transparent;
+		color: var(--ink);
+		cursor: default;
+		font: inherit;
+		text-align: start;
+		white-space: nowrap;
+	}
+
+	.context-menu-item:hover,
+	.context-menu-item:focus-visible {
+		background: var(--selection);
+		color: white;
+		outline: 0;
+	}
+
+	.context-menu-arrow {
+		margin-inline-start: auto;
+		font-size: 0.58rem;
+	}
+
+	.context-menu-check {
+		width: 13px;
+		font-family: var(--font-sans);
+		font-weight: 950;
+		visibility: hidden;
+	}
+
+	.context-menu-item[aria-checked='true'] .context-menu-check {
+		visibility: visible;
+	}
+
+	.context-submenu {
+		position: absolute;
+		z-index: 161;
+		min-width: 158px;
+		padding: 3px;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+		box-shadow: 3px 3px 0 rgb(23 23 27 / 48%);
+	}
+
+	@media (max-width: 1023px) {
+		.context-menu {
+			display: none;
+		}
+	}
+</style>
