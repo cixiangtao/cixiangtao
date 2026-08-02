@@ -9,6 +9,7 @@ interface Props {
 	tone?: 'paper' | 'cyan' | 'yellow' | 'coral';
 	label?: string;
 	scrollbars?: boolean;
+	closeLabel?: string;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
 	tone = 'paper',
 	label = title,
 	scrollbars = false,
+	closeLabel = `Close “${title}” window`,
 } = Astro.props;
 ---
 
@@ -35,8 +37,8 @@ const {
 				<button
 					class="mac-control mac-control--close"
 					type="button"
-					aria-label={`关闭“${title}”窗口`}
-					title={`关闭“${title}”窗口`}
+					aria-label={closeLabel}
+					title={closeLabel}
 					data-window-close
 				></button>
 			) : (
@@ -96,12 +98,16 @@ const {
 		if (!shortcut) return;
 
 		const isOpen = !panel.hidden && !panel.hasAttribute('data-closing');
-		const label = shortcut.dataset.windowLabel ?? panel.id;
 		shortcut.dataset.windowOpen = String(isOpen);
-		shortcut.setAttribute('aria-label', isOpen ? `切换到${label}窗口` : `打开${label}窗口`);
+		shortcut.setAttribute(
+			'aria-label',
+			isOpen ? shortcut.dataset.windowSwitchLabel ?? panel.id : shortcut.dataset.windowOpenLabel ?? panel.id,
+		);
 		shortcut.setAttribute(
 			'title',
-			desktopWindowQuery.matches ? `双击打开或置顶“${label}”窗口` : `点按打开或置顶“${label}”窗口`,
+			desktopWindowQuery.matches
+				? shortcut.dataset.windowDesktopTitle ?? ''
+				: shortcut.dataset.windowTouchTitle ?? '',
 		);
 	}
 

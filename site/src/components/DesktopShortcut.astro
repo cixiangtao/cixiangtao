@@ -1,14 +1,17 @@
 ---
 import ModuleIcon from './ModuleIcon.astro';
+import { getMessages, type Locale } from '../i18n';
 
 /** Renders a classic desktop shortcut for an internal workspace window. */
 interface Props {
 	href: string;
 	label: string;
 	icon: 'folder' | 'document' | 'profile';
+	locale: Locale;
 }
 
-const { href, label, icon } = Astro.props;
+const { href, label, icon, locale } = Astro.props;
+const copy = getMessages(locale).shortcut;
 const windowId = href.startsWith('#') ? href.slice(1) : href;
 ---
 
@@ -16,12 +19,16 @@ const windowId = href.startsWith('#') ? href.slice(1) : href;
 	class="desktop-shortcut grid w-17 justify-items-center gap-1.5 text-[0.68rem] font-extrabold !text-white [text-shadow:1px_1px_0_var(--ink)]"
 	href={href}
 	aria-controls={windowId}
-	aria-label={`切换到${label}窗口`}
-	title={`双击打开或置顶“${label}”窗口`}
+	aria-label={copy.switchTo(label)}
+	title={copy.desktopHint(label)}
+	data-window-desktop-title={copy.desktopHint(label)}
 	data-window-label={label}
 	data-window-open="true"
+	data-window-open-label={copy.open(label)}
 	data-window-shortcut
+	data-window-switch-label={copy.switchTo(label)}
 	data-window-target={windowId}
+	data-window-touch-title={copy.touchHint(label)}
 >
 	<ModuleIcon name={icon} size="desktop" />
 	<span class="desktop-shortcut-label">{label}</span>

@@ -1,34 +1,5 @@
 ---
-import AboutWindow from '../components/AboutWindow.astro';
-import DesktopShortcut from '../components/DesktopShortcut.astro';
-import ProjectsWindow from '../components/ProjectsWindow.astro';
-import WritingWindow from '../components/WritingWindow.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getBlogPosts } from '../lib/github';
-
-const posts = await getBlogPosts();
-const base = import.meta.env.BASE_URL;
+import HomePage from '../components/HomePage.astro';
 ---
 
-<!--
-THESIS: 把个人网站变成一台持续工作的彩色桌面，拒绝普通博客的纵向栏目与卡片陈列。
-OWN-WORLD: 经典 Mac 窗口、像素图形、紫蓝桌面，以及青黄珊瑚色的功能状态共同构成界面。
-STORY: 访客先看见最近写作，再确认代表项目与作者身份，并进入文章或 GitHub 继续阅读。
-FIRST VIEWPORT: 最大的文章窗口位于前景，项目窗口居右后方，关于我缩在左上；主导航固定在菜单栏。
-FORM: 有明确主次的多窗口桌面，沿用用户选中的方案三构图，并融合像素色彩与技术档案排版；seed 7348d99a。
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
--->
-
-<BaseLayout>
-	<section class="desktop-stage relative flex w-full flex-1 flex-col gap-5 px-4 py-6 sm:px-6 lg:block lg:min-h-[850px] lg:px-8 lg:py-8" aria-label="cixiangtao 的个人工作台">
-		<div class="desktop-icons mx-auto grid grid-cols-3 gap-6 lg:absolute lg:left-[2.5%] lg:top-[7%] lg:z-10 lg:mx-0 lg:grid-cols-1" aria-label="快捷入口">
-			<DesktopShortcut href="#about" label="关于我" icon="profile" />
-			<DesktopShortcut href="#projects" label="项目" icon="folder" />
-			<DesktopShortcut href="#writing" label="文章" icon="document" />
-		</div>
-
-		<AboutWindow />
-		<ProjectsWindow />
-		<WritingWindow posts={posts} base={base} />
-	</section>
-</BaseLayout>
+<HomePage locale="en" />

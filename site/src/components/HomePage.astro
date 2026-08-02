@@ -1,0 +1,40 @@
+---
+import AboutWindow from './AboutWindow.astro';
+import DesktopShortcut from './DesktopShortcut.astro';
+import ProjectsWindow from './ProjectsWindow.astro';
+import WritingWindow from './WritingWindow.astro';
+import { getAlternateLocale, getLocalizedPath, getMessages, type Locale } from '../i18n';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getBlogPosts } from '../lib/github';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const posts = await getBlogPosts();
+const base = import.meta.env.BASE_URL;
+const copy = getMessages(locale);
+const alternateHref = getLocalizedPath(base, getAlternateLocale(locale));
+---
+
+<!--
+THESIS: Turn a personal website into an active, colorful desktop instead of a conventional vertical blog.
+OWN-WORLD: Classic Mac windows, pixel graphics, a violet-blue desktop, and functional cyan, yellow, and coral signals.
+STORY: Visitors see the latest writing first, then verify the projects and the person behind them.
+FIRST VIEWPORT: The writing window leads, projects sit behind it, and the compact about window anchors the upper left.
+-->
+
+<BaseLayout locale={locale} alternateHref={alternateHref}>
+	<section class="desktop-stage relative flex w-full flex-1 flex-col gap-5 px-4 py-6 sm:px-6 lg:block lg:min-h-[850px] lg:px-8 lg:py-8" aria-label={copy.workspace.label}>
+		<div class="desktop-icons mx-auto grid grid-cols-3 gap-6 lg:absolute lg:left-[2.5%] lg:top-[7%] lg:z-10 lg:mx-0 lg:grid-cols-1" aria-label={copy.workspace.shortcuts}>
+			<DesktopShortcut href="#about" label={copy.about.title} icon="profile" locale={locale} />
+			<DesktopShortcut href="#projects" label={copy.nav.projects} icon="folder" locale={locale} />
+			<DesktopShortcut href="#writing" label={copy.nav.writing} icon="document" locale={locale} />
+		</div>
+
+		<AboutWindow locale={locale} />
+		<ProjectsWindow locale={locale} />
+		<WritingWindow posts={posts} base={base} locale={locale} />
+	</section>
+</BaseLayout>

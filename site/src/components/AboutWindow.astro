@@ -1,32 +1,41 @@
 ---
 import MacWindow from './MacWindow.astro';
+import { getMessages, type Locale } from '../i18n';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = getMessages(locale);
 ---
 
 <MacWindow
-	title="关于我"
+	title={copy.about.title}
 	icon="profile"
 	id="about"
+	closeLabel={copy.window.close(copy.about.title)}
 	class="order-1 lg:absolute lg:left-[12%] lg:top-[7%] lg:z-20 lg:w-[34%]"
 >
 	<div class="about-panel grid grid-cols-[88px_minmax(0,1fr)] items-center gap-[18px] p-[22px] max-[760px]:grid-cols-[72px_minmax(0,1fr)] max-[760px]:p-[17px]">
-		<a class="pixel-avatar" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="打开 cixiangtao 的 GitHub 主页">
-			<img src="https://github.com/cixiangtao.png?size=176" alt="cixiangtao 的 GitHub 头像" width="176" height="176" decoding="async" fetchpriority="high" />
+		<a class="pixel-avatar" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.about.openProfile}>
+			<img src="https://github.com/cixiangtao.png?size=176" alt={copy.about.avatarAlt} width="176" height="176" decoding="async" fetchpriority="high" />
 		</a>
 		<div class="min-w-0">
 			<h1>cixiangtao</h1>
-			<p class="about-role">开源项目 · 技术写作</p>
-			<p class="about-copy">持续构建开源项目，也把实践过程整理成可以复用的工具和文章。</p>
+			<p class="about-role">{copy.about.role}</p>
+			<p class="about-copy">{copy.about.copy}</p>
 		</div>
 	</div>
 	<div class="about-status flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper)] px-4 py-[9px] text-[0.72rem] font-[750] max-[760px]:gap-2.5">
-		<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label="公开入口">
+		<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label={copy.about.publicLinks}>
 			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i></a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
-			<a href="#projects" aria-label="代表项目"><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
+			<a href="#projects" aria-label={copy.about.projects}><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
-			<a href="#writing" aria-label="最近文章"><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
+			<a href="#writing" aria-label={copy.about.writing}><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
 		</nav>
-		<span class="inline-flex items-center gap-[7px]"><i class="status-dot" aria-hidden="true"></i>持续构建</span>
+		<span class="inline-flex items-center gap-[7px]"><i class="status-dot" aria-hidden="true"></i>{copy.about.status}</span>
 	</div>
 </MacWindow>
 

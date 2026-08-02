@@ -111,10 +111,10 @@ export function getBlogPosts() {
 	return postsRequest;
 }
 
-export function formatDate(date: string) {
-	return new Intl.DateTimeFormat('zh-CN', {
+export function formatDate(date: string, locale: 'en' | 'zh' = 'en') {
+	return new Intl.DateTimeFormat(locale === 'zh' ? 'zh-CN' : 'en-US', {
 		year: 'numeric',
-		month: 'long',
+		month: locale === 'zh' ? 'long' : 'short',
 		day: 'numeric',
 	}).format(new Date(date));
 }

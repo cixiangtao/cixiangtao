@@ -1,6 +1,6 @@
 ---
-import ArticlePage from '../../components/ArticlePage.astro';
-import { getBlogPosts, type BlogPost } from '../../lib/github';
+import ArticlePage from '../../../components/ArticlePage.astro';
+import { getBlogPosts, type BlogPost } from '../../../lib/github';
 
 export async function getStaticPaths() {
 	const posts = await getBlogPosts();
@@ -18,4 +18,4 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<ArticlePage post={post} locale="en" />
+<ArticlePage post={post} locale="zh" />

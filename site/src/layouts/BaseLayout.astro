@@ -1,50 +1,74 @@
 ---
 import '../styles/global.css';
 import ModuleIcon from '../components/ModuleIcon.astro';
+import { defaultLocale, getAlternateLocale, getLocalizedPath, getMessages, type Locale } from '../i18n';
 
 interface Props {
 	title?: string;
 	description?: string;
+	locale?: Locale;
+	alternateHref: string;
 }
 
 const {
-	title = 'cixiangtao 的个人工作台',
-	description = '慈祥涛的个人主页、开源作品集与中文技术博客。',
+	title,
+	description,
+	locale = defaultLocale,
+	alternateHref,
 } = Astro.props;
-const pageTitle = title === 'cixiangtao 的个人工作台' ? title : `${title} · cixiangtao`;
+const copy = getMessages(locale);
+const alternateLocale = getAlternateLocale(locale);
+const pageTitle = title ? `${title} · cixiangtao` : copy.site.title;
+const pageDescription = description ?? copy.site.description;
 const base = import.meta.env.BASE_URL;
+const homeHref = getLocalizedPath(base, locale);
+const currentAbsoluteUrl = new URL(Astro.url.pathname, Astro.site);
+const alternateAbsoluteUrl = new URL(alternateHref, Astro.site);
+const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alternateAbsoluteUrl;
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+
+<html lang={copy.htmlLang}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
+		<meta name="description" content={pageDescription} />
 		<meta name="theme-color" content="#6670c9" />
 		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+		<link rel="canonical" href={currentAbsoluteUrl} />
+		<link rel="alternate" hreflang={locale} href={currentAbsoluteUrl} />
+		<link rel="alternate" hreflang={alternateLocale} href={alternateAbsoluteUrl} />
+		<link rel="alternate" hreflang="x-default" href={defaultAbsoluteUrl} />
 		<title>{pageTitle}</title>
 	</head>
-	<body class="flex min-h-svh min-w-80 flex-col antialiased">
+	<body
+		class="flex min-h-svh min-w-80 flex-col antialiased"
+		data-nav-about={copy.nav.about}
+		data-nav-home={copy.nav.home}
+		data-nav-projects={copy.nav.projects}
+		data-nav-writing={copy.nav.writing}
+	>
 		<header class="system-bar">
 			<div class="system-context-group">
-				<nav class="system-home" aria-label="主页">
-					<a class="system-tool system-tool--avatar" href={base} aria-label="首页" data-label="首页" data-nav="home">
+				<nav class="system-home" aria-label={copy.nav.homeNav}>
+					<a class="system-tool system-tool--avatar" href={homeHref} aria-label={copy.nav.home} data-label={copy.nav.home} data-nav="home">
 						<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
 					</a>
 				</nav>
 				<span class="system-separator" aria-hidden="true"></span>
-				<span class="system-context">当前位置：<strong data-nav-context aria-live="polite">首页</strong></span>
+				<span class="system-context">{copy.nav.location}<strong data-nav-context aria-live="polite">{copy.nav.home}</strong></span>
 			</div>
 
 			<div class="system-actions">
-				<nav class="system-external" aria-label="外部链接">
-					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="在新窗口打开 GitHub" data-label="GitHub"><ModuleIcon name="github" /></a>
+				<nav class="system-external" aria-label={copy.nav.externalLinks}>
+					<a class="system-language-link" href={alternateHref} hreflang={alternateLocale} aria-label={copy.nav.languageName} title={copy.nav.languageName}>{copy.nav.languageShort}</a>
+					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.nav.openGitHub} data-label="GitHub"><ModuleIcon name="github" /></a>
 				</nav>
 				<span class="system-separator" aria-hidden="true"></span>
-				<div class="system-status" aria-label="系统状态">
-					<span class="system-presence"><span class="status-dot" aria-hidden="true"></span>在线</span>
+				<div class="system-status" aria-label={copy.nav.systemStatus}>
+					<span class="system-presence"><span class="status-dot" aria-hidden="true"></span>{copy.nav.online}</span>
 				</div>
 			</div>
 		</header>
@@ -54,16 +78,17 @@ const base = import.meta.env.BASE_URL;
 		</main>
 
 		<footer class="site-footer">
-			<p>持续好奇，认真交付。</p>
-			<p>内容来自 GitHub Issues，由 Astro 构建。</p>
+			<p>{copy.footer.motto}</p>
+			<p>{copy.footer.source}</p>
 		</footer>
 
 		<script>
+			const body = document.body;
 			const navigationLabels = {
-				home: '首页',
-				projects: '代表项目',
-				writing: '最近文章',
-				about: '关于我',
+				home: body.dataset.navHome ?? 'Home',
+				projects: body.dataset.navProjects ?? 'Projects',
+				writing: body.dataset.navWriting ?? 'Latest writing',
+				about: body.dataset.navAbout ?? 'About me',
 			} as const;
 			type NavigationKey = keyof typeof navigationLabels;
 

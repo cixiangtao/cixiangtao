@@ -14,6 +14,13 @@ content source.
 Astro fetches the Issues during the build and generates static HTML. The
 published site does not call the GitHub API at runtime.
 
+## Localization
+
+English is served from the default routes, while the complete Chinese interface
+is available under `/zh/`. Language switches preserve the current home or post
+route. GitHub Issue titles and article bodies remain in their original authored
+language instead of being machine-translated.
+
 ## Deployment
 
 GitHub Actions builds and deploys the site to GitHub Pages when:

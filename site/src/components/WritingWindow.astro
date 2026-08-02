@@ -1,23 +1,27 @@
 ---
 import type { BlogPost } from '../lib/github';
 import { formatDate } from '../lib/github';
+import { getLocalizedPath, getMessages, type Locale } from '../i18n';
 import MacWindow from './MacWindow.astro';
 
 /** Supplies the issue-backed article collection and deployment base path. */
 interface Props {
 	posts: BlogPost[];
 	base: string;
+	locale: Locale;
 }
 
-const { posts, base } = Astro.props;
+const { posts, base, locale } = Astro.props;
+const copy = getMessages(locale);
 ---
 
 <MacWindow
-	title="最近文章"
+	title={copy.writing.title}
 	icon="document"
 	id="writing"
 	tone="cyan"
 	scrollbars
+	closeLabel={copy.window.close(copy.writing.title)}
 	class="order-2 lg:absolute lg:bottom-[7%] lg:left-[16%] lg:z-40 lg:min-h-[470px] lg:w-[72%]"
 >
 	<div class="writing-toolbar flex items-center justify-between border-b border-[var(--ink)] bg-[var(--paper)] px-[13px] py-[9px] text-[0.72rem] font-extrabold max-[760px]:gap-2.5 max-[760px]:text-[0.64rem]">
@@ -25,13 +29,13 @@ const { posts, base } = Astro.props;
 			<span class="mini-document" aria-hidden="true"></span>
 			<strong class="[font-family:var(--font-data)] text-[0.68rem] max-[760px]:text-[0.61rem]">cixiangtao / writing</strong>
 		</div>
-		<span>{posts.length} 个文件</span>
+		<span>{copy.writing.files(posts.length)}</span>
 	</div>
 
 	<div class="article-list flex flex-1 flex-col bg-[var(--paper)]" aria-labelledby="writing">
 		{posts.slice(0, 5).map((post, index) => (
 			<article class:list={['article-row', { 'article-row--featured': index === 0 }]}>
-				<a class="grid grid-cols-[70px_minmax(0,1fr)_104px_52px] items-center gap-3.5 p-[15px] [transition:background_120ms_ease,color_120ms_ease] max-[760px]:grid-cols-[52px_minmax(0,1fr)] max-[760px]:gap-2.5 max-[760px]:px-3 max-[760px]:py-3.5" href={`${base}posts/${post.number}/`} aria-label={`阅读：${post.title}`}>
+				<a class="grid grid-cols-[70px_minmax(0,1fr)_104px_52px] items-center gap-3.5 p-[15px] [transition:background_120ms_ease,color_120ms_ease] max-[760px]:grid-cols-[52px_minmax(0,1fr)] max-[760px]:gap-2.5 max-[760px]:px-3 max-[760px]:py-3.5" href={getLocalizedPath(base, locale, `posts/${post.number}/`)} aria-label={copy.writing.read(post.title)}>
 					<span class="article-file-icon" aria-hidden="true"><i></i></span>
 					<span class="article-copy">
 						<span class="article-index">ISSUE {String(post.number).padStart(3, '0')}</span>
@@ -39,10 +43,10 @@ const { posts, base } = Astro.props;
 						<small>{post.excerpt}</small>
 					</span>
 					<span class="article-meta max-[760px]:!hidden">
-						<time datetime={post.createdAt}>{formatDate(post.createdAt)}</time>
-						<small>{post.readingMinutes} 分钟</small>
+						<time datetime={post.createdAt}>{formatDate(post.createdAt, locale)}</time>
+						<small>{copy.writing.minutes(post.readingMinutes)}</small>
 					</span>
-					<span class="article-open max-[760px]:hidden" aria-hidden="true">打开</span>
+					<span class="article-open max-[760px]:hidden" aria-hidden="true">{copy.writing.open}</span>
 				</a>
 			</article>
 		))}
@@ -50,14 +54,14 @@ const { posts, base } = Astro.props;
 
 	{posts.length === 0 && (
 		<div class="empty-state flex min-h-40 items-center justify-between p-7">
-			<strong>文章文件夹暂时为空。</strong>
-			<a href="https://github.com/cixiangtao/cixiangtao/issues">前往 GitHub Issues ↗</a>
+			<strong>{copy.writing.empty}</strong>
+			<a href="https://github.com/cixiangtao/cixiangtao/issues">{copy.writing.openIssues}</a>
 		</div>
 	)}
 
 	<div class="writing-footer flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper-soft)] px-[15px] py-[11px] text-[0.68rem] font-bold text-[var(--muted)] max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-[7px]">
-		<span>文章源自带有 blog 标签的 GitHub Issues</span>
-		<a href="https://github.com/cixiangtao/cixiangtao/issues?q=is%3Aissue%20label%3Ablog" target="_blank" rel="noreferrer">打开文章档案 ↗</a>
+		<span>{copy.writing.source}</span>
+		<a href="https://github.com/cixiangtao/cixiangtao/issues?q=is%3Aissue%20label%3Ablog" target="_blank" rel="noreferrer">{copy.writing.archive}</a>
 	</div>
 </MacWindow>
 
