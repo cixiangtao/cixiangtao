@@ -14,6 +14,10 @@ content source.
 Astro fetches the Issues during the build and generates static HTML. The
 published site does not call the GitHub API at runtime.
 
+The projects window is generated from the owner's public GitHub repositories.
+Archived repositories and forks are excluded, and the remaining projects are
+ordered by their most recent push.
+
 ## Localization
 
 English is served from the default routes, while the complete Chinese interface

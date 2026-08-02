@@ -5,14 +5,14 @@ import ProjectsWindow from './ProjectsWindow.astro';
 import WritingWindow from './WritingWindow.astro';
 import { getAlternateLocale, getLocalizedPath, getMessages, type Locale } from '../i18n';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getBlogPosts } from '../lib/github';
+import { getBlogPosts, getProjects } from '../lib/github';
 
 interface Props {
 	locale: Locale;
 }
 
 const { locale } = Astro.props;
-const posts = await getBlogPosts();
+const [posts, projects] = await Promise.all([getBlogPosts(), getProjects()]);
 const base = import.meta.env.BASE_URL;
 const copy = getMessages(locale);
 const alternateHref = getLocalizedPath(base, getAlternateLocale(locale));
@@ -34,7 +34,7 @@ FIRST VIEWPORT: The writing window leads, projects sit behind it, and the compac
 		</div>
 
 		<AboutWindow locale={locale} />
-		<ProjectsWindow locale={locale} />
+		<ProjectsWindow projects={projects} locale={locale} />
 		<WritingWindow posts={posts} base={base} locale={locale} />
 	</section>
 </BaseLayout>

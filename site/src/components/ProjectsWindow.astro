@@ -1,34 +1,21 @@
 ---
 import MacWindow from './MacWindow.astro';
 import { getMessages, type Locale } from '../i18n';
+import { formatDate, type Project } from '../lib/github';
 
 interface Props {
 	locale: Locale;
+	projects: Project[];
 }
 
-const { locale } = Astro.props;
+const { locale, projects } = Astro.props;
 const copy = getMessages(locale);
+const colors = ['cyan', 'yellow', 'coral'] as const;
 
-const projects = [
-	{
-		name: 'codex-skin',
-		description: copy.projects.descriptions.codexSkin,
-		href: 'https://github.com/cixiangtao/codex-skin',
-		color: 'cyan',
-	},
-	{
-		name: 'vite-plugin-locator',
-		description: copy.projects.descriptions.vitePluginLocator,
-		href: 'https://github.com/cixiangtao/vite-plugin-locator',
-		color: 'yellow',
-	},
-	{
-		name: 'sticker-ui',
-		description: copy.projects.descriptions.stickerUi,
-		href: 'https://github.com/cixiangtao/sticker-ui',
-		color: 'coral',
-	},
-];
+function getProjectColor(name: string) {
+	const hash = [...name].reduce((total, character) => total + character.codePointAt(0)!, 0);
+	return colors[hash % colors.length];
+}
 ---
 
 <MacWindow
@@ -44,20 +31,22 @@ const projects = [
 		<div class="inline-flex items-center gap-[9px]"><span class="mini-folder" aria-hidden="true"></span><strong class="[font-family:var(--font-data)] text-[0.68rem] max-[760px]:text-[0.61rem]">cixiangtao / projects</strong></div>
 		<a href="https://github.com/cixiangtao?tab=repositories" target="_blank" rel="noreferrer">{copy.projects.count(projects.length)}</a>
 	</div>
-	<ul class="project-list m-0 list-none p-2">
+	<ul class="project-list m-0 list-none p-2" aria-label={copy.projects.listLabel}>
 		{projects.map((project) => (
 			<li>
-				<a class="grid grid-cols-[52px_minmax(0,1fr)_28px] items-center gap-[13px] px-[9px] py-[11px] max-[760px]:grid-cols-[44px_minmax(0,1fr)_22px]" href={project.href} target="_blank" rel="noreferrer">
-					<span class:list={['project-icon', `project-icon--${project.color}`]} aria-hidden="true"><i></i></span>
+				<a class="grid grid-cols-[52px_minmax(0,1fr)_28px] items-center gap-[13px] px-[9px] py-[11px] max-[760px]:grid-cols-[44px_minmax(0,1fr)_22px]" href={project.href} target="_blank" rel="noreferrer" title={copy.projects.updated(formatDate(project.maintainedAt, locale))}>
+					<span class:list={['project-icon', `project-icon--${getProjectColor(project.name)}`]} aria-hidden="true"><i></i></span>
 					<span class="project-info block min-w-0">
 						<strong>{project.name}</strong>
-						<small>{project.description}</small>
+						<small>{project.description || copy.projects.noDescription}</small>
+						<time datetime={project.maintainedAt}>{copy.projects.updated(formatDate(project.maintainedAt, locale))}</time>
 					</span>
 					<span class="project-actions inline-flex items-center justify-end gap-2" aria-hidden="true"><i>☆</i><b></b><em>↗</em></span>
 				</a>
 			</li>
 		))}
 	</ul>
+	{projects.length === 0 && <p class="project-empty">{copy.projects.empty}</p>}
 </MacWindow>
 
 <style is:global>
@@ -92,10 +81,31 @@ const projects = [
 		border-top: 1px solid var(--line-strong);
 	}
 
+	@media (min-width: 1024px) {
+		.project-list {
+			max-height: 430px;
+			overflow-y: auto;
+			scrollbar-width: none;
+		}
+
+		.project-list::-webkit-scrollbar {
+			display: none;
+		}
+	}
+
 	.project-list a:hover,
 	.project-list a:focus-visible {
 		background: var(--selection);
 		color: white;
+	}
+
+	.project-empty {
+		margin: 0;
+		padding: 28px 18px;
+		color: var(--muted);
+		font-size: 0.72rem;
+		font-weight: 750;
+		text-align: center;
 	}
 
 	.project-icon {
@@ -143,7 +153,8 @@ const projects = [
 	}
 
 	.project-info strong,
-	.project-info small {
+	.project-info small,
+	.project-info time {
 		display: block;
 	}
 
@@ -162,8 +173,17 @@ const projects = [
 		white-space: nowrap;
 	}
 
+	.project-info time {
+		margin-top: 2px;
+		color: var(--muted);
+		font-family: var(--font-data);
+		font-size: 0.58rem;
+	}
+
 	.project-list a:hover small,
-	.project-list a:focus-visible small {
+	.project-list a:focus-visible small,
+	.project-list a:hover time,
+	.project-list a:focus-visible time {
 		color: #eefcff;
 	}
 

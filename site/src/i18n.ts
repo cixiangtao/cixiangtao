@@ -52,11 +52,10 @@ export const messages = {
 		projects: {
 			title: 'Featured projects',
 			count: (count: number) => `${count} projects · Open all ↗`,
-			descriptions: {
-				codexSkin: 'Theme and interface customization for the Codex desktop app on macOS.',
-				vitePluginLocator: 'One-call LocatorJS integration for Vite 5–8.',
-				stickerUi: 'A handbook sticker-style React and Tailwind CSS component library.',
-			},
+			listLabel: 'Active repositories, most recently maintained first',
+			noDescription: 'No description yet.',
+			empty: 'No active public projects are available right now.',
+			updated: (date: string) => `Maintained ${date}`,
 		},
 		writing: {
 			title: 'Latest writing',
@@ -138,11 +137,10 @@ export const messages = {
 		projects: {
 			title: '代表项目',
 			count: (count: number) => `${count} 项 · 全部打开 ↗`,
-			descriptions: {
-				codexSkin: '为 macOS 上的 Codex 桌面端提供主题与界面定制。',
-				vitePluginLocator: '一行配置，为 Vite 5–8 接入 LocatorJS。',
-				stickerUi: '手册贴纸风格的 React 与 Tailwind CSS 组件库。',
-			},
+			listLabel: '正在维护的仓库，按最近维护时间排序',
+			noDescription: '暂时没有项目说明。',
+			empty: '目前没有可展示的公开维护项目。',
+			updated: (date: string) => `维护于 ${date}`,
 		},
 		writing: {
 			title: '最近文章',
