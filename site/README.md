@@ -21,9 +21,10 @@ excluded. The remaining projects are ordered by their most recent push.
 ## Localization
 
 English is served from the default routes, while the complete Chinese interface
-is available under `/zh/`. Language switches preserve the current home or post
-route. GitHub Issue titles and article bodies remain in their original authored
-language instead of being machine-translated.
+is available under `/zh/`. The language selector displays the active language
+and preserves the current home, window anchor, or post route when changed.
+GitHub Issue titles and article bodies remain in their original authored language
+instead of being machine-translated.
 
 ## Desktop wallpapers
 

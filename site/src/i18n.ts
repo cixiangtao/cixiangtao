@@ -22,8 +22,7 @@ export const messages = {
 			openGitHub: 'Open GitHub in a new window',
 			systemStatus: 'System status',
 			online: 'Online',
-			languageShort: '中文',
-			languageName: 'Switch to Chinese',
+			languageLabel: 'Language',
 		},
 		workspace: {
 			label: "cixiangtao's personal workspace",
@@ -117,8 +116,7 @@ export const messages = {
 			openGitHub: '在新窗口打开 GitHub',
 			systemStatus: '系统状态',
 			online: '在线',
-			languageShort: 'EN',
-			languageName: '切换到英文',
+			languageLabel: '语言',
 		},
 		workspace: {
 			label: 'cixiangtao 的个人工作台',

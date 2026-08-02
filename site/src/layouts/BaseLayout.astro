@@ -100,7 +100,20 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 						<span class="wallpaper-swatch" aria-hidden="true"></span>
 					</button>
 					<span class="sr-only" aria-live="polite" data-wallpaper-announcer></span>
-					<a class="system-language-link" href={alternateHref} hreflang={alternateLocale} aria-label={copy.nav.languageName} title={copy.nav.languageName}>{copy.nav.languageShort}</a>
+					<label class="sr-only" for="system-language">{copy.nav.languageLabel}</label>
+					<span class="system-language-picker">
+						<select
+							id="system-language"
+							class="system-language-select"
+							aria-label={copy.nav.languageLabel}
+							autocomplete="off"
+							data-language-select
+							title={copy.nav.languageLabel}
+						>
+							<option lang="en" value={locale === 'en' ? Astro.url.pathname : alternateHref} selected={locale === 'en'}>English</option>
+							<option lang="zh-CN" value={locale === 'zh' ? Astro.url.pathname : alternateHref} selected={locale === 'zh'}>中文</option>
+						</select>
+					</span>
 					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.nav.openGitHub} data-label="GitHub"><ModuleIcon name="github" /></a>
 				</nav>
 				<span class="system-separator" aria-hidden="true"></span>
@@ -120,6 +133,14 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 		</footer>
 
 		<script>
+			const languageSelect = document.querySelector<HTMLSelectElement>('[data-language-select]');
+			languageSelect?.addEventListener('change', () => {
+				const destination = new URL(languageSelect.value, window.location.href);
+				destination.search = window.location.search;
+				destination.hash = window.location.hash;
+				window.location.assign(destination);
+			});
+
 			const wallpapers = ['classic', 'aqua', 'midnight'] as const;
 			type Wallpaper = (typeof wallpapers)[number];
 			const wallpaperButton = document.querySelector<HTMLButtonElement>('[data-wallpaper-toggle]');
