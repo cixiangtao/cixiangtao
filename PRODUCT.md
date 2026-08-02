@@ -27,7 +27,7 @@ web
 - Astro 在构建阶段通过 GitHub API 获取文章，最终网站运行时不依赖 GitHub API。
 - 根目录 `README.md` 继续作为 GitHub Profile README。
 - Astro 网站源码位于仓库的 `site/` 目录。
-- 项目与作品信息在构建阶段从作者的公开 GitHub 仓库读取，排除已归档仓库与 Fork，并按最近代码推送时间倒序排列。
+- 项目与作品信息在构建阶段从作者的公开 GitHub 仓库读取，排除已归档仓库、Fork 与 `cixiangtao` Profile 仓库，并按最近代码推送时间倒序排列。
 
 ## Capabilities and Constraints
 

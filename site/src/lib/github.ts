@@ -1,5 +1,6 @@
 const REPOSITORY = 'cixiangtao/cixiangtao';
 const OWNER = 'cixiangtao';
+const PROFILE_REPOSITORY = 'cixiangtao';
 const PAGE_SIZE = 100;
 
 interface GitHubLabel {
@@ -164,7 +165,10 @@ async function fetchProjects() {
 	}
 
 	return repositories
-		.filter((repository) => !repository.archived && !repository.fork)
+		.filter(
+			(repository) =>
+				!repository.archived && !repository.fork && repository.name !== PROFILE_REPOSITORY,
+		)
 		.map((repository) => ({
 			name: repository.name,
 			description: repository.description?.trim() ?? '',

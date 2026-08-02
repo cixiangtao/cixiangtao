@@ -15,8 +15,8 @@ Astro fetches the Issues during the build and generates static HTML. The
 published site does not call the GitHub API at runtime.
 
 The projects window is generated from the owner's public GitHub repositories.
-Archived repositories and forks are excluded, and the remaining projects are
-ordered by their most recent push.
+Archived repositories, forks, and the `cixiangtao` profile repository are
+excluded. The remaining projects are ordered by their most recent push.
 
 ## Localization
 
