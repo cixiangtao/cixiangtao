@@ -7,6 +7,8 @@ Building developer tools and open-source projects with TypeScript and React.
 [![GitHub followers](https://img.shields.io/github/followers/cixiangtao?style=flat-square&logo=github&label=Followers)](https://github.com/cixiangtao?tab=followers)
 ![Profile views](https://komarev.com/ghpvc/?username=cixiangtao&label=Profile+views&color=7c3aed&style=flat-square)
 
+**[Personal website →](https://cixiangtao.github.io/cixiangtao/)**
+
 </div>
 
 ## About
