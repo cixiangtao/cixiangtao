@@ -23,6 +23,8 @@ excluded. The remaining projects are ordered by their most recent push.
 English is served from the default routes, while the complete Chinese interface
 is available under `/zh/`. The language selector displays the active language
 and preserves the current home, window anchor, or post route when changed.
+Language navigation bypasses stale route HTML and removes its temporary cache
+parameter after the destination loads.
 GitHub Issue titles and article bodies remain in their original authored language
 instead of being machine-translated.
 
