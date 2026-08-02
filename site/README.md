@@ -25,6 +25,8 @@ is available under `/zh/`. The language selector displays the active language
 and preserves the current home, window anchor, or post route when changed.
 Language navigation bypasses stale route HTML and removes its temporary cache
 parameter after the destination loads.
+Desktop shortcuts, window titles, and navigation context share one localized
+module-name source: About, Projects, and Writing in English; 关于、项目、文章 in Chinese.
 GitHub Issue titles and article bodies remain in their original authored language
 instead of being machine-translated.
 

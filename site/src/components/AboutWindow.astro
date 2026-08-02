@@ -11,10 +11,10 @@ const copy = getMessages(locale);
 ---
 
 <MacWindow
-	title={copy.about.title}
+	title={copy.sections.about}
 	icon="profile"
 	id="about"
-	closeLabel={copy.window.close(copy.about.title)}
+	closeLabel={copy.window.close(copy.sections.about)}
 	class="order-1 lg:absolute lg:left-[12%] lg:top-[7%] lg:z-20 lg:w-[34%]"
 >
 	<div class="about-panel grid grid-cols-[88px_minmax(0,1fr)] items-center gap-[18px] p-[22px] max-[760px]:grid-cols-[72px_minmax(0,1fr)] max-[760px]:p-[17px]">
@@ -31,9 +31,9 @@ const copy = getMessages(locale);
 		<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label={copy.about.publicLinks}>
 			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i></a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
-			<a href="#projects" aria-label={copy.about.projects}><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
+			<a href="#projects" aria-label={copy.sections.projects}><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
-			<a href="#writing" aria-label={copy.about.writing}><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
+			<a href="#writing" aria-label={copy.sections.writing}><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
 		</nav>
 		<span class="inline-flex items-center gap-[7px]"><i class="status-dot" aria-hidden="true"></i>{copy.about.status}</span>
 	</div>

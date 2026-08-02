@@ -66,20 +66,20 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 	</head>
 	<body
 		class="flex min-h-svh min-w-80 flex-col antialiased"
-		data-nav-about={copy.nav.about}
-		data-nav-home={copy.nav.home}
-		data-nav-projects={copy.nav.projects}
-		data-nav-writing={copy.nav.writing}
+		data-nav-about={copy.sections.about}
+		data-nav-home={copy.sections.home}
+		data-nav-projects={copy.sections.projects}
+		data-nav-writing={copy.sections.writing}
 	>
 		<header class="system-bar">
 			<div class="system-context-group">
-				<nav class="system-home" aria-label={copy.nav.homeNav}>
-					<a class="system-tool system-tool--avatar" href={homeHref} aria-label={copy.nav.home} data-label={copy.nav.home} data-nav="home">
+				<nav class="system-home" aria-label={copy.sections.home}>
+					<a class="system-tool system-tool--avatar" href={homeHref} aria-label={copy.sections.home} data-label={copy.sections.home} data-nav="home">
 						<img src="https://github.com/cixiangtao.png?size=64" alt="" width="32" height="32" decoding="async" />
 					</a>
 				</nav>
 				<span class="system-separator" aria-hidden="true"></span>
-				<span class="system-context">{copy.nav.location}<strong data-nav-context aria-live="polite">{copy.nav.home}</strong></span>
+				<span class="system-context">{copy.nav.location}<strong data-nav-context aria-live="polite">{copy.sections.home}</strong></span>
 			</div>
 
 			<div class="system-actions">
@@ -209,8 +209,8 @@ const defaultAbsoluteUrl = locale === defaultLocale ? currentAbsoluteUrl : alter
 			const navigationLabels = {
 				home: body.dataset.navHome ?? 'Home',
 				projects: body.dataset.navProjects ?? 'Projects',
-				writing: body.dataset.navWriting ?? 'Latest writing',
-				about: body.dataset.navAbout ?? 'About me',
+				writing: body.dataset.navWriting ?? 'Writing',
+				about: body.dataset.navAbout ?? 'About',
 			} as const;
 			type NavigationKey = keyof typeof navigationLabels;
 

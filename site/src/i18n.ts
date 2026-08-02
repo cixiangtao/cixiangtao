@@ -11,13 +11,14 @@ export const messages = {
 			title: "cixiangtao's personal workspace",
 			description: "cixiangtao's personal website, open-source portfolio, and technical blog.",
 		},
-		nav: {
+		sections: {
 			home: 'Home',
-			location: 'Location:',
+			about: 'About',
 			projects: 'Projects',
-			writing: 'Latest writing',
-			about: 'About me',
-			homeNav: 'Home',
+			writing: 'Writing',
+		},
+		nav: {
+			location: 'Location:',
 			externalLinks: 'External links',
 			openGitHub: 'Open GitHub in a new window',
 			systemStatus: 'System status',
@@ -48,18 +49,14 @@ export const messages = {
 			},
 		},
 		about: {
-			title: 'About me',
 			role: 'Open source · Technical writing',
 			copy: 'I build open-source projects and turn the lessons behind them into reusable tools and articles.',
 			openProfile: "Open cixiangtao's GitHub profile",
 			avatarAlt: "cixiangtao's GitHub avatar",
 			publicLinks: 'Public links',
-			projects: 'Featured projects',
-			writing: 'Latest writing',
 			status: 'Always building',
 		},
 		projects: {
-			title: 'Featured projects',
 			count: (count: number) => `${count} projects · Open all ↗`,
 			listLabel: 'Active repositories, most recently maintained first',
 			noDescription: 'No description yet.',
@@ -67,7 +64,6 @@ export const messages = {
 			updated: (date: string) => `Maintained ${date}`,
 		},
 		writing: {
-			title: 'Latest writing',
 			files: (count: number) => `${count} ${count === 1 ? 'file' : 'files'}`,
 			read: (title: string) => `Read: ${title}`,
 			minutes: (count: number) => `${count} min`,
@@ -78,7 +74,6 @@ export const messages = {
 			archive: 'Open writing archive ↗',
 		},
 		article: {
-			windowTitle: (number: number) => `Article #${number}`,
 			navigation: 'Article navigation',
 			back: '← Back to writing',
 			openGitHub: 'Open on GitHub ↗',
@@ -105,13 +100,14 @@ export const messages = {
 			title: 'cixiangtao 的个人工作台',
 			description: '慈祥涛的个人主页、开源作品集与中文技术博客。',
 		},
-		nav: {
+		sections: {
 			home: '首页',
+			about: '关于',
+			projects: '项目',
+			writing: '文章',
+		},
+		nav: {
 			location: '当前位置：',
-			projects: '代表项目',
-			writing: '最近文章',
-			about: '关于我',
-			homeNav: '主页',
 			externalLinks: '外部链接',
 			openGitHub: '在新窗口打开 GitHub',
 			systemStatus: '系统状态',
@@ -142,18 +138,14 @@ export const messages = {
 			},
 		},
 		about: {
-			title: '关于我',
 			role: '开源项目 · 技术写作',
 			copy: '持续构建开源项目，也把实践过程整理成可以复用的工具和文章。',
 			openProfile: '打开 cixiangtao 的 GitHub 主页',
 			avatarAlt: 'cixiangtao 的 GitHub 头像',
 			publicLinks: '公开入口',
-			projects: '代表项目',
-			writing: '最近文章',
 			status: '持续构建',
 		},
 		projects: {
-			title: '代表项目',
 			count: (count: number) => `${count} 项 · 全部打开 ↗`,
 			listLabel: '正在维护的仓库，按最近维护时间排序',
 			noDescription: '暂时没有项目说明。',
@@ -161,7 +153,6 @@ export const messages = {
 			updated: (date: string) => `维护于 ${date}`,
 		},
 		writing: {
-			title: '最近文章',
 			files: (count: number) => `${count} 个文件`,
 			read: (title: string) => `阅读：${title}`,
 			minutes: (count: number) => `${count} 分钟`,
@@ -172,7 +163,6 @@ export const messages = {
 			archive: '打开文章档案 ↗',
 		},
 		article: {
-			windowTitle: (number: number) => `文章 #${number}`,
 			navigation: '文章导航',
 			back: '← 返回文章目录',
 			openGitHub: '在 GitHub 中打开 ↗',

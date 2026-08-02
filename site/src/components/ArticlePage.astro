@@ -26,7 +26,7 @@ const showOriginalLanguage = locale === 'en' && contentLanguage === 'zh-CN';
 
 <BaseLayout title={post.title} description={post.excerpt} locale={locale} alternateHref={alternateHref}>
 	<div class="article-desktop mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 lg:py-10">
-		<MacWindow title={copy.article.windowTitle(post.number)} icon="document" tone="cyan" class="article-window">
+		<MacWindow title={copy.sections.writing} icon="document" tone="cyan" class="article-window">
 			<nav class="article-toolbar" aria-label={copy.article.navigation}>
 				<a href={writingHref}>{copy.article.back}</a>
 				<a href={post.githubUrl} target="_blank" rel="noreferrer">{copy.article.openGitHub}</a>
