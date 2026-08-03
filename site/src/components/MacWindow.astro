@@ -10,6 +10,9 @@ interface Props {
 	label?: string;
 	scrollbars?: boolean;
 	closeLabel?: string;
+	minimizeLabel?: string;
+	maximizeLabel?: string;
+	restoreLabel?: string;
 	/** Minimum desktop resize width in CSS pixels. */
 	minWidth?: number;
 	/** Minimum desktop resize height in CSS pixels. */
@@ -27,6 +30,9 @@ const {
 	label = title,
 	scrollbars = false,
 	closeLabel = `Close “${title}” window`,
+	minimizeLabel = `Minimize “${title}” window`,
+	maximizeLabel = `Maximize “${title}” window`,
+	restoreLabel = `Restore “${title}” window`,
 	minWidth = 320,
 	minHeight = 220,
 	fitContentHeight = false,
@@ -48,8 +54,34 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 		<h2>{title}</h2>
 		<div class="mac-title-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 		<div class="mac-window-controls">
-			<span class="mac-control mac-control--minimize" aria-hidden="true"></span>
-			<span class="mac-control mac-control--maximize" aria-hidden="true"></span>
+			{id ? (
+				<button
+					class="mac-control mac-control--minimize"
+					type="button"
+					aria-label={minimizeLabel}
+					aria-pressed="false"
+					title={minimizeLabel}
+					data-window-minimize
+					data-window-control-label={minimizeLabel}
+					data-window-restore-label={restoreLabel}
+				></button>
+			) : (
+				<span class="mac-control mac-control--minimize" aria-hidden="true"></span>
+			)}
+			{id ? (
+				<button
+					class="mac-control mac-control--maximize"
+					type="button"
+					aria-label={maximizeLabel}
+					aria-pressed="false"
+					title={maximizeLabel}
+					data-window-maximize
+					data-window-control-label={maximizeLabel}
+					data-window-restore-label={restoreLabel}
+				></button>
+			) : (
+				<span class="mac-control mac-control--maximize" aria-hidden="true"></span>
+			)}
 			{id ? (
 				<button
 					class="mac-control mac-control--close"
@@ -98,6 +130,16 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 	const closeTimers = new WeakMap<HTMLElement, number>();
 	const defaultMinimumWindowWidth = 320;
 	const defaultMinimumWindowHeight = 220;
+	interface WindowLayout {
+		left: string;
+		top: string;
+		right: string;
+		bottom: string;
+		width: string;
+		height: string;
+		wasResized: boolean;
+	}
+	const restoredWindowLayouts = new WeakMap<HTMLElement, WindowLayout>();
 	let fitWindowsFrame = 0;
 	let topWindowLayer = 0;
 
@@ -176,6 +218,40 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 		document.querySelectorAll<HTMLElement>(selectableWindows).forEach(syncShortcutState);
 	}
 
+	function syncWindowControls(panel: HTMLElement) {
+		const minimizeButton = panel.querySelector<HTMLButtonElement>('[data-window-minimize]');
+		const maximizeButton = panel.querySelector<HTMLButtonElement>('[data-window-maximize]');
+		const controlsEnabled = desktopWindowQuery.matches;
+
+		for (const button of [minimizeButton, maximizeButton]) {
+			if (button) button.disabled = !controlsEnabled;
+		}
+
+		if (minimizeButton) {
+			const minimized = panel.hasAttribute('data-window-minimized');
+			const label = minimized
+				? minimizeButton.dataset.windowRestoreLabel
+				: minimizeButton.dataset.windowControlLabel;
+			minimizeButton.setAttribute('aria-pressed', String(minimized));
+			minimizeButton.setAttribute('aria-label', label ?? panel.id);
+			minimizeButton.title = label ?? '';
+		}
+
+		if (maximizeButton) {
+			const maximized = panel.hasAttribute('data-window-maximized');
+			const label = maximized
+				? maximizeButton.dataset.windowRestoreLabel
+				: maximizeButton.dataset.windowControlLabel;
+			maximizeButton.setAttribute('aria-pressed', String(maximized));
+			maximizeButton.setAttribute('aria-label', label ?? panel.id);
+			maximizeButton.title = label ?? '';
+		}
+	}
+
+	function syncAllWindowControls() {
+		document.querySelectorAll<HTMLElement>(selectableWindows).forEach(syncWindowControls);
+	}
+
 	function getWindowLayer(panel: HTMLElement) {
 		const assignedLayer = Number.parseInt(panel.style.getPropertyValue('--window-layer'), 10);
 		if (Number.isFinite(assignedLayer)) return assignedLayer;
@@ -200,6 +276,16 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 
 		const stage = panel.closest<HTMLElement>('.desktop-stage');
 		if (!stage) return;
+		if (panel.hasAttribute('data-window-minimized')) return;
+		if (panel.hasAttribute('data-window-maximized')) {
+			panel.style.left = '0px';
+			panel.style.top = '0px';
+			panel.style.right = 'auto';
+			panel.style.bottom = 'auto';
+			panel.style.setProperty('--window-width', `${stage.clientWidth}px`);
+			panel.style.setProperty('--window-height', `${stage.clientHeight}px`);
+			return;
+		}
 
 		const panelRect = panel.getBoundingClientRect();
 		const stageRect = stage.getBoundingClientRect();
@@ -214,6 +300,59 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 		panel.style.bottom = 'auto';
 		panel.style.setProperty('--window-width', `${Math.floor(width)}px`);
 		panel.style.setProperty('--window-height', `${Math.floor(height)}px`);
+	}
+
+	function restoreWindowLayout(panel: HTMLElement) {
+		const layout = restoredWindowLayouts.get(panel);
+		if (!layout) return;
+
+		panel.style.left = layout.left;
+		panel.style.top = layout.top;
+		panel.style.right = layout.right;
+		panel.style.bottom = layout.bottom;
+		panel.style.setProperty('--window-width', layout.width);
+		panel.style.setProperty('--window-height', layout.height);
+		panel.toggleAttribute('data-window-resized', layout.wasResized);
+		panel.removeAttribute('data-window-maximized');
+		restoredWindowLayouts.delete(panel);
+		fitWindowToStage(panel);
+		syncWindowControls(panel);
+	}
+
+	function maximizeWindow(panel: HTMLElement) {
+		const stage = panel.closest<HTMLElement>('.desktop-stage');
+		if (!stage) return;
+
+		restoredWindowLayouts.set(panel, {
+			left: panel.style.left,
+			top: panel.style.top,
+			right: panel.style.right,
+			bottom: panel.style.bottom,
+			width: panel.style.getPropertyValue('--window-width'),
+			height: panel.style.getPropertyValue('--window-height'),
+			wasResized: panel.hasAttribute('data-window-resized'),
+		});
+		panel.removeAttribute('data-window-minimized');
+		panel.toggleAttribute('data-window-maximized', true);
+		panel.toggleAttribute('data-window-resized', true);
+		fitWindowToStage(panel);
+		syncWindowControls(panel);
+	}
+
+	function toggleWindowMinimize(panel: HTMLElement) {
+		const minimized = panel.toggleAttribute(
+			'data-window-minimized',
+			!panel.hasAttribute('data-window-minimized'),
+		);
+		if (!minimized && panel.hasAttribute('data-window-maximized')) fitWindowToStage(panel);
+		syncWindowControls(panel);
+	}
+
+	function toggleWindowMaximize(panel: HTMLElement) {
+		panel.removeAttribute('data-window-minimized');
+		if (panel.hasAttribute('data-window-maximized')) restoreWindowLayout(panel);
+		else maximizeWindow(panel);
+		syncWindowControls(panel);
 	}
 
 	function scheduleFitWindowsToStage() {
@@ -281,6 +420,9 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 		if (!panel) return;
 
 		revealWindow(panel);
+		panel.removeAttribute('data-window-minimized');
+		if (panel.hasAttribute('data-window-maximized')) fitWindowToStage(panel);
+		syncWindowControls(panel);
 		selectWindow(panel);
 		syncWindowHash(panel);
 	}
@@ -337,7 +479,7 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 
 		const handle = event.currentTarget;
 		const panel = handle.closest<HTMLElement>(selectableWindows);
-		if (!panel) return;
+		if (!panel || panel.hasAttribute('data-window-maximized')) return;
 		const dragPanel = panel;
 
 		const stage = dragPanel.closest<HTMLElement>('.desktop-stage');
@@ -410,7 +552,12 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 
 		const panel = handle.closest<HTMLElement>(selectableWindows);
 		const stage = panel?.closest<HTMLElement>('.desktop-stage');
-		if (!panel || !stage) return;
+		if (
+			!panel ||
+			!stage ||
+			panel.hasAttribute('data-window-minimized') ||
+			panel.hasAttribute('data-window-maximized')
+		) return;
 		const resizePanel = panel;
 
 		event.preventDefault();
@@ -517,6 +664,24 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 	document.addEventListener('click', (event) => {
 		if (!(event.target instanceof Element)) return;
 
+		const minimizeButton = event.target.closest<HTMLElement>('[data-window-minimize]');
+		if (minimizeButton) {
+			event.preventDefault();
+			event.stopPropagation();
+			const panel = minimizeButton.closest<HTMLElement>(selectableWindows);
+			if (panel && desktopWindowQuery.matches) toggleWindowMinimize(panel);
+			return;
+		}
+
+		const maximizeButton = event.target.closest<HTMLElement>('[data-window-maximize]');
+		if (maximizeButton) {
+			event.preventDefault();
+			event.stopPropagation();
+			const panel = maximizeButton.closest<HTMLElement>(selectableWindows);
+			if (panel && desktopWindowQuery.matches) toggleWindowMaximize(panel);
+			return;
+		}
+
 		const closeButton = event.target.closest<HTMLElement>('[data-window-close]');
 		if (closeButton) {
 			event.preventDefault();
@@ -560,10 +725,18 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 
 	window.addEventListener('hashchange', syncSelectedWindow);
 	desktopWindowQuery.addEventListener('change', () => {
+		if (!desktopWindowQuery.matches) {
+			document.querySelectorAll<HTMLElement>(selectableWindows).forEach((panel) => {
+				panel.removeAttribute('data-window-minimized');
+				if (panel.hasAttribute('data-window-maximized')) restoreWindowLayout(panel);
+			});
+		}
 		syncAllShortcutStates();
+		syncAllWindowControls();
 		scheduleFitWindowsToStage();
 	});
 	window.addEventListener('resize', scheduleFitWindowsToStage);
 	syncAllShortcutStates();
+	syncAllWindowControls();
 	syncSelectedWindow();
 </script>

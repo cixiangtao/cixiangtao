@@ -380,6 +380,23 @@ a:focus-visible {
 		width: var(--window-width);
 		height: var(--window-height);
 	}
+
+	.mac-window[data-window-minimized] {
+		height: auto;
+		min-height: 0;
+	}
+
+	.mac-window[data-window-minimized] > :not(.mac-titlebar) {
+		display: none;
+	}
+
+	.mac-window[data-window-minimized] > .mac-titlebar {
+		border-bottom: 0;
+	}
+
+	.mac-window[data-window-maximized] .mac-resize-handles {
+		display: none;
+	}
 }
 
 .mac-window[data-dragging],
@@ -451,21 +468,26 @@ a:focus-visible {
 	background: var(--accent-coral);
 }
 
-button.mac-control--close {
+button.mac-control {
 	cursor: pointer;
 }
 
-button.mac-control--close:hover {
+button.mac-control:hover:not(:disabled),
+button.mac-control[aria-pressed='true'] {
 	box-shadow: inset 0 0 0 2px var(--paper);
 }
 
-button.mac-control--close:active {
+button.mac-control:active:not(:disabled) {
 	transform: translate(1px, 1px);
 }
 
-button.mac-control--close:focus-visible {
+button.mac-control:focus-visible {
 	outline: 2px solid var(--selection);
 	outline-offset: 2px;
+}
+
+button.mac-control:disabled {
+	cursor: default;
 }
 
 .mac-control--minimize::before,

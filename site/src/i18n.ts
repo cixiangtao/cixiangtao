@@ -36,6 +36,9 @@ export const messages = {
 		},
 		window: {
 			close: (title: string) => `Close “${title}” window`,
+			minimize: (title: string) => `Minimize “${title}” window`,
+			maximize: (title: string) => `Maximize “${title}” window`,
+			restore: (title: string) => `Restore “${title}” window`,
 		},
 		wallpaper: {
 			menuLabel: 'Desktop menu',
@@ -131,6 +134,9 @@ export const messages = {
 		},
 		window: {
 			close: (title: string) => `关闭“${title}”窗口`,
+			minimize: (title: string) => `最小化“${title}”窗口`,
+			maximize: (title: string) => `最大化“${title}”窗口`,
+			restore: (title: string) => `还原“${title}”窗口`,
 		},
 		wallpaper: {
 			menuLabel: '桌面菜单',
