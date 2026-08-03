@@ -28,6 +28,7 @@ const {
 	minWidth = 320,
 	minHeight = 220,
 } = Astro.props;
+const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 ---
 
 <section
@@ -75,13 +76,20 @@ const {
 			<span class="mac-scroll-arrow mac-scroll-arrow--left"></span>
 			<i class="mac-scroll-track"><b></b></i>
 			<span class="mac-scroll-arrow mac-scroll-arrow--right"></span>
-			{id ? <span class="mac-resize-grip" data-window-resize></span> : <span class="mac-resize-grip"></span>}
+			<span class="mac-resize-grip"></span>
 		</div>
 	)}
-	{id && !scrollbars && <span class="mac-resize-grip mac-resize-grip--standalone" data-window-resize aria-hidden="true"></span>}
+	{id && !scrollbars && <span class="mac-resize-grip mac-resize-grip--standalone" aria-hidden="true"></span>}
+	{id && (
+		<div class="mac-resize-handles" aria-hidden="true">
+			{resizeEdges.map((direction) => <span class:list={['mac-resize-handle', `mac-resize-handle--${direction}`]} data-window-resize={direction}></span>)}
+		</div>
+	)}
 </section>
 
 <script>
+	const resizeDirections = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
+	type ResizeDirection = (typeof resizeDirections)[number];
 	const selectableWindows = '.mac-window[id]';
 	const desktopWindowQuery = window.matchMedia('(min-width: 1024px)');
 	const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -93,6 +101,10 @@ const {
 
 	function clamp(value: number, min: number, max: number) {
 		return Math.min(Math.max(value, min), max);
+	}
+
+	function isResizeDirection(value: string | undefined): value is ResizeDirection {
+		return resizeDirections.some((direction) => direction === value);
 	}
 
 	function getWindow(id: string) {
@@ -360,6 +372,10 @@ const {
 		) return;
 
 		const handle = event.currentTarget;
+		const direction = handle.dataset.windowResize;
+		if (!isResizeDirection(direction)) return;
+		const resizeDirection = direction;
+
 		const panel = handle.closest<HTMLElement>(selectableWindows);
 		const stage = panel?.closest<HTMLElement>('.desktop-stage');
 		if (!panel || !stage) return;
@@ -368,29 +384,36 @@ const {
 		event.preventDefault();
 		event.stopPropagation();
 		selectWindow(resizePanel);
-		syncWindowHash(resizePanel);
 
 		const panelRect = resizePanel.getBoundingClientRect();
 		const stageRect = stage.getBoundingClientRect();
-		const originLeft = panelRect.left - stageRect.left;
-		const originTop = panelRect.top - stageRect.top;
-		const maximumWidth = Math.max(0, stageRect.width - originLeft);
-		const maximumHeight = Math.max(0, stageRect.height - originTop);
+		const startLeft = panelRect.left - stageRect.left;
+		const startTop = panelRect.top - stageRect.top;
+		const startWidth = panelRect.width;
+		const startHeight = panelRect.height;
+		const startRight = startLeft + startWidth;
+		const startBottom = startTop + startHeight;
+		const requestedMinimumWidth = Number.parseInt(resizePanel.dataset.windowMinWidth ?? '', 10) || defaultMinimumWindowWidth;
+		const requestedMinimumHeight = Number.parseInt(resizePanel.dataset.windowMinHeight ?? '', 10) || defaultMinimumWindowHeight;
+		const availableWidth = resizeDirection.includes('w') ? startRight : stageRect.width - startLeft;
+		const availableHeight = resizeDirection.includes('n') ? startBottom : stageRect.height - startTop;
 		const minimumWidth = Math.min(
-			Number.parseInt(resizePanel.dataset.windowMinWidth ?? '', 10) || defaultMinimumWindowWidth,
-			maximumWidth,
+			requestedMinimumWidth,
+			availableWidth,
 		);
 		const minimumHeight = Math.min(
-			Number.parseInt(resizePanel.dataset.windowMinHeight ?? '', 10) || defaultMinimumWindowHeight,
-			maximumHeight,
+			requestedMinimumHeight,
+			availableHeight,
 		);
 		const pointerId = event.pointerId;
 		const startX = event.clientX;
 		const startY = event.clientY;
-		const startWidth = panelRect.width;
-		const startHeight = panelRect.height;
 		let resizing = true;
 
+		resizePanel.style.left = `${startLeft}px`;
+		resizePanel.style.top = `${startTop}px`;
+		resizePanel.style.right = 'auto';
+		resizePanel.style.bottom = 'auto';
 		resizePanel.style.setProperty('--window-width', `${startWidth}px`);
 		resizePanel.style.setProperty('--window-height', `${startHeight}px`);
 		resizePanel.toggleAttribute('data-window-resized', true);
@@ -399,8 +422,29 @@ const {
 		function resizeWindow(moveEvent: PointerEvent) {
 			if (moveEvent.pointerId !== pointerId) return;
 
-			const width = clamp(startWidth + moveEvent.clientX - startX, minimumWidth, maximumWidth);
-			const height = clamp(startHeight + moveEvent.clientY - startY, minimumHeight, maximumHeight);
+			const deltaX = moveEvent.clientX - startX;
+			const deltaY = moveEvent.clientY - startY;
+			let left = startLeft;
+			let top = startTop;
+			let width = startWidth;
+			let height = startHeight;
+
+			if (resizeDirection.includes('w')) {
+				left = clamp(startLeft + deltaX, 0, startRight - minimumWidth);
+				width = startRight - left;
+			} else if (resizeDirection.includes('e')) {
+				width = clamp(startWidth + deltaX, minimumWidth, stageRect.width - startLeft);
+			}
+
+			if (resizeDirection.includes('n')) {
+				top = clamp(startTop + deltaY, 0, startBottom - minimumHeight);
+				height = startBottom - top;
+			} else if (resizeDirection.includes('s')) {
+				height = clamp(startHeight + deltaY, minimumHeight, stageRect.height - startTop);
+			}
+
+			resizePanel.style.left = `${Math.floor(left)}px`;
+			resizePanel.style.top = `${Math.floor(top)}px`;
 			resizePanel.style.setProperty('--window-width', `${Math.floor(width)}px`);
 			resizePanel.style.setProperty('--window-height', `${Math.floor(height)}px`);
 		}
@@ -433,7 +477,6 @@ const {
 		if (!selectedWindow) return;
 
 		selectWindow(selectedWindow);
-		syncWindowHash(selectedWindow);
 	});
 
 	document.addEventListener('click', (event) => {
