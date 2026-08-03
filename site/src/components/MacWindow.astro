@@ -14,6 +14,8 @@ interface Props {
 	minWidth?: number;
 	/** Minimum desktop resize height in CSS pixels. */
 	minHeight?: number;
+	/** Prevent desktop resizing from making sequential body content overflow vertically. */
+	fitContentHeight?: boolean;
 }
 
 const {
@@ -27,6 +29,7 @@ const {
 	closeLabel = `Close “${title}” window`,
 	minWidth = 320,
 	minHeight = 220,
+	fitContentHeight = false,
 } = Astro.props;
 const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 ---
@@ -37,6 +40,7 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 	aria-label={label}
 	data-window-min-width={id ? minWidth : undefined}
 	data-window-min-height={id ? minHeight : undefined}
+	data-window-fit-content-height={id && fitContentHeight ? '' : undefined}
 >
 	<header class="mac-titlebar">
 		<ModuleIcon name={icon} size="window" />
@@ -103,6 +107,36 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 
 	function isResizeDirection(value: string | undefined): value is ResizeDirection {
 		return resizeDirections.some((direction) => direction === value);
+	}
+
+	function getContentMinimumHeight(panel: HTMLElement) {
+		if (!panel.hasAttribute('data-window-fit-content-height')) return 0;
+
+		const titlebar = panel.querySelector<HTMLElement>(':scope > .mac-titlebar');
+		const body = panel.querySelector<HTMLElement>(':scope > .mac-window-content > .mac-window-body');
+		const horizontalScrollbar = panel.querySelector<HTMLElement>(':scope > .mac-scrollbar--horizontal');
+		if (!titlebar || !body) return 0;
+
+		const bodyStyle = window.getComputedStyle(body);
+		const panelStyle = window.getComputedStyle(panel);
+		const bodyChildren = [...body.children];
+		const bodyPadding = Number.parseFloat(bodyStyle.paddingTop) + Number.parseFloat(bodyStyle.paddingBottom);
+		const bodyGap = (Number.parseFloat(bodyStyle.rowGap) || 0) * Math.max(0, bodyChildren.length - 1);
+		const bodyContentHeight = bodyChildren.reduce((height, child) => {
+			const childStyle = window.getComputedStyle(child);
+			return height
+				+ child.getBoundingClientRect().height
+				+ (Number.parseFloat(childStyle.marginTop) || 0)
+				+ (Number.parseFloat(childStyle.marginBottom) || 0);
+		}, bodyPadding + bodyGap);
+		const panelBorders = Number.parseFloat(panelStyle.borderTopWidth) + Number.parseFloat(panelStyle.borderBottomWidth);
+
+		return Math.ceil(
+			panelBorders
+			+ titlebar.getBoundingClientRect().height
+			+ bodyContentHeight
+			+ (horizontalScrollbar?.getBoundingClientRect().height ?? 0),
+		);
 	}
 
 	function getWindow(id: string) {
@@ -399,10 +433,6 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 			requestedMinimumWidth,
 			availableWidth,
 		);
-		const minimumHeight = Math.min(
-			requestedMinimumHeight,
-			availableHeight,
-		);
 		const pointerId = event.pointerId;
 		const startX = event.clientX;
 		const startY = event.clientY;
@@ -433,17 +463,24 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 			} else if (resizeDirection.includes('e')) {
 				width = clamp(startWidth + deltaX, minimumWidth, stageRect.width - startLeft);
 			}
+			resizePanel.style.left = `${Math.floor(left)}px`;
+			resizePanel.style.setProperty('--window-width', `${Math.floor(width)}px`);
+
+			const minimumHeight = Math.min(
+				Math.max(requestedMinimumHeight, getContentMinimumHeight(resizePanel)),
+				availableHeight,
+			);
 
 			if (resizeDirection.includes('n')) {
 				top = clamp(startTop + deltaY, 0, startBottom - minimumHeight);
 				height = startBottom - top;
 			} else if (resizeDirection.includes('s')) {
 				height = clamp(startHeight + deltaY, minimumHeight, stageRect.height - startTop);
+			} else {
+				height = Math.max(startHeight, minimumHeight);
 			}
 
-			resizePanel.style.left = `${Math.floor(left)}px`;
 			resizePanel.style.top = `${Math.floor(top)}px`;
-			resizePanel.style.setProperty('--window-width', `${Math.floor(width)}px`);
 			resizePanel.style.setProperty('--window-height', `${Math.floor(height)}px`);
 		}
 
