@@ -612,9 +612,9 @@ button.mac-control--close:focus-visible {
 .site-footer {
 	display: flex;
 	justify-content: space-between;
-	width: min(100% - 32px, 1400px);
+	width: 100%;
 	margin: 0 auto;
-	padding: 18px 4px 26px;
+	padding: 18px 20px 26px;
 	color: white;
 	font-size: 0.68rem;
 	font-weight: 750;

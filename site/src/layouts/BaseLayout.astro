@@ -77,7 +77,7 @@ const wallpaperOptions = wallpaperIds.map((id) => ({ id, label: copy.wallpaper.n
 		data-nav-projects={copy.sections.projects}
 		data-nav-writing={copy.sections.writing}
 	>
-		<header class="system-bar">
+		<header class="system-bar w-full">
 			<div class="system-context-group">
 				<nav class="system-home" aria-label={copy.sections.home}>
 					<a class="system-tool system-tool--avatar" href={homeHref} aria-label={copy.sections.home} data-label={copy.sections.home} data-nav="home">
@@ -159,11 +159,11 @@ const wallpaperOptions = wallpaperIds.map((id) => ({ id, label: copy.wallpaper.n
 			</div>
 		</ContextMenu>
 
-		<main class="flex flex-1 flex-col">
+		<main class="flex w-full flex-1 flex-col">
 			<slot />
 		</main>
 
-		<footer class="site-footer">
+		<footer class="site-footer w-full">
 			<p>{copy.footer.motto}</p>
 			<p>{copy.footer.source}</p>
 		</footer>
