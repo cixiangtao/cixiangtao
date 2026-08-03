@@ -73,6 +73,7 @@ const {
 	const desktopWindowQuery = window.matchMedia('(min-width: 1024px)');
 	const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const closeTimers = new WeakMap<HTMLElement, number>();
+	let topWindowLayer = 0;
 
 	function clamp(value: number, min: number, max: number) {
 		return Math.min(Math.max(value, min), max);
@@ -115,8 +116,28 @@ const {
 		document.querySelectorAll<HTMLElement>(selectableWindows).forEach(syncShortcutState);
 	}
 
+	function getWindowLayer(panel: HTMLElement) {
+		const assignedLayer = Number.parseInt(panel.style.getPropertyValue('--window-layer'), 10);
+		if (Number.isFinite(assignedLayer)) return assignedLayer;
+
+		return Number.parseInt(window.getComputedStyle(panel).zIndex, 10) || 0;
+	}
+
+	function bringWindowToFront(panel: HTMLElement) {
+		if (!desktopWindowQuery.matches) return;
+
+		const currentTopLayer = Math.max(
+			topWindowLayer,
+			...[...document.querySelectorAll<HTMLElement>(selectableWindows)].map(getWindowLayer),
+		);
+		topWindowLayer = currentTopLayer + 1;
+		panel.style.setProperty('--window-layer', String(topWindowLayer));
+		panel.toggleAttribute('data-window-layered', true);
+	}
+
 	function selectWindow(selectedWindow: HTMLElement | null) {
 		const visibleWindow = selectedWindow && !selectedWindow.hidden ? selectedWindow : null;
+		if (visibleWindow) bringWindowToFront(visibleWindow);
 		document.querySelectorAll<HTMLElement>(selectableWindows).forEach((panel) => {
 			panel.toggleAttribute('data-selected', panel === visibleWindow);
 		});
@@ -232,9 +253,6 @@ const {
 		if (!stage) return;
 
 		event.preventDefault();
-		selectWindow(dragPanel);
-		syncWindowHash(dragPanel);
-
 		const panelRect = dragPanel.getBoundingClientRect();
 		const stageRect = stage.getBoundingClientRect();
 		const originLeft = panelRect.left - stageRect.left;

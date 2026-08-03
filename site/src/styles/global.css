@@ -300,6 +300,10 @@ a:focus-visible {
 	box-shadow: inset -2px -2px 0 rgb(0 0 0 / 18%);
 }
 
+.desktop-stage {
+	isolation: isolate;
+}
+
 .mac-window {
 	overflow: hidden;
 	border: 1px solid var(--ink);
@@ -351,10 +355,15 @@ a:focus-visible {
 }
 
 .mac-window[data-selected] {
-	z-index: 80;
 	box-shadow:
 		0 0 0 3px var(--accent-yellow),
 		5px 5px 0 rgb(23 23 27 / 46%);
+}
+
+@media (min-width: 1024px) {
+	.mac-window[data-window-layered] {
+		z-index: var(--window-layer);
+	}
 }
 
 .mac-window[data-dragging] {
