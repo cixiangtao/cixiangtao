@@ -54,6 +54,10 @@ export const messages = {
 			copy: 'I build open-source projects and turn the lessons behind them into reusable tools and articles.',
 			openProfile: "Open cixiangtao's GitHub profile",
 			email: (address: string) => `Email cixiangtao at ${address}`,
+			linkNames: {
+				github: 'GitHub',
+				email: 'Email',
+			},
 			avatarAlt: "cixiangtao's GitHub avatar",
 			publicLinks: 'Public links',
 			status: 'Always building',
@@ -145,6 +149,10 @@ export const messages = {
 			copy: '持续构建开源项目，也把实践过程整理成可以复用的工具和文章。',
 			openProfile: '打开 cixiangtao 的 GitHub 主页',
 			email: (address: string) => `发送邮件至 ${address}`,
+			linkNames: {
+				github: 'GitHub',
+				email: '邮箱',
+			},
 			avatarAlt: 'cixiangtao 的 GitHub 头像',
 			publicLinks: '公开入口',
 			status: '持续构建',

@@ -30,9 +30,17 @@ const contactEmail = 'cixiangtao@gmail.com';
 	</div>
 	<div class="about-status flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper)] px-4 py-[9px] text-[0.72rem] font-[750] max-[760px]:gap-2.5">
 		<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label={copy.about.publicLinks}>
-			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.about.openProfile}><i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i></a>
+			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.about.openProfile} title={copy.about.linkNames.github}>
+				<svg class="shortcut-icon shortcut-icon--github" viewBox="0 0 16 16" aria-hidden="true">
+					<path d="M6.766 11.328c-2.063-.25-3.516-1.734-3.516-3.656 0-.781.281-1.625.75-2.188-.203-.515-.172-1.609.063-2.062.625-.078 1.468.25 1.968.703.594-.187 1.219-.281 1.985-.281.765 0 1.39.094 1.953.265.484-.437 1.344-.765 1.969-.687.218.422.25 1.515.046 2.047.5.593.766 1.39.766 2.203 0 1.922-1.453 3.375-3.547 3.64.531.344.89 1.094.89 1.954v1.625c0 .468.391.734.86.547C13.781 14.359 16 11.53 16 8.03 16 3.61 12.406 0 7.984 0 3.563 0 0 3.61 0 8.031a7.88 7.88 0 0 0 5.172 7.422c.422.156.828-.125.828-.547v-1.25c-.219.094-.5.156-.75.156-1.031 0-1.64-.562-2.078-1.609-.172-.422-.36-.672-.719-.719-.187-.015-.25-.093-.25-.187 0-.188.313-.328.625-.328.453 0 .844.281 1.25.86.313.452.64.655 1.031.655s.641-.14 1-.5c.266-.265.47-.5.657-.656"></path>
+				</svg>
+				<span class="shortcut-tooltip" aria-hidden="true">{copy.about.linkNames.github}</span>
+			</a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
-			<a href={`mailto:${contactEmail}`} aria-label={copy.about.email(contactEmail)} title={contactEmail}><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
+			<a href={`mailto:${contactEmail}`} aria-label={copy.about.email(contactEmail)} title={copy.about.linkNames.email}>
+				<i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i>
+				<span class="shortcut-tooltip" aria-hidden="true">{copy.about.linkNames.email}</span>
+			</a>
 		</nav>
 		<span class="inline-flex items-center gap-[7px]"><i class="status-dot" aria-hidden="true"></i>{copy.about.status}</span>
 	</div>
@@ -83,10 +91,13 @@ const contactEmail = 'cixiangtao@gmail.com';
 	}
 
 	.about-shortcuts a {
+		position: relative;
 		display: grid;
 		width: 24px;
 		height: 24px;
+		color: var(--ink);
 		place-items: center;
+		text-decoration: none;
 	}
 
 	.about-shortcuts a:hover,
@@ -104,19 +115,8 @@ const contactEmail = 'cixiangtao@gmail.com';
 	}
 
 	.shortcut-icon--github {
-		border: 1px solid var(--ink);
-		border-radius: 50%;
-		background: var(--ink);
-	}
-
-	.shortcut-icon--github::after {
-		position: absolute;
-		right: 4px;
-		bottom: -3px;
-		width: 4px;
-		height: 6px;
-		background: var(--ink);
-		content: "";
+		height: 18px;
+		fill: currentColor;
 	}
 
 	.shortcut-icon--mail {
@@ -144,9 +144,35 @@ const contactEmail = 'cixiangtao@gmail.com';
 		transform: rotate(-30deg);
 	}
 
-	.about-status a {
-		text-decoration: underline;
-		text-underline-offset: 3px;
+	.shortcut-tooltip {
+		position: absolute;
+		bottom: calc(100% + 7px);
+		left: 50%;
+		z-index: 3;
+		padding: 3px 6px;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+		box-shadow: 2px 2px 0 rgb(23 23 27 / 32%);
+		font-family: var(--font-data);
+		font-size: 0.6rem;
+		font-weight: 800;
+		line-height: 1.2;
+		white-space: nowrap;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transform: translate(-50%, 3px);
+		transition:
+			opacity 90ms ease-out,
+			transform 90ms ease-out,
+			visibility 90ms;
+	}
+
+	.about-shortcuts a:hover .shortcut-tooltip,
+	.about-shortcuts a:focus-visible .shortcut-tooltip {
+		opacity: 1;
+		visibility: visible;
+		transform: translate(-50%, 0);
 	}
 
 	@media (max-width: 760px) {
