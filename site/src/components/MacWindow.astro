@@ -76,10 +76,8 @@ const resizeEdges = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw'] as const;
 			<span class="mac-scroll-arrow mac-scroll-arrow--left"></span>
 			<i class="mac-scroll-track"><b></b></i>
 			<span class="mac-scroll-arrow mac-scroll-arrow--right"></span>
-			<span class="mac-resize-grip"></span>
 		</div>
 	)}
-	{id && !scrollbars && <span class="mac-resize-grip mac-resize-grip--standalone" aria-hidden="true"></span>}
 	{id && (
 		<div class="mac-resize-handles" aria-hidden="true">
 			{resizeEdges.map((direction) => <span class:list={['mac-resize-handle', `mac-resize-handle--${direction}`]} data-window-resize={direction}></span>)}

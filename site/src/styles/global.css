@@ -363,6 +363,7 @@ a:focus-visible {
 @media (min-width: 1024px) {
 	.mac-window[id] {
 		display: flex;
+		overflow: visible;
 		flex-direction: column;
 	}
 
@@ -536,13 +537,12 @@ button.mac-control--close:focus-visible {
 }
 
 .mac-scrollbar--horizontal {
-	grid-template-columns: 18px minmax(0, 1fr) 18px 18px;
+	grid-template-columns: 18px minmax(0, 1fr) 18px;
 	height: 18px;
 	border-top: 1px solid var(--ink);
 }
 
-.mac-scroll-arrow,
-.mac-resize-grip {
+.mac-scroll-arrow {
 	position: relative;
 	display: block;
 	width: 18px;
@@ -558,10 +558,12 @@ button.mac-control--close:focus-visible {
 	border-top: 1px solid var(--ink);
 }
 
-.mac-scrollbar--horizontal .mac-scroll-arrow--left,
-.mac-scrollbar--horizontal .mac-scroll-arrow--right,
-.mac-resize-grip {
+.mac-scrollbar--horizontal .mac-scroll-arrow--left {
 	border-right: 1px solid var(--ink);
+}
+
+.mac-scrollbar--horizontal .mac-scroll-arrow--right {
+	border-left: 1px solid var(--ink);
 }
 
 .mac-scroll-arrow::before {
@@ -629,42 +631,16 @@ button.mac-control--close:focus-visible {
 	width: 24%;
 }
 
-.mac-resize-grip {
-	border-right: 0;
-	background:
-		linear-gradient(135deg, transparent 46%, var(--ink) 47% 53%, transparent 54%), var(--paper);
-}
-
-.mac-resize-grip--standalone,
 .mac-resize-handles,
 .mac-resize-handle {
 	display: none;
 }
 
 @media (min-width: 1024px) {
-	.mac-resize-grip {
-		cursor: nwse-resize;
-		touch-action: none;
-		user-select: none;
-	}
-
-	.mac-resize-grip:hover {
-		background:
-			linear-gradient(135deg, transparent 46%, var(--ink) 47% 53%, transparent 54%),
-			var(--accent-yellow);
-	}
-
-	.mac-resize-grip--standalone {
-		position: absolute;
-		z-index: 2;
-		right: 0;
-		bottom: 0;
-		display: block;
-		border-top: 1px solid var(--ink);
-		border-left: 1px solid var(--ink);
-	}
-
 	.mac-resize-handles {
+		--mac-resize-edge-offset: -6px;
+		--mac-resize-corner-offset: -9px;
+
 		position: absolute;
 		z-index: 3;
 		inset: 0;
@@ -682,35 +658,35 @@ button.mac-control--close:focus-visible {
 
 	.mac-resize-handle--n,
 	.mac-resize-handle--s {
-		right: 11px;
-		left: 11px;
-		height: 8px;
+		right: 16px;
+		left: 16px;
+		height: 10px;
 	}
 
 	.mac-resize-handle--n {
-		top: -3px;
+		top: var(--mac-resize-edge-offset);
 		cursor: ns-resize;
 	}
 
 	.mac-resize-handle--s {
-		bottom: -3px;
+		bottom: var(--mac-resize-edge-offset);
 		cursor: ns-resize;
 	}
 
 	.mac-resize-handle--e,
 	.mac-resize-handle--w {
-		top: 11px;
-		bottom: 11px;
-		width: 8px;
+		top: 16px;
+		bottom: 16px;
+		width: 10px;
 	}
 
 	.mac-resize-handle--e {
-		right: -3px;
+		right: var(--mac-resize-edge-offset);
 		cursor: ew-resize;
 	}
 
 	.mac-resize-handle--w {
-		left: -3px;
+		left: var(--mac-resize-edge-offset);
 		cursor: ew-resize;
 	}
 
@@ -719,31 +695,31 @@ button.mac-control--close:focus-visible {
 	.mac-resize-handle--sw,
 	.mac-resize-handle--nw {
 		z-index: 1;
-		width: 14px;
-		height: 14px;
+		width: 16px;
+		height: 16px;
 	}
 
 	.mac-resize-handle--ne {
-		top: -3px;
-		right: -3px;
+		top: var(--mac-resize-corner-offset);
+		right: var(--mac-resize-corner-offset);
 		cursor: nesw-resize;
 	}
 
 	.mac-resize-handle--se {
-		right: -3px;
-		bottom: -3px;
+		right: var(--mac-resize-corner-offset);
+		bottom: var(--mac-resize-corner-offset);
 		cursor: nwse-resize;
 	}
 
 	.mac-resize-handle--sw {
-		bottom: -3px;
-		left: -3px;
+		bottom: var(--mac-resize-corner-offset);
+		left: var(--mac-resize-corner-offset);
 		cursor: nesw-resize;
 	}
 
 	.mac-resize-handle--nw {
-		top: -3px;
-		left: -3px;
+		top: var(--mac-resize-corner-offset);
+		left: var(--mac-resize-corner-offset);
 		cursor: nwse-resize;
 	}
 
