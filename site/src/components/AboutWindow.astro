@@ -8,6 +8,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const copy = getMessages(locale);
+const contactEmail = 'cixiangtao@gmail.com';
 ---
 
 <MacWindow
@@ -29,14 +30,9 @@ const copy = getMessages(locale);
 	</div>
 	<div class="about-status flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper)] px-4 py-[9px] text-[0.72rem] font-[750] max-[760px]:gap-2.5">
 		<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label={copy.about.publicLinks}>
-			<a class="about-github-link" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.about.openProfile}>
-				<i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i>
-				<span>GitHub</span>
-			</a>
+			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.about.openProfile}><i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i></a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
-			<a href="#projects" aria-label={copy.sections.projects}><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
-			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
-			<a href="#writing" aria-label={copy.sections.writing}><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
+			<a href={`mailto:${contactEmail}`} aria-label={copy.about.email(contactEmail)} title={contactEmail}><i class="shortcut-icon shortcut-icon--mail" aria-hidden="true"></i></a>
 		</nav>
 		<span class="inline-flex items-center gap-[7px]"><i class="status-dot" aria-hidden="true"></i>{copy.about.status}</span>
 	</div>
@@ -93,16 +89,6 @@ const copy = getMessages(locale);
 		place-items: center;
 	}
 
-	.about-shortcuts .about-github-link {
-		display: inline-flex;
-		width: auto;
-		gap: 6px;
-		padding-inline: 3px;
-		font-family: var(--font-data);
-		font-size: 0.64rem;
-		font-weight: 900;
-	}
-
 	.about-shortcuts a:hover,
 	.about-shortcuts a:focus-visible {
 		background: var(--accent-yellow);
@@ -130,24 +116,6 @@ const copy = getMessages(locale);
 		width: 4px;
 		height: 6px;
 		background: var(--ink);
-		content: "";
-	}
-
-	.shortcut-icon--folder {
-		margin-top: 3px;
-		border: 1px solid var(--ink);
-		background: var(--accent-yellow);
-	}
-
-	.shortcut-icon--folder::before {
-		position: absolute;
-		top: -4px;
-		left: -1px;
-		width: 8px;
-		height: 4px;
-		border: 1px solid var(--ink);
-		border-bottom: 0;
-		background: var(--accent-yellow);
 		content: "";
 	}
 

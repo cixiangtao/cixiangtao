@@ -243,7 +243,7 @@ components:
 ### Homepage Window Compositions
 
 - **实现：** `AboutWindow`、`ProjectsWindow` 与 `WritingWindow` 分别封装各自的内容、数据和局部图形样式，并统一复用 `MacWindow` 的标题栏、滚动轨道、选中和拖动能力。
-- **站外入口：** GitHub 归入关于我窗口，并同时显示品牌图标与文字，优先保证识别性；系统栏不承担站外导航。
+- **站外入口：** GitHub 与邮箱归入关于我窗口底部，仅显示可识别的品牌与信封图标，并保留可访问名称和邮箱提示；系统栏不承担站外导航。
 - **边界：** 首页只负责工作台构图和数据装配；窗口内容变化不应回流为页面级样式。
 
 ### Article File Row
