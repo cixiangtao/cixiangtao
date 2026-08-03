@@ -16,6 +16,8 @@ const contactEmail = 'cixiangtao@gmail.com';
 	icon="profile"
 	id="about"
 	closeLabel={copy.window.close(copy.sections.about)}
+	minWidth={380}
+	minHeight={250}
 	class="order-1 lg:absolute lg:left-[13%] lg:top-[6%] lg:z-20 lg:w-[36%]"
 >
 	<div class="about-panel grid grid-cols-[88px_minmax(0,1fr)] items-center gap-[18px] p-[22px] max-[760px]:grid-cols-[72px_minmax(0,1fr)] max-[760px]:p-[17px]">
@@ -178,6 +180,18 @@ const contactEmail = 'cixiangtao@gmail.com';
 	@media (max-width: 760px) {
 		.pixel-avatar {
 			width: 72px;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		#about .mac-window-body {
+			display: flex;
+			height: 100%;
+			flex-direction: column;
+		}
+
+		#about .about-status {
+			margin-top: auto;
 		}
 	}
 </style>

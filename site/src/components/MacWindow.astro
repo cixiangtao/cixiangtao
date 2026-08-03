@@ -10,6 +10,10 @@ interface Props {
 	label?: string;
 	scrollbars?: boolean;
 	closeLabel?: string;
+	/** Minimum desktop resize width in CSS pixels. */
+	minWidth?: number;
+	/** Minimum desktop resize height in CSS pixels. */
+	minHeight?: number;
 }
 
 const {
@@ -21,10 +25,18 @@ const {
 	label = title,
 	scrollbars = false,
 	closeLabel = `Close “${title}” window`,
+	minWidth = 320,
+	minHeight = 220,
 } = Astro.props;
 ---
 
-<section id={id} class:list={['mac-window', `mac-window--${tone}`, className]} aria-label={label}>
+<section
+	id={id}
+	class:list={['mac-window', `mac-window--${tone}`, className]}
+	aria-label={label}
+	data-window-min-width={id ? minWidth : undefined}
+	data-window-min-height={id ? minHeight : undefined}
+>
 	<header class="mac-titlebar">
 		<ModuleIcon name={icon} size="window" />
 		<div class="mac-title-lines" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
@@ -63,9 +75,10 @@ const {
 			<span class="mac-scroll-arrow mac-scroll-arrow--left"></span>
 			<i class="mac-scroll-track"><b></b></i>
 			<span class="mac-scroll-arrow mac-scroll-arrow--right"></span>
-			<span class="mac-resize-grip"></span>
+			{id ? <span class="mac-resize-grip" data-window-resize></span> : <span class="mac-resize-grip"></span>}
 		</div>
 	)}
+	{id && !scrollbars && <span class="mac-resize-grip mac-resize-grip--standalone" data-window-resize aria-hidden="true"></span>}
 </section>
 
 <script>
@@ -73,6 +86,9 @@ const {
 	const desktopWindowQuery = window.matchMedia('(min-width: 1024px)');
 	const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const closeTimers = new WeakMap<HTMLElement, number>();
+	const defaultMinimumWindowWidth = 320;
+	const defaultMinimumWindowHeight = 220;
+	let fitWindowsFrame = 0;
 	let topWindowLayer = 0;
 
 	function clamp(value: number, min: number, max: number) {
@@ -135,6 +151,36 @@ const {
 		panel.toggleAttribute('data-window-layered', true);
 	}
 
+	function fitWindowToStage(panel: HTMLElement) {
+		if (!desktopWindowQuery.matches || panel.hidden || !panel.hasAttribute('data-window-resized')) return;
+
+		const stage = panel.closest<HTMLElement>('.desktop-stage');
+		if (!stage) return;
+
+		const panelRect = panel.getBoundingClientRect();
+		const stageRect = stage.getBoundingClientRect();
+		const width = Math.min(panelRect.width, stageRect.width);
+		const height = Math.min(panelRect.height, stageRect.height);
+		const left = clamp(panelRect.left - stageRect.left, 0, Math.max(0, stageRect.width - width));
+		const top = clamp(panelRect.top - stageRect.top, 0, Math.max(0, stageRect.height - height));
+
+		panel.style.left = `${Math.floor(left)}px`;
+		panel.style.top = `${Math.floor(top)}px`;
+		panel.style.right = 'auto';
+		panel.style.bottom = 'auto';
+		panel.style.setProperty('--window-width', `${Math.floor(width)}px`);
+		panel.style.setProperty('--window-height', `${Math.floor(height)}px`);
+	}
+
+	function scheduleFitWindowsToStage() {
+		if (fitWindowsFrame) return;
+
+		fitWindowsFrame = window.requestAnimationFrame(() => {
+			fitWindowsFrame = 0;
+			document.querySelectorAll<HTMLElement>(`${selectableWindows}[data-window-resized]`).forEach(fitWindowToStage);
+		});
+	}
+
 	function selectWindow(selectedWindow: HTMLElement | null) {
 		const visibleWindow = selectedWindow && !selectedWindow.hidden ? selectedWindow : null;
 		if (visibleWindow) bringWindowToFront(visibleWindow);
@@ -178,6 +224,7 @@ const {
 		const wasHidden = panel.hidden || panel.hasAttribute('data-closing');
 		panel.hidden = false;
 		panel.removeAttribute('data-closing');
+		fitWindowToStage(panel);
 		if (wasHidden && !reducedMotionQuery.matches) {
 			panel.toggleAttribute('data-opening', true);
 			window.setTimeout(() => panel.removeAttribute('data-opening'), 160);
@@ -305,6 +352,80 @@ const {
 		window.addEventListener('blur', finishWindowDragOnBlur);
 	}
 
+	function beginWindowResize(event: PointerEvent) {
+		if (
+			event.button !== 0 ||
+			!desktopWindowQuery.matches ||
+			!(event.currentTarget instanceof HTMLElement)
+		) return;
+
+		const handle = event.currentTarget;
+		const panel = handle.closest<HTMLElement>(selectableWindows);
+		const stage = panel?.closest<HTMLElement>('.desktop-stage');
+		if (!panel || !stage) return;
+		const resizePanel = panel;
+
+		event.preventDefault();
+		event.stopPropagation();
+		selectWindow(resizePanel);
+		syncWindowHash(resizePanel);
+
+		const panelRect = resizePanel.getBoundingClientRect();
+		const stageRect = stage.getBoundingClientRect();
+		const originLeft = panelRect.left - stageRect.left;
+		const originTop = panelRect.top - stageRect.top;
+		const maximumWidth = Math.max(0, stageRect.width - originLeft);
+		const maximumHeight = Math.max(0, stageRect.height - originTop);
+		const minimumWidth = Math.min(
+			Number.parseInt(resizePanel.dataset.windowMinWidth ?? '', 10) || defaultMinimumWindowWidth,
+			maximumWidth,
+		);
+		const minimumHeight = Math.min(
+			Number.parseInt(resizePanel.dataset.windowMinHeight ?? '', 10) || defaultMinimumWindowHeight,
+			maximumHeight,
+		);
+		const pointerId = event.pointerId;
+		const startX = event.clientX;
+		const startY = event.clientY;
+		const startWidth = panelRect.width;
+		const startHeight = panelRect.height;
+		let resizing = true;
+
+		resizePanel.style.setProperty('--window-width', `${startWidth}px`);
+		resizePanel.style.setProperty('--window-height', `${startHeight}px`);
+		resizePanel.toggleAttribute('data-window-resized', true);
+		resizePanel.toggleAttribute('data-resizing', true);
+
+		function resizeWindow(moveEvent: PointerEvent) {
+			if (moveEvent.pointerId !== pointerId) return;
+
+			const width = clamp(startWidth + moveEvent.clientX - startX, minimumWidth, maximumWidth);
+			const height = clamp(startHeight + moveEvent.clientY - startY, minimumHeight, maximumHeight);
+			resizePanel.style.setProperty('--window-width', `${Math.floor(width)}px`);
+			resizePanel.style.setProperty('--window-height', `${Math.floor(height)}px`);
+		}
+
+		function finishWindowResize(finishEvent?: PointerEvent) {
+			if (!resizing || (finishEvent && finishEvent.pointerId !== pointerId)) return;
+			resizing = false;
+
+			window.removeEventListener('pointermove', resizeWindow);
+			window.removeEventListener('pointerup', finishWindowResize);
+			window.removeEventListener('pointercancel', finishWindowResize);
+			window.removeEventListener('blur', finishWindowResizeOnBlur);
+			resizePanel.removeAttribute('data-resizing');
+		}
+
+		function finishWindowResizeOnBlur() {
+			finishWindowResize();
+		}
+
+		window.addEventListener('pointermove', resizeWindow);
+		window.addEventListener('pointerup', finishWindowResize);
+		window.addEventListener('pointercancel', finishWindowResize);
+		window.addEventListener('blur', finishWindowResizeOnBlur);
+	}
+
 	document.addEventListener('pointerdown', (event) => {
 		if (event.button !== 0 || !(event.target instanceof Element)) return;
 
@@ -355,9 +476,16 @@ const {
 	document.querySelectorAll<HTMLElement>(`${selectableWindows} > .mac-titlebar`).forEach((handle) => {
 		handle.addEventListener('pointerdown', beginWindowDrag);
 	});
+	document.querySelectorAll<HTMLElement>(`${selectableWindows} [data-window-resize]`).forEach((handle) => {
+		handle.addEventListener('pointerdown', beginWindowResize);
+	});
 
 	window.addEventListener('hashchange', syncSelectedWindow);
-	desktopWindowQuery.addEventListener('change', syncAllShortcutStates);
+	desktopWindowQuery.addEventListener('change', () => {
+		syncAllShortcutStates();
+		scheduleFitWindowsToStage();
+	});
+	window.addEventListener('resize', scheduleFitWindowsToStage);
 	syncAllShortcutStates();
 	syncSelectedWindow();
 </script>

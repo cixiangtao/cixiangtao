@@ -361,12 +361,28 @@ a:focus-visible {
 }
 
 @media (min-width: 1024px) {
+	.mac-window[id] {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.mac-window[id] > .mac-window-content {
+		flex: 1;
+		min-height: 0;
+	}
+
 	.mac-window[data-window-layered] {
 		z-index: var(--window-layer);
 	}
+
+	.mac-window[data-window-resized] {
+		width: var(--window-width);
+		height: var(--window-height);
+	}
 }
 
-.mac-window[data-dragging] {
+.mac-window[data-dragging],
+.mac-window[data-resizing] {
 	box-shadow:
 		0 0 0 3px var(--accent-yellow),
 		8px 8px 0 rgb(23 23 27 / 52%);
@@ -617,6 +633,33 @@ button.mac-control--close:focus-visible {
 	border-right: 0;
 	background:
 		linear-gradient(135deg, transparent 46%, var(--ink) 47% 53%, transparent 54%), var(--paper);
+}
+
+@media (min-width: 1024px) {
+	.mac-resize-grip {
+		cursor: nwse-resize;
+		touch-action: none;
+		user-select: none;
+	}
+
+	.mac-resize-grip:hover {
+		background:
+			linear-gradient(135deg, transparent 46%, var(--ink) 47% 53%, transparent 54%),
+			var(--accent-yellow);
+	}
+
+	.mac-resize-grip--standalone {
+		position: absolute;
+		z-index: 2;
+		right: 0;
+		bottom: 0;
+		border-top: 1px solid var(--ink);
+		border-left: 1px solid var(--ink);
+	}
+
+	.mac-window[data-resizing] {
+		will-change: width, height;
+	}
 }
 
 .site-footer {
