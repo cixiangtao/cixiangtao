@@ -101,13 +101,13 @@ a:focus-visible {
 .system-context-group,
 .system-actions,
 .system-home,
-.system-external,
+.system-controls,
 .system-status {
 	display: flex;
 	align-items: center;
 }
 
-.system-external {
+.system-controls {
 	gap: 8px;
 }
 
@@ -152,12 +152,6 @@ a:focus-visible {
 .system-tool:hover::after,
 .system-tool:focus-visible::after {
 	display: block;
-}
-
-.system-external .system-tool::after {
-	right: 0;
-	left: auto;
-	transform: none;
 }
 
 .system-wallpaper-button {
@@ -271,17 +265,24 @@ a:focus-visible {
 }
 
 .system-context,
-.system-presence {
+.system-clock {
 	font-family: var(--font-data);
 	font-size: 0.66rem;
 	font-weight: 800;
 }
 
-.system-context,
-.system-presence {
+.system-context {
 	display: flex;
 	gap: 6px;
 	align-items: center;
+	white-space: nowrap;
+}
+
+.system-clock {
+	display: block;
+	min-width: 5ch;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
 	white-space: nowrap;
 }
 

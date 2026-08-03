@@ -19,10 +19,9 @@ export const messages = {
 		},
 		nav: {
 			location: 'Location:',
-			externalLinks: 'External links',
-			openGitHub: 'Open GitHub in a new window',
-			systemStatus: 'System status',
-			online: 'Online',
+			systemControls: 'System controls',
+			systemInformation: 'System information',
+			localTime: 'Local time',
 			languageLabel: 'Language',
 		},
 		workspace: {
@@ -110,10 +109,9 @@ export const messages = {
 		},
 		nav: {
 			location: '当前位置：',
-			externalLinks: '外部链接',
-			openGitHub: '在新窗口打开 GitHub',
-			systemStatus: '系统状态',
-			online: '在线',
+			systemControls: '系统功能',
+			systemInformation: '系统信息',
+			localTime: '本地时间',
 			languageLabel: '语言',
 		},
 		workspace: {

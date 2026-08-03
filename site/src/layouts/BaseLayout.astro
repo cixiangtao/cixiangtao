@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import ContextMenu from '../components/ContextMenu.astro';
-import ModuleIcon from '../components/ModuleIcon.astro';
 import { defaultLocale, getAlternateLocale, getLocalizedPath, getMessages, type Locale } from '../i18n';
 import { wallpaperIds, wallpaperThemeColors } from '../wallpapers';
 
@@ -89,7 +88,7 @@ const wallpaperOptions = wallpaperIds.map((id) => ({ id, label: copy.wallpaper.n
 			</div>
 
 			<div class="system-actions">
-				<nav class="system-external" aria-label={copy.nav.externalLinks}>
+				<div class="system-controls" role="group" aria-label={copy.nav.systemControls}>
 					<button
 						class="system-tool system-wallpaper-button"
 						type="button"
@@ -119,11 +118,10 @@ const wallpaperOptions = wallpaperIds.map((id) => ({ id, label: copy.wallpaper.n
 							<option data-locale="zh" lang="zh-CN" value={locale === 'zh' ? Astro.url.pathname : alternateHref} selected={locale === 'zh'}>中文</option>
 						</select>
 					</span>
-					<a class="system-tool" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.nav.openGitHub} data-label="GitHub"><ModuleIcon name="github" /></a>
-				</nav>
+				</div>
 				<span class="system-separator" aria-hidden="true"></span>
-				<div class="system-status" aria-label={copy.nav.systemStatus}>
-					<span class="system-presence"><span class="status-dot" aria-hidden="true"></span>{copy.nav.online}</span>
+				<div class="system-status" aria-label={copy.nav.systemInformation}>
+					<time class="system-clock" data-label={copy.nav.localTime} data-system-clock>--:--</time>
 				</div>
 			</div>
 		</header>
@@ -170,6 +168,36 @@ const wallpaperOptions = wallpaperIds.map((id) => ({ id, label: copy.wallpaper.n
 
 		<script>
 			import { wallpaperIds, wallpaperThemeColors, type Wallpaper } from '../wallpapers';
+
+			const systemClock = document.querySelector<HTMLTimeElement>('[data-system-clock]');
+			const clockLocale = document.documentElement.lang;
+			const clockTimeFormatter = new Intl.DateTimeFormat(clockLocale, {
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: false,
+			});
+			const clockDetailsFormatter = new Intl.DateTimeFormat(clockLocale, {
+				dateStyle: 'full',
+				timeStyle: 'short',
+			});
+
+			function updateSystemClock() {
+				if (!systemClock) return;
+
+				const now = new Date();
+				const details = clockDetailsFormatter.format(now);
+				const label = systemClock.dataset.label ?? '';
+				systemClock.textContent = clockTimeFormatter.format(now);
+				systemClock.dateTime = now.toISOString();
+				systemClock.title = details;
+				systemClock.setAttribute('aria-label', label ? `${label}: ${details}` : details);
+			}
+
+			updateSystemClock();
+			window.setTimeout(() => {
+				updateSystemClock();
+				window.setInterval(updateSystemClock, 60_000);
+			}, 60_000 - (Date.now() % 60_000));
 
 			const languageCacheParam = '_language';
 			const currentUrl = new URL(window.location.href);

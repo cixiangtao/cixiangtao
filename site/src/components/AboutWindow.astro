@@ -29,7 +29,10 @@ const copy = getMessages(locale);
 	</div>
 	<div class="about-status flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper)] px-4 py-[9px] text-[0.72rem] font-[750] max-[760px]:gap-2.5">
 		<nav class="about-shortcuts inline-flex items-center gap-3.5" aria-label={copy.about.publicLinks}>
-			<a href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i></a>
+			<a class="about-github-link" href="https://github.com/cixiangtao" target="_blank" rel="noreferrer" aria-label={copy.about.openProfile}>
+				<i class="shortcut-icon shortcut-icon--github" aria-hidden="true"></i>
+				<span>GitHub</span>
+			</a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
 			<a href="#projects" aria-label={copy.sections.projects}><i class="shortcut-icon shortcut-icon--folder" aria-hidden="true"></i></a>
 			<span class="h-5 w-px bg-[var(--line-strong)]" aria-hidden="true"></span>
@@ -88,6 +91,16 @@ const copy = getMessages(locale);
 		width: 24px;
 		height: 24px;
 		place-items: center;
+	}
+
+	.about-shortcuts .about-github-link {
+		display: inline-flex;
+		width: auto;
+		gap: 6px;
+		padding-inline: 3px;
+		font-family: var(--font-data);
+		font-size: 0.64rem;
+		font-weight: 900;
 	}
 
 	.about-shortcuts a:hover,
