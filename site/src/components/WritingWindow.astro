@@ -38,7 +38,7 @@ const copy = getMessages(locale);
 	</div>
 
 	<div class="article-list flex flex-1 flex-col bg-[var(--paper)]" aria-labelledby="writing">
-		{posts.slice(0, 5).map((post, index) => (
+		{posts.map((post, index) => (
 			<article class:list={['article-row', { 'article-row--featured': index === 0 }]}>
 				<a class="grid grid-cols-[70px_minmax(0,1fr)_104px_52px] items-center gap-3.5 p-[15px] [transition:background_120ms_ease,color_120ms_ease] max-[760px]:grid-cols-[52px_minmax(0,1fr)] max-[760px]:gap-2.5 max-[760px]:px-3 max-[760px]:py-3.5" href={getLocalizedPath(base, locale, `posts/${post.number}/`)} aria-label={copy.writing.read(post.title)}>
 					<span class="article-file-icon" aria-hidden="true"><i></i></span>
