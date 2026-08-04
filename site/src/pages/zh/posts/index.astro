@@ -1,0 +1,17 @@
+---
+import ArchivePage from '../../../components/ArchivePage.astro';
+import { getArchivePage, getArchivePageCount } from '../../../lib/blog';
+import { getBlogPosts } from '../../../lib/github';
+
+const posts = await getBlogPosts();
+const currentPage = 1;
+const totalPages = getArchivePageCount(posts.length);
+---
+
+<ArchivePage
+	posts={getArchivePage(posts, currentPage)}
+	totalPosts={posts.length}
+	currentPage={currentPage}
+	totalPages={totalPages}
+	locale="zh"
+/>

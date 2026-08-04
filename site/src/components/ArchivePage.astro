@@ -1,0 +1,476 @@
+---
+import MacWindow from './MacWindow.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+	detectContentLanguage,
+	getAlternateLocale,
+	getLocalizedPath,
+	getMessages,
+	type Locale,
+} from '../i18n';
+import { ARCHIVE_PAGE_SIZE } from '../lib/blog';
+import { formatDate, type BlogPost } from '../lib/github';
+
+interface Props {
+	posts: BlogPost[];
+	totalPosts: number;
+	currentPage: number;
+	totalPages: number;
+	locale: Locale;
+}
+
+const { posts, totalPosts, currentPage, totalPages, locale } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const copy = getMessages(locale);
+const archivePath = currentPage === 1 ? 'posts/' : `posts/page/${currentPage}/`;
+const alternateHref = getLocalizedPath(base, getAlternateLocale(locale), archivePath);
+const homeHref = `${getLocalizedPath(base, locale)}#writing`;
+const archiveRootHref = getLocalizedPath(base, locale, 'posts/');
+const start = totalPosts === 0 ? 0 : (currentPage - 1) * ARCHIVE_PAGE_SIZE + 1;
+const end = start === 0 ? 0 : start + posts.length - 1;
+
+function getPageHref(page: number) {
+	return page === 1
+		? archiveRootHref
+		: getLocalizedPath(base, locale, `posts/page/${page}/`);
+}
+
+function getPaginationItems() {
+	const visiblePages = new Set(
+		[1, totalPages, currentPage - 1, currentPage, currentPage + 1].filter(
+			(page) => page >= 1 && page <= totalPages,
+		),
+	);
+	const pages = [...visiblePages].toSorted((a, b) => a - b);
+	const items: Array<number | 'ellipsis'> = [];
+
+	pages.forEach((page, index) => {
+		if (index > 0 && page - pages[index - 1] > 1) items.push('ellipsis');
+		items.push(page);
+	});
+
+	return items;
+}
+
+const paginationItems = getPaginationItems();
+---
+
+<!--
+THESIS: Make the complete writing history feel like opening a real archive folder, not browsing a generic blog index.
+OWN-WORLD: Paper-white directory window, violet desktop, one-pixel ink rules, cyan channel color, and yellow file signals.
+STORY: Visitors understand the archive scale, scan newest-first article records, and move between static pages or the original Issues.
+FIRST VIEWPORT: One wide archive window leads with title and purpose, followed immediately by the directory path and article rows.
+FORM: Extend the confirmed article-file directory into a full Read surface; its structure was already settled, so no concept seed was needed.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
+
+<BaseLayout
+	title={copy.archive.title}
+	description={copy.archive.description(totalPosts)}
+	locale={locale}
+	alternateHref={alternateHref}
+>
+	<div class="archive-desktop mx-auto w-full max-w-[1180px] px-4 py-6 sm:px-6 lg:py-10">
+		<MacWindow title={copy.sections.writing} icon="document" tone="cyan" scrollbars class="archive-window">
+			<nav class="archive-toolbar" aria-label={copy.article.navigation}>
+				<a href={homeHref}>{copy.archive.back}</a>
+				<a href="https://github.com/cixiangtao/cixiangtao/issues?q=is%3Aissue%20label%3Ablog" target="_blank" rel="noreferrer">{copy.archive.openIssues}</a>
+			</nav>
+
+			<section class="archive-sheet" aria-labelledby="archive-title">
+				<header class="archive-header">
+					<div>
+						<h1 id="archive-title">{copy.archive.title}</h1>
+						<p>{copy.archive.description(totalPosts)}</p>
+					</div>
+					<span class="archive-page-status">{copy.archive.pageStatus(currentPage, totalPages)}</span>
+				</header>
+
+				<div class="archive-directory-bar">
+					<strong>{copy.archive.path}</strong>
+					<span>{copy.archive.range(start, end, totalPosts)}</span>
+				</div>
+
+				<div class="archive-list" role="list" aria-label={copy.archive.listLabel}>
+					{posts.map((post) => {
+						const contentLanguage = detectContentLanguage(`${post.title}\n${post.bodyText}`);
+
+						return (
+							<article class="archive-row" role="listitem">
+								<a href={getLocalizedPath(base, locale, `posts/${post.number}/`)} aria-label={copy.writing.read(post.title)}>
+									<span class="archive-file-icon" aria-hidden="true"><i></i></span>
+									<span class="archive-copy">
+										<span class="archive-index">ISSUE {String(post.number).padStart(3, '0')}</span>
+										<strong lang={contentLanguage}>{post.title}</strong>
+										<small lang={contentLanguage}>{post.excerpt}</small>
+									</span>
+									<span class="archive-meta">
+										<time datetime={post.createdAt}>{formatDate(post.createdAt, locale)}</time>
+										<small>{copy.writing.minutes(post.readingMinutes)}</small>
+									</span>
+									<span class="archive-open" aria-hidden="true">{copy.writing.open}</span>
+								</a>
+							</article>
+						);
+					})}
+				</div>
+
+				{posts.length === 0 && <p class="archive-empty">{copy.archive.empty}</p>}
+
+				{totalPages > 1 && (
+					<nav class="archive-pagination" aria-label={copy.archive.pageStatus(currentPage, totalPages)}>
+						{currentPage > 1 ? (
+							<a class="archive-pagination-direction" href={getPageHref(currentPage - 1)}>{copy.archive.previous}</a>
+						) : (
+							<span class="archive-pagination-direction" aria-disabled="true">{copy.archive.previous}</span>
+						)}
+
+						<div class="archive-pagination-pages">
+							{paginationItems.map((item) => item === 'ellipsis' ? (
+								<span class="archive-pagination-ellipsis" aria-hidden="true">…</span>
+							) : item === currentPage ? (
+								<span class="archive-pagination-page" aria-current="page" aria-label={copy.archive.currentPageLabel(item)}>{item}</span>
+							) : (
+								<a class="archive-pagination-page" href={getPageHref(item)} aria-label={copy.archive.pageLabel(item)}>{item}</a>
+							))}
+						</div>
+
+						{currentPage < totalPages ? (
+							<a class="archive-pagination-direction" href={getPageHref(currentPage + 1)}>{copy.archive.next}</a>
+						) : (
+							<span class="archive-pagination-direction" aria-disabled="true">{copy.archive.next}</span>
+						)}
+					</nav>
+				)}
+			</section>
+		</MacWindow>
+	</div>
+</BaseLayout>
+
+<style is:global>
+	.archive-window {
+		width: 100%;
+	}
+
+	.archive-toolbar,
+	.archive-directory-bar,
+	.archive-header,
+	.archive-pagination {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.archive-toolbar {
+		padding: 10px 14px;
+		border-bottom: 1px solid var(--ink);
+		background: var(--paper);
+		font-size: 0.72rem;
+		font-weight: 850;
+	}
+
+	.archive-toolbar a {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.archive-sheet {
+		background: var(--paper);
+	}
+
+	.archive-header {
+		gap: 28px;
+		padding: clamp(28px, 5vw, 58px);
+		border-bottom: 1px solid var(--ink);
+	}
+
+	.archive-header h1 {
+		margin: 0;
+		font-size: clamp(2rem, 5vw, 4.5rem);
+		font-weight: 950;
+		letter-spacing: -0.04em;
+		line-height: 1.05;
+		text-wrap: balance;
+	}
+
+	.archive-header p {
+		max-width: 58ch;
+		margin: 17px 0 0;
+		color: var(--muted);
+		font-size: 0.92rem;
+		line-height: 1.7;
+	}
+
+	.archive-page-status {
+		flex: none;
+		padding: 8px 10px;
+		border: 1px solid var(--ink);
+		background: var(--accent-yellow);
+		font-family: var(--font-data);
+		font-size: 0.68rem;
+		font-weight: 900;
+	}
+
+	.archive-directory-bar {
+		gap: 18px;
+		padding: 10px 14px;
+		border-bottom: 1px solid var(--ink);
+		background: var(--paper-soft);
+		font-family: var(--font-data);
+		font-size: 0.66rem;
+	}
+
+	.archive-directory-bar strong {
+		font-weight: 900;
+	}
+
+	.archive-directory-bar span {
+		color: var(--muted);
+		font-weight: 750;
+	}
+
+	.archive-row + .archive-row {
+		border-top: 1px solid var(--line-strong);
+	}
+
+	.archive-row > a {
+		display: grid;
+		grid-template-columns: 64px minmax(0, 1fr) 116px 52px;
+		gap: 15px;
+		align-items: center;
+		padding: 15px 16px;
+		transition: background 120ms ease, color 120ms ease;
+	}
+
+	.archive-row > a:hover,
+	.archive-row > a:focus-visible {
+		background: var(--selection);
+		color: white;
+		outline: none;
+	}
+
+	.archive-file-icon {
+		position: relative;
+		display: block;
+		width: 60px;
+		height: 48px;
+		border: 1px solid var(--ink);
+		background:
+			radial-gradient(var(--line-strong) 0.7px, transparent 0.7px),
+			var(--accent-cyan);
+		background-size: 3px 3px;
+	}
+
+	.archive-file-icon i {
+		position: absolute;
+		top: 9px;
+		left: 19px;
+		width: 22px;
+		height: 30px;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+	}
+
+	.archive-file-icon i::before {
+		position: absolute;
+		top: 7px;
+		right: 4px;
+		left: 4px;
+		height: 2px;
+		background: var(--ink);
+		box-shadow: 0 6px 0 var(--ink), 0 12px 0 var(--accent-coral);
+		content: '';
+	}
+
+	.archive-copy,
+	.archive-copy strong,
+	.archive-copy small,
+	.archive-meta,
+	.archive-meta small {
+		display: block;
+		min-width: 0;
+	}
+
+	.archive-index {
+		display: block;
+		margin-bottom: 5px;
+		color: var(--accent-blue-dark);
+		font-family: var(--font-data);
+		font-size: 0.62rem;
+		font-weight: 900;
+	}
+
+	.archive-copy strong {
+		font-size: clamp(0.92rem, 1.7vw, 1.08rem);
+		font-weight: 900;
+		line-height: 1.35;
+	}
+
+	.archive-copy small {
+		overflow: hidden;
+		margin-top: 5px;
+		color: var(--muted);
+		font-size: 0.72rem;
+		line-height: 1.5;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.archive-meta {
+		color: var(--muted);
+		font-size: 0.66rem;
+		line-height: 1.5;
+		text-align: right;
+	}
+
+	.archive-meta small {
+		margin-top: 3px;
+	}
+
+	.archive-open {
+		padding: 7px 8px;
+		border: 1px dashed currentColor;
+		font-family: var(--font-data);
+		font-size: 0.62rem;
+		font-weight: 900;
+		text-align: center;
+	}
+
+	.archive-row > a:hover .archive-copy small,
+	.archive-row > a:focus-visible .archive-copy small,
+	.archive-row > a:hover .archive-meta,
+	.archive-row > a:focus-visible .archive-meta,
+	.archive-row > a:hover .archive-index,
+	.archive-row > a:focus-visible .archive-index {
+		color: white;
+	}
+
+	.archive-empty {
+		margin: 0;
+		padding: 44px 28px;
+		color: var(--muted);
+		font-size: 0.85rem;
+		font-weight: 800;
+		text-align: center;
+	}
+
+	.archive-pagination {
+		gap: 18px;
+		padding: 16px;
+		border-top: 1px solid var(--ink);
+		background: var(--paper-soft);
+		font-family: var(--font-data);
+		font-size: 0.68rem;
+		font-weight: 900;
+	}
+
+	.archive-pagination-pages {
+		display: flex;
+		gap: 6px;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.archive-pagination-direction,
+	.archive-pagination-page {
+		display: grid;
+		min-height: 34px;
+		place-items: center;
+		border: 1px solid var(--ink);
+		background: var(--paper);
+	}
+
+	.archive-pagination-direction {
+		min-width: 112px;
+		padding: 7px 10px;
+	}
+
+	.archive-pagination-page {
+		min-width: 34px;
+		padding: 6px;
+	}
+
+	.archive-pagination a:hover,
+	.archive-pagination a:focus-visible,
+	.archive-pagination-page[aria-current='page'] {
+		background: var(--selection);
+		color: white;
+		outline: none;
+	}
+
+	.archive-pagination [aria-disabled='true'] {
+		border-color: var(--line-strong);
+		color: var(--muted);
+	}
+
+	.archive-pagination-ellipsis {
+		min-width: 22px;
+		text-align: center;
+	}
+
+	@media (max-width: 760px) {
+		.archive-header,
+		.archive-toolbar,
+		.archive-directory-bar,
+		.archive-pagination {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.archive-header {
+			padding: 28px 20px;
+		}
+
+		.archive-page-status {
+			align-self: flex-start;
+		}
+
+		.archive-row > a {
+			grid-template-columns: 52px minmax(0, 1fr);
+			gap: 11px;
+			padding: 14px 12px;
+		}
+
+		.archive-file-icon {
+			width: 50px;
+			height: 42px;
+		}
+
+		.archive-file-icon i {
+			top: 7px;
+			left: 16px;
+			width: 19px;
+			height: 27px;
+		}
+
+		.archive-file-icon i::before {
+			top: 7px;
+			height: 1px;
+			box-shadow: 0 5px 0 var(--ink), 0 10px 0 var(--accent-coral);
+		}
+
+		.archive-meta,
+		.archive-open {
+			display: none;
+		}
+
+		.archive-copy small {
+			display: -webkit-box;
+			white-space: normal;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+		}
+
+		.archive-pagination {
+			align-items: stretch;
+		}
+
+		.archive-pagination-pages {
+			order: -1;
+		}
+
+		.archive-pagination-direction {
+			width: 100%;
+		}
+	}
+</style>

@@ -1,6 +1,7 @@
 ---
 import type { BlogPost } from '../lib/github';
 import { formatDate } from '../lib/github';
+import { HOMEPAGE_POST_LIMIT } from '../lib/blog';
 import { getLocalizedPath, getMessages, type Locale } from '../i18n';
 import MacWindow from './MacWindow.astro';
 
@@ -13,6 +14,8 @@ interface Props {
 
 const { posts, base, locale } = Astro.props;
 const copy = getMessages(locale);
+const visiblePosts = posts.slice(0, HOMEPAGE_POST_LIMIT);
+const archiveHref = getLocalizedPath(base, locale, 'posts/');
 ---
 
 <MacWindow
@@ -34,11 +37,11 @@ const copy = getMessages(locale);
 			<span class="mini-document" aria-hidden="true"></span>
 			<strong class="[font-family:var(--font-data)] text-[0.68rem] max-[760px]:text-[0.61rem]">cixiangtao / writing</strong>
 		</div>
-		<span>{copy.writing.files(posts.length)}</span>
+		<span>{posts.length > visiblePosts.length ? copy.writing.recentFiles(visiblePosts.length, posts.length) : copy.writing.files(posts.length)}</span>
 	</div>
 
 	<div class="article-list flex flex-1 flex-col bg-[var(--paper)]" aria-labelledby="writing">
-		{posts.map((post, index) => (
+		{visiblePosts.map((post, index) => (
 			<article class:list={['article-row', { 'article-row--featured': index === 0 }]}>
 				<a class="grid grid-cols-[70px_minmax(0,1fr)_104px_52px] items-center gap-3.5 p-[15px] [transition:background_120ms_ease,color_120ms_ease] max-[760px]:grid-cols-[52px_minmax(0,1fr)] max-[760px]:gap-2.5 max-[760px]:px-3 max-[760px]:py-3.5" href={getLocalizedPath(base, locale, `posts/${post.number}/`)} aria-label={copy.writing.read(post.title)}>
 					<span class="article-file-icon" aria-hidden="true"><i></i></span>
@@ -66,7 +69,7 @@ const copy = getMessages(locale);
 
 	<div class="writing-footer flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper-soft)] px-[15px] py-[11px] text-[0.68rem] font-bold text-[var(--muted)] max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-[7px]">
 		<span>{copy.writing.source}</span>
-		<a href="https://github.com/cixiangtao/cixiangtao/issues?q=is%3Aissue%20label%3Ablog" target="_blank" rel="noreferrer">{copy.writing.archive}</a>
+		<a href={archiveHref}>{copy.writing.archive}</a>
 	</div>
 </MacWindow>
 

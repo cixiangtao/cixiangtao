@@ -19,7 +19,7 @@ const { post, locale } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const copy = getMessages(locale);
 const alternateHref = getLocalizedPath(base, getAlternateLocale(locale), `posts/${post.number}/`);
-const writingHref = `${getLocalizedPath(base, locale)}#writing`;
+const writingHref = getLocalizedPath(base, locale, 'posts/');
 const contentLanguage = detectContentLanguage(`${post.title}\n${post.bodyText}`);
 const showOriginalLanguage = locale === 'en' && contentLanguage === 'zh-CN';
 ---
