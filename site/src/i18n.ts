@@ -81,7 +81,8 @@ export const messages = {
 			empty: 'The writing folder is empty for now.',
 			openIssues: 'Open GitHub Issues ↗',
 			source: 'Articles are built from GitHub Issues labeled blog',
-			archive: 'Open writing archive ↗',
+			archiveNavigation: 'Writing archive navigation',
+			archive: 'View all articles →',
 		},
 		archive: {
 			title: 'Writing archive',
@@ -196,7 +197,8 @@ export const messages = {
 			empty: '文章文件夹暂时为空。',
 			openIssues: '前往 GitHub Issues ↗',
 			source: '文章源自带有 blog 标签的 GitHub Issues',
-			archive: '打开文章档案 ↗',
+			archiveNavigation: '文章归档导航',
+			archive: '查看全部文章 →',
 		},
 		archive: {
 			title: '文章归档',

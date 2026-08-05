@@ -40,6 +40,10 @@ const archiveHref = getLocalizedPath(base, locale, 'posts/');
 		<span>{posts.length > visiblePosts.length ? copy.writing.recentFiles(visiblePosts.length, posts.length) : copy.writing.files(posts.length)}</span>
 	</div>
 
+	<nav class="writing-archive-nav flex justify-end border-b border-[var(--ink)] bg-[var(--paper-soft)] px-[13px] py-2" aria-label={copy.writing.archiveNavigation}>
+		<a href={archiveHref}>{copy.writing.archive}</a>
+	</nav>
+
 	<div class="article-list flex flex-1 flex-col bg-[var(--paper)]" aria-labelledby="writing">
 		{visiblePosts.map((post, index) => (
 			<article class:list={['article-row', { 'article-row--featured': index === 0 }]}>
@@ -67,17 +71,36 @@ const archiveHref = getLocalizedPath(base, locale, 'posts/');
 		</div>
 	)}
 
-	<div class="writing-footer flex items-center justify-between border-t border-[var(--ink)] bg-[var(--paper-soft)] px-[15px] py-[11px] text-[0.68rem] font-bold text-[var(--muted)] max-[760px]:flex-col max-[760px]:items-start max-[760px]:gap-[7px]">
+	<div class="writing-footer border-t border-[var(--ink)] bg-[var(--paper-soft)] px-[15px] py-[11px] text-[0.68rem] font-bold text-[var(--muted)]">
 		<span>{copy.writing.source}</span>
-		<a href={archiveHref}>{copy.writing.archive}</a>
 	</div>
 </MacWindow>
 
 <style is:global>
-	.writing-footer a {
-		color: var(--ink);
-		text-decoration: underline;
-		text-underline-offset: 3px;
+	.writing-archive-nav a {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		min-height: 34px;
+		padding: 7px 10px;
+		border: 1px solid var(--ink);
+		background: var(--selection);
+		box-shadow: 2px 2px 0 var(--ink);
+		color: white;
+		font-family: var(--font-data);
+		font-weight: 900;
+		text-decoration: none;
+	}
+
+	.writing-archive-nav a:hover {
+		background: var(--ink);
+	}
+
+	.writing-archive-nav a:focus-visible {
+		background: var(--ink);
+		outline: 3px solid var(--accent-yellow);
+		outline-offset: 2px;
 	}
 
 	.mini-document {
