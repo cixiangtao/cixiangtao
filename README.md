@@ -2,6 +2,8 @@
 
 <div align="center">
 
+English | [简体中文](README.zh-CN.md)
+
 Building developer tools and open-source projects with TypeScript and React.
 
 [![GitHub followers](https://img.shields.io/github/followers/cixiangtao?style=flat-square&logo=github&label=Followers)](https://github.com/cixiangtao?tab=followers)
@@ -25,10 +27,14 @@ These are the open-source projects I currently maintain and plan to keep evolvin
 | Project | What it does | Links |
 | --- | --- | --- |
 | [codex-skin](https://github.com/cixiangtao/codex-skin) | A theming and interface customization tool for the Codex desktop app on macOS | [Website](https://cixiangtao.github.io/codex-skin/) |
+| [codex-usage](https://github.com/cixiangtao/codex-usage) | A native macOS menu-bar app for Codex usage windows, reset timing, notifications, and local trends | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
+| [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit setup, diagnostics, synchronization, and review pushes | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
 | [nice-use-modal](https://github.com/cixiangtao/nice-use-modal) | A type-safe, headless React modal controller with explicit show, hide, and destroy lifecycles | [Live demo](https://cixiangtao.github.io/nice-use-modal/) · [npm](https://www.npmjs.com/package/nice-use-modal) |
+| [sprite-pet](https://github.com/cixiangtao/sprite-pet) | A framework-agnostic TypeScript runtime for deterministic Canvas sprite pets | [Live demo](https://cixiangtao.github.io/sprite-pet/) · [npm](https://www.npmjs.com/package/sprite-pet) |
 | [url-join](https://github.com/cixiangtao/url-join) | A zero-dependency TypeScript URL joiner with null filtering, protocol safety, and query parameter support | [npm](https://www.npmjs.com/package/@anys/url-join) |
 | [acer-almanac](https://github.com/cixiangtao/acer-almanac) | A deterministic Chinese almanac toolkit with a TypeScript package, Web Component, Chrome extension, and live demo | [Live demo](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 projects | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
+| [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | A Vite transform that resolves Tailwind CSS conflicts across static and dynamic JSX class values | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
 | [sticker-ui](https://github.com/cixiangtao/sticker-ui) | A handbook sticker-style React and Tailwind CSS component library and source registry | [Live preview](https://sticker-ui.cixiangtao.workers.dev/) |
 | [skills](https://github.com/cixiangtao/skills) | Reusable Agent Skills for development workflows, with explicit execution steps and verification boundaries | [Repository](https://github.com/cixiangtao/skills) |
 
