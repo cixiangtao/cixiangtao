@@ -27,10 +27,10 @@
 <!-- recent-projects:start -->
 | 项目 | 简介 | 最近推送 | 链接 |
 | --- | --- | --- | --- |
+| [skills](https://github.com/cixiangtao/skills) | 具有明确执行步骤与验证边界的可复用 Agent Skills | 2026-08-18 | [目录](https://skills.sh/cixiangtao/skills) |
 | [codex-skin](https://github.com/cixiangtao/codex-skin) | 面向 macOS Codex 桌面端的主题与界面美化工具 | 2026-08-17 | [网站](https://cixiangtao.github.io/codex-skin/) |
 | [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | 按当前工作区筛选 Codex VS Code 任务历史记录 | 2026-08-17 | — |
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | 面向 Gerrit 安装、诊断、同步与送审的安全本地 Git 工作流 CLI | 2026-08-13 | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
-| [skills](https://github.com/cixiangtao/skills) | 具有明确执行步骤与验证边界的可复用 Agent Skills | 2026-08-12 | [目录](https://skills.sh/cixiangtao/skills) |
 | [acer-almanac](https://github.com/cixiangtao/acer-almanac) | 包含 TypeScript 包、Web Component、Chrome 扩展与在线演示的确定性老黄历工具集 | 2026-08-10 | [演示](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
 | [codex-usage](https://github.com/cixiangtao/codex-usage) | 展示 Codex 用量窗口、重置时间、通知与本地趋势的原生 macOS 状态栏应用 | 2026-08-10 | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | 为 Vite 5–8 项目提供一次调用即可完成的 LocatorJS 集成 | 2026-08-10 | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
