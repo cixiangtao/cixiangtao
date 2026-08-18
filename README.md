@@ -27,9 +27,9 @@ Public repositories that are not forks or archived, ordered by their latest push
 <!-- recent-projects:start -->
 | Project | What it does | Links |
 | --- | --- | --- |
+| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
 | [skills](https://github.com/cixiangtao/skills) | Personal, opinionated Agent Skills for repeatable development workflows | [Directory](https://skills.sh/cixiangtao/skills) |
 | [codex-skin](https://github.com/cixiangtao/codex-skin) | A macOS Codex theming tool with wallpapers, main-panel scenes, and sidebar decorations. | [Website](https://cixiangtao.github.io/codex-skin/) |
-| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit Code Review. | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
 | [acer-almanac](https://github.com/cixiangtao/acer-almanac) | A deterministic Chinese almanac workspace with a TypeScript package, Web Component, Chrome extension, and live preview. | [Live demo](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
 | [codex-usage](https://github.com/cixiangtao/codex-usage) | Native macOS menu bar app for monitoring Codex usage, notifications, and widget snapshots. | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
