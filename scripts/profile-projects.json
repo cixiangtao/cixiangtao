@@ -1,0 +1,128 @@
+{
+  "owner": "cixiangtao",
+  "profileRepository": "cixiangtao",
+  "limit": 12,
+  "repositories": {
+    "acer-almanac": {
+      "zhDescription": "包含 TypeScript 包、Web Component、Chrome 扩展与在线演示的确定性老黄历工具集",
+      "links": [
+        {
+          "label": "Live demo",
+          "zhLabel": "演示",
+          "url": "https://cixiangtao.github.io/acer-almanac/"
+        },
+        {
+          "label": "npm",
+          "zhLabel": "npm",
+          "url": "https://www.npmjs.com/package/acer-almanac"
+        }
+      ]
+    },
+    "codex-skin": {
+      "zhDescription": "面向 macOS Codex 桌面端的主题与界面美化工具"
+    },
+    "codex-usage": {
+      "zhDescription": "展示 Codex 用量窗口、重置时间、通知与本地趋势的原生 macOS 状态栏应用",
+      "links": [
+        {
+          "label": "Releases",
+          "zhLabel": "Releases",
+          "url": "https://github.com/cixiangtao/codex-usage/releases"
+        }
+      ]
+    },
+    "codex-vscode-project-patch": {
+      "zhDescription": "按当前工作区筛选 Codex VS Code 任务历史记录"
+    },
+    "gerrit-cli": {
+      "zhDescription": "面向 Gerrit 安装、诊断、同步与送审的安全本地 Git 工作流 CLI",
+      "links": [
+        {
+          "label": "npm",
+          "zhLabel": "npm",
+          "url": "https://www.npmjs.com/package/@anys/gerrit-cli"
+        }
+      ]
+    },
+    "nice-use-modal": {
+      "zhDescription": "类型安全、无样式且具有明确 show/hide/destroy 生命周期的 React 模态框控制器",
+      "links": [
+        {
+          "label": "Live demo",
+          "zhLabel": "演示",
+          "url": "https://cixiangtao.github.io/nice-use-modal/"
+        },
+        {
+          "label": "npm",
+          "zhLabel": "npm",
+          "url": "https://www.npmjs.com/package/nice-use-modal"
+        }
+      ]
+    },
+    "skills": {
+      "zhDescription": "具有明确执行步骤与验证边界的可复用 Agent Skills",
+      "links": [
+        {
+          "label": "Directory",
+          "zhLabel": "目录",
+          "url": "https://skills.sh/cixiangtao/skills"
+        }
+      ]
+    },
+    "sprite-pet": {
+      "zhDescription": "用于确定性 Canvas 精灵宠物动画的框架无关 TypeScript 运行时",
+      "links": [
+        {
+          "label": "Live demo",
+          "zhLabel": "演示",
+          "url": "https://cixiangtao.github.io/sprite-pet/"
+        },
+        {
+          "label": "npm",
+          "zhLabel": "npm",
+          "url": "https://www.npmjs.com/package/sprite-pet"
+        }
+      ]
+    },
+    "sticker-ui": {
+      "zhDescription": "手册贴纸风格的 React 与 Tailwind CSS 组件库和源码 Registry",
+      "links": [
+        {
+          "label": "Live preview",
+          "zhLabel": "预览",
+          "url": "https://sticker-ui.cixiangtao.workers.dev/"
+        }
+      ]
+    },
+    "url-join": {
+      "zhDescription": "支持空值过滤、协议安全与查询参数的零依赖 TypeScript URL 拼接工具",
+      "links": [
+        {
+          "label": "npm",
+          "zhLabel": "npm",
+          "url": "https://www.npmjs.com/package/@anys/url-join"
+        }
+      ]
+    },
+    "vite-plugin-locator": {
+      "zhDescription": "为 Vite 5–8 项目提供一次调用即可完成的 LocatorJS 集成",
+      "links": [
+        {
+          "label": "npm",
+          "zhLabel": "npm",
+          "url": "https://www.npmjs.com/package/vite-plugin-locator"
+        }
+      ]
+    },
+    "vite-plugin-tailwind-merge": {
+      "zhDescription": "在 Vite 转换阶段处理 JSX 静态与动态类名中的 Tailwind CSS 冲突",
+      "links": [
+        {
+          "label": "npm",
+          "zhLabel": "npm",
+          "url": "https://www.npmjs.com/package/vite-plugin-tailwind-merge"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,139 @@
+name: Sync profile projects
+
+on:
+  schedule:
+    - cron: "37 20 * * *" # Daily at 04:37 Asia/Shanghai
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-profile-projects
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Refresh recent projects
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SYNC_BRANCH: automation/recent-projects
+    steps:
+      - name: Check automation credentials
+        id: auth
+        run: |
+          if [[ -n "$PROFILE_SYNC_TOKEN" ]]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "PROFILE_SYNC_TOKEN is not configured; skipping the scheduled update." >> "$GITHUB_STEP_SUMMARY"
+          fi
+        env:
+          PROFILE_SYNC_TOKEN: ${{ secrets.PROFILE_SYNC_TOKEN }}
+
+      - name: Checkout main
+        if: steps.auth.outputs.configured == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          token: ${{ secrets.PROFILE_SYNC_TOKEN }}
+
+      - name: Set up Node.js
+        if: steps.auth.outputs.configured == 'true'
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.12.0
+
+      - name: Generate recent projects
+        if: steps.auth.outputs.configured == 'true'
+        run: node scripts/sync-profile-projects.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Detect changes
+        if: steps.auth.outputs.configured == 'true'
+        id: changes
+        run: |
+          if git diff --quiet -- README.md README.zh-CN.md; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push sync branch
+        if: steps.changes.outputs.changed == 'true'
+        id: commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$SYNC_BRANCH"
+          git add README.md README.zh-CN.md
+          git commit -m "docs(profile): refresh recent projects"
+
+          remote_sha="$(git ls-remote --heads origin "refs/heads/$SYNC_BRANCH" | cut -f1)"
+          if [[ -n "$remote_sha" ]]; then
+            git push --force-with-lease="refs/heads/$SYNC_BRANCH:$remote_sha" origin "HEAD:refs/heads/$SYNC_BRANCH"
+          else
+            git push origin "HEAD:refs/heads/$SYNC_BRANCH"
+          fi
+
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Create protected update PR
+        if: steps.changes.outputs.changed == 'true'
+        id: pull_request
+        run: |
+          set -euo pipefail
+          pr_number="$(gh pr list \
+            --base main \
+            --head "$SYNC_BRANCH" \
+            --state open \
+            --json number \
+            --jq '.[0].number')"
+
+          if [[ -z "$pr_number" ]]; then
+            pr_url="$(gh pr create \
+              --base main \
+              --head "$SYNC_BRANCH" \
+              --title "docs(profile): refresh recent projects" \
+              --body "Daily generated update for the bilingual recent-project tables.")"
+            pr_number="${pr_url##*/}"
+          fi
+
+          echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_SYNC_TOKEN }}
+
+      - name: Wait for required checks
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          check_count="0"
+
+          for attempt in {1..60}; do
+            check_count="$(gh pr checks "$PR_NUMBER" --required --json name --jq 'length' 2>/dev/null || true)"
+            if [[ "$check_count" =~ ^[1-9][0-9]*$ ]]; then
+              break
+            fi
+            sleep 2
+          done
+
+          if [[ ! "$check_count" =~ ^[1-9][0-9]*$ ]]; then
+            echo "Timed out waiting for required checks to register." >&2
+            exit 1
+          fi
+
+          gh pr checks "$PR_NUMBER" --required --watch --interval 10 --fail-fast
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_SYNC_TOKEN }}
+          PR_NUMBER: ${{ steps.pull_request.outputs.number }}
+
+      - name: Merge protected update PR
+        if: steps.changes.outputs.changed == 'true'
+        run: gh pr merge "$PR_NUMBER" --squash --delete-branch --match-head-commit "$SYNC_SHA"
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_SYNC_TOKEN }}
+          PR_NUMBER: ${{ steps.pull_request.outputs.number }}
+          SYNC_SHA: ${{ steps.commit.outputs.sha }}
