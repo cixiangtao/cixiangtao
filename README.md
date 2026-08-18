@@ -25,20 +25,20 @@ I'm a frontend engineer based in Beijing. I enjoy turning complex problems into 
 Public repositories that are not forks or archived, ordered by their latest push. This section is refreshed automatically every day.
 
 <!-- recent-projects:start -->
-| Project | What it does | Last push | Links |
-| --- | --- | --- | --- |
-| [skills](https://github.com/cixiangtao/skills) | Personal, opinionated Agent Skills for repeatable development workflows | 2026-08-18 | [Directory](https://skills.sh/cixiangtao/skills) |
-| [codex-skin](https://github.com/cixiangtao/codex-skin) | A macOS Codex theming tool with wallpapers, main-panel scenes, and sidebar decorations. | 2026-08-17 | [Website](https://cixiangtao.github.io/codex-skin/) |
-| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | 2026-08-17 | — |
-| [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit Code Review. | 2026-08-13 | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
-| [acer-almanac](https://github.com/cixiangtao/acer-almanac) | A deterministic Chinese almanac workspace with a TypeScript package, Web Component, Chrome extension, and live preview. | 2026-08-10 | [Live demo](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
-| [codex-usage](https://github.com/cixiangtao/codex-usage) | Native macOS menu bar app for monitoring Codex usage, notifications, and widget snapshots. | 2026-08-10 | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
-| [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 and multiple UI frameworks | 2026-08-10 | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
-| [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | Automatically merge conflicting Tailwind CSS classes in Vite builds. | 2026-08-10 | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
-| [sticker-ui](https://github.com/cixiangtao/sticker-ui) | A source-first handbook sticker style React + Tailwind component registry. | 2026-08-10 | [Live preview](https://sticker-ui.cixiangtao.workers.dev/) |
-| [sprite-pet](https://github.com/cixiangtao/sprite-pet) | A framework-agnostic browser runtime for animated web pets. | 2026-08-10 | [Live demo](https://cixiangtao.github.io/sprite-pet/) · [npm](https://www.npmjs.com/package/sprite-pet) |
-| [nice-use-modal](https://github.com/cixiangtao/nice-use-modal) | A type-safe, headless React modal controller with explicit lifecycle APIs. | 2026-08-10 | [Live demo](https://cixiangtao.github.io/nice-use-modal/) · [npm](https://www.npmjs.com/package/nice-use-modal) |
-| [url-join](https://github.com/cixiangtao/url-join) | A TypeScript utility for joining URL segments with null-safe filtering and query parameters | 2026-08-10 | [npm](https://www.npmjs.com/package/@anys/url-join) |
+| Project | What it does | Links |
+| --- | --- | --- |
+| [skills](https://github.com/cixiangtao/skills) | Personal, opinionated Agent Skills for repeatable development workflows | [Directory](https://skills.sh/cixiangtao/skills) |
+| [codex-skin](https://github.com/cixiangtao/codex-skin) | A macOS Codex theming tool with wallpapers, main-panel scenes, and sidebar decorations. | [Website](https://cixiangtao.github.io/codex-skin/) |
+| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
+| [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit Code Review. | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
+| [acer-almanac](https://github.com/cixiangtao/acer-almanac) | A deterministic Chinese almanac workspace with a TypeScript package, Web Component, Chrome extension, and live preview. | [Live demo](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
+| [codex-usage](https://github.com/cixiangtao/codex-usage) | Native macOS menu bar app for monitoring Codex usage, notifications, and widget snapshots. | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
+| [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 and multiple UI frameworks | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
+| [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | Automatically merge conflicting Tailwind CSS classes in Vite builds. | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
+| [sticker-ui](https://github.com/cixiangtao/sticker-ui) | A source-first handbook sticker style React + Tailwind component registry. | [Live preview](https://sticker-ui.cixiangtao.workers.dev/) |
+| [sprite-pet](https://github.com/cixiangtao/sprite-pet) | A framework-agnostic browser runtime for animated web pets. | [Live demo](https://cixiangtao.github.io/sprite-pet/) · [npm](https://www.npmjs.com/package/sprite-pet) |
+| [nice-use-modal](https://github.com/cixiangtao/nice-use-modal) | A type-safe, headless React modal controller with explicit lifecycle APIs. | [Live demo](https://cixiangtao.github.io/nice-use-modal/) · [npm](https://www.npmjs.com/package/nice-use-modal) |
+| [url-join](https://github.com/cixiangtao/url-join) | A TypeScript utility for joining URL segments with null-safe filtering and query parameters | [npm](https://www.npmjs.com/package/@anys/url-join) |
 <!-- recent-projects:end -->
 
 ## Toolbox
