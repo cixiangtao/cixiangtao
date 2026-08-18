@@ -104,20 +104,18 @@ function formatLinks(repository, locale) {
 function createTable(repositories, locale) {
   const isChinese = locale === "zh";
   const header = isChinese
-    ? ["项目", "简介", "最近推送", "链接"]
-    : ["Project", "What it does", "Last push", "Links"];
+    ? ["项目", "简介", "链接"]
+    : ["Project", "What it does", "Links"];
   const separator = header.map(() => "---");
   const rows = repositories.map((repository) => {
     const metadata = config.repositories[repository.name] ?? {};
     const description = isChinese
       ? (metadata.zhDescription ?? repository.description ?? "")
       : (repository.description ?? "");
-    const maintainedAt = repository.pushed_at ?? repository.updated_at;
 
     return [
       `[${escapeCell(repository.name)}](${repository.html_url})`,
       escapeCell(description) || (isChinese ? "暂无简介" : "No description yet"),
-      maintainedAt.slice(0, 10),
       formatLinks(repository, locale),
     ];
   });
