@@ -27,10 +27,10 @@ Public repositories that are not forks or archived, ordered by their latest push
 <!-- recent-projects:start -->
 | Project | What it does | Last push | Links |
 | --- | --- | --- | --- |
+| [skills](https://github.com/cixiangtao/skills) | Personal, opinionated Agent Skills for repeatable development workflows | 2026-08-18 | [Directory](https://skills.sh/cixiangtao/skills) |
 | [codex-skin](https://github.com/cixiangtao/codex-skin) | A macOS Codex theming tool with wallpapers, main-panel scenes, and sidebar decorations. | 2026-08-17 | [Website](https://cixiangtao.github.io/codex-skin/) |
 | [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | 2026-08-17 | — |
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit Code Review. | 2026-08-13 | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
-| [skills](https://github.com/cixiangtao/skills) | Personal, opinionated Agent Skills for repeatable development workflows | 2026-08-12 | [Directory](https://skills.sh/cixiangtao/skills) |
 | [acer-almanac](https://github.com/cixiangtao/acer-almanac) | A deterministic Chinese almanac workspace with a TypeScript package, Web Component, Chrome extension, and live preview. | 2026-08-10 | [Live demo](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
 | [codex-usage](https://github.com/cixiangtao/codex-usage) | Native macOS menu bar app for monitoring Codex usage, notifications, and widget snapshots. | 2026-08-10 | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 and multiple UI frameworks | 2026-08-10 | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
