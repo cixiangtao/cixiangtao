@@ -18,6 +18,29 @@ The projects window is generated from the owner's public GitHub repositories.
 Archived repositories, forks, and the `cixiangtao` profile repository are
 excluded. The remaining projects are ordered by their most recent push.
 
+## Profile project synchronization
+
+The root English and Chinese READMEs contain generated recent-project tables
+between `recent-projects` markers. Run the generator from the repository root:
+
+```sh
+node scripts/sync-profile-projects.mjs
+```
+
+The generator uses the same public-repository filters as the website, keeps the
+12 most recently pushed repositories, and reads Chinese descriptions and custom
+links from `scripts/profile-projects.json`. New repositories fall back to their
+GitHub descriptions and homepage fields.
+
+`Sync profile projects` runs every day at 04:37 Asia/Shanghai. It safely skips
+when the `PROFILE_SYNC_TOKEN` repository secret is absent. To activate automatic
+updates, set that secret to a fine-grained personal access token restricted to
+this repository with `Contents: Read and write`, `Pull requests: Read and write`,
+and `Actions: Read-only` permissions. The workflow updates its owned
+`automation/recent-projects` branch, waits for the protected branch's required
+checks, and squash-merges the generated PR. Rotate the secret when the token
+expires.
+
 ## Localization
 
 English is served from the default routes, while the complete Chinese interface
