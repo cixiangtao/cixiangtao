@@ -27,6 +27,7 @@ Public repositories that are not forks or archived, ordered by their latest push
 <!-- recent-projects:start -->
 | Project | What it does | Links |
 | --- | --- | --- |
+| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 and multiple UI frameworks | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
 | [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | Automatically merge conflicting Tailwind CSS classes in Vite builds. | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
 | [url-join](https://github.com/cixiangtao/url-join) | A TypeScript utility for joining URL segments with null-safe filtering and query parameters | [npm](https://www.npmjs.com/package/@anys/url-join) |
@@ -38,7 +39,6 @@ Public repositories that are not forks or archived, ordered by their latest push
 | [codex-usage](https://github.com/cixiangtao/codex-usage) | Native macOS menu bar app for monitoring Codex usage, notifications, and widget snapshots. | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
 | [codex-skin](https://github.com/cixiangtao/codex-skin) | A macOS Codex theming tool with wallpapers, main-panel scenes, and sidebar decorations. | [Website](https://cixiangtao.github.io/codex-skin/) |
 | [acer-almanac](https://github.com/cixiangtao/acer-almanac) | A deterministic Chinese almanac workspace with a TypeScript package, Web Component, Chrome extension, and live preview. | [Live demo](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
-| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
 <!-- recent-projects:end -->
 
 ## Toolbox
