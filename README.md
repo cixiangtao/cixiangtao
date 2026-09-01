@@ -27,9 +27,9 @@ Public repositories that are not forks or archived, ordered by their latest push
 <!-- recent-projects:start -->
 | Project | What it does | Links |
 | --- | --- | --- |
+| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
 | [ninebot-desktop](https://github.com/cixiangtao/ninebot-desktop) | 韭号出行：本地优先、只读的九号骑行轨迹、速度回放与数据导出桌面客户端（非官方） | — |
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit Code Review. | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
-| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 and multiple UI frameworks | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
 | [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | Automatically merge conflicting Tailwind CSS classes in Vite builds. | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
 | [url-join](https://github.com/cixiangtao/url-join) | A TypeScript utility for joining URL segments with null-safe filtering and query parameters | [npm](https://www.npmjs.com/package/@anys/url-join) |

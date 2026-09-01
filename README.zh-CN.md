@@ -27,9 +27,9 @@
 <!-- recent-projects:start -->
 | 项目 | 简介 | 链接 |
 | --- | --- | --- |
+| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | 按当前工作区筛选 Codex VS Code 任务历史记录 | — |
 | [ninebot-desktop](https://github.com/cixiangtao/ninebot-desktop) | 韭号出行：本地优先、只读的九号骑行轨迹、速度回放与数据导出桌面客户端（非官方） | — |
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | 面向 Gerrit 安装、诊断、同步与送审的安全本地 Git 工作流 CLI | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
-| [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | 按当前工作区筛选 Codex VS Code 任务历史记录 | — |
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | 为 Vite 5–8 项目提供一次调用即可完成的 LocatorJS 集成 | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
 | [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | 在 Vite 转换阶段处理 JSX 静态与动态类名中的 Tailwind CSS 冲突 | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
 | [url-join](https://github.com/cixiangtao/url-join) | 支持空值过滤、协议安全与查询参数的零依赖 TypeScript URL 拼接工具 | [npm](https://www.npmjs.com/package/@anys/url-join) |
