@@ -27,9 +27,9 @@ Public repositories that are not forks or archived, ordered by their latest push
 <!-- recent-projects:start -->
 | Project | What it does | Links |
 | --- | --- | --- |
+| [sticker-ui](https://github.com/cixiangtao/sticker-ui) | A source-first handbook sticker style React + Tailwind component registry. | [Live preview](https://sticker-ui.cixiangtao.workers.dev/) |
 | [codex-vscode-project-patch](https://github.com/cixiangtao/codex-vscode-project-patch) | Filter Codex VS Code task history by the active workspace. | — |
 | [sprite-pet](https://github.com/cixiangtao/sprite-pet) | A framework-agnostic browser runtime for animated web pets. | [Live demo](https://cixiangtao.github.io/sprite-pet/) · [npm](https://www.npmjs.com/package/sprite-pet) |
-| [sticker-ui](https://github.com/cixiangtao/sticker-ui) | A source-first handbook sticker style React + Tailwind component registry. | [Live preview](https://sticker-ui.cixiangtao.workers.dev/) |
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit Code Review. | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
 | [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | Automatically merge conflicting Tailwind CSS classes in Vite builds. | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
 | [url-join](https://github.com/cixiangtao/url-join) | A TypeScript utility for joining URL segments with null-safe filtering and query parameters | [npm](https://www.npmjs.com/package/@anys/url-join) |
