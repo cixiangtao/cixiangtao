@@ -37,8 +37,6 @@ Public repositories that are not forks or archived, ordered by their latest push
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | A safe local Git workflow CLI for Gerrit Code Review. | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
 | [ninebot-desktop](https://github.com/cixiangtao/ninebot-desktop) | 韭号出行：本地优先、只读的九号骑行轨迹、速度回放与数据导出桌面客户端（非官方） | — |
 | [skills](https://github.com/cixiangtao/skills) | Personal, opinionated Agent Skills for repeatable development workflows | [Directory](https://skills.sh/cixiangtao/skills) |
-| [codex-usage](https://github.com/cixiangtao/codex-usage) | Native macOS menu bar app for monitoring Codex usage, notifications, and widget snapshots. | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
-| [codex-skin](https://github.com/cixiangtao/codex-skin) | A macOS Codex theming tool with wallpapers, main-panel scenes, and sidebar decorations. | [Website](https://cixiangtao.github.io/codex-skin/) |
 <!-- recent-projects:end -->
 
 ## Toolbox
