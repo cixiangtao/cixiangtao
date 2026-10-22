@@ -37,8 +37,6 @@
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | 面向 Gerrit 安装、诊断、同步与送审的安全本地 Git 工作流 CLI | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
 | [ninebot-desktop](https://github.com/cixiangtao/ninebot-desktop) | 韭号出行：本地优先、只读的九号骑行轨迹、速度回放与数据导出桌面客户端（非官方） | — |
 | [skills](https://github.com/cixiangtao/skills) | 具有明确执行步骤与验证边界的可复用 Agent Skills | [目录](https://skills.sh/cixiangtao/skills) |
-| [codex-usage](https://github.com/cixiangtao/codex-usage) | 展示 Codex 用量窗口、重置时间、通知与本地趋势的原生 macOS 状态栏应用 | [Releases](https://github.com/cixiangtao/codex-usage/releases) |
-| [codex-skin](https://github.com/cixiangtao/codex-skin) | 面向 macOS Codex 桌面端的主题与界面美化工具 | [网站](https://cixiangtao.github.io/codex-skin/) |
 <!-- recent-projects:end -->
 
 ## 工具箱
