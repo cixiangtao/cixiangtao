@@ -28,9 +28,9 @@ Public repositories that are not forks or archived, ordered by their latest push
 | Project | What it does | Links |
 | --- | --- | --- |
 | [ninebot-desktop](https://github.com/cixiangtao/ninebot-desktop) | 韭号出行：本地优先、只读的九号骑行轨迹、速度回放与数据导出桌面客户端（非官方） | — |
-| [sticker-ui](https://github.com/cixiangtao/sticker-ui) | A source-first handbook sticker style React + Tailwind component registry. | [Live preview](https://sticker-ui.cixiangtao.workers.dev/) |
-| [nice-use-modal](https://github.com/cixiangtao/nice-use-modal) | A type-safe, headless React modal controller with explicit lifecycle APIs. | [Live demo](https://cixiangtao.github.io/nice-use-modal/) · [npm](https://www.npmjs.com/package/nice-use-modal) |
 | [acer-almanac](https://github.com/cixiangtao/acer-almanac) | A deterministic Chinese almanac workspace with a TypeScript package, Web Component, Chrome extension, and live preview. | [Live demo](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
+| [nice-use-modal](https://github.com/cixiangtao/nice-use-modal) | A type-safe, headless React modal controller with explicit lifecycle APIs. | [Live demo](https://cixiangtao.github.io/nice-use-modal/) · [npm](https://www.npmjs.com/package/nice-use-modal) |
+| [sticker-ui](https://github.com/cixiangtao/sticker-ui) | A source-first handbook sticker style React + Tailwind component registry. | [Live preview](https://sticker-ui.cixiangtao.workers.dev/) |
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 and multiple UI frameworks | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
 | [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | Automatically merge conflicting Tailwind CSS classes in Vite builds. | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
 | [sprite-pet](https://github.com/cixiangtao/sprite-pet) | A framework-agnostic browser runtime for animated web pets. | [Live demo](https://cixiangtao.github.io/sprite-pet/) · [npm](https://www.npmjs.com/package/sprite-pet) |
