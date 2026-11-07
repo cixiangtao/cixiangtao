@@ -27,8 +27,8 @@
 <!-- recent-projects:start -->
 | 项目 | 简介 | 链接 |
 | --- | --- | --- |
-| [codex-project-chats](https://github.com/cixiangtao/codex-project-chats) | Browse Codex conversations by project and continue in the official Codex sidebar. | — |
 | [codex-coco](https://github.com/cixiangtao/codex-coco) | Codex Coco — a macOS desktop companion for Codex usage, appearance, and menu bar workflows. | — |
+| [codex-project-chats](https://github.com/cixiangtao/codex-project-chats) | Browse Codex conversations by project and continue in the official Codex sidebar. | — |
 | [ninebot-desktop](https://github.com/cixiangtao/ninebot-desktop) | 韭号出行：本地优先、只读的九号骑行轨迹、速度回放与数据导出桌面客户端（非官方） | — |
 | [acer-almanac](https://github.com/cixiangtao/acer-almanac) | 包含 TypeScript 包、Web Component、Chrome 扩展与在线演示的确定性老黄历工具集 | [演示](https://cixiangtao.github.io/acer-almanac/) · [npm](https://www.npmjs.com/package/acer-almanac) |
 | [gerrit-cli](https://github.com/cixiangtao/gerrit-cli) | 面向 Gerrit 安装、诊断、同步与送审的安全本地 Git 工作流 CLI | [npm](https://www.npmjs.com/package/@anys/gerrit-cli) |
