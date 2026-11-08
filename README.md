@@ -1,4 +1,4 @@
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:7C3AED,50:2563EB,100:06B6D4&height=220&section=header&text=Hi,%20I%27m%20cixiangtao&fontSize=46&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Frontend%20Engineer%20%C2%B7%20Open%20Source%20Builder&descAlignY=60&descSize=18" alt="cixiangtao header" />
+# Hi, I'm cixiangtao
 
 <div align="center">
 
@@ -19,6 +19,15 @@ I'm a frontend engineer based in Beijing. I enjoy turning complex problems into 
 
 - I care about developer experience, type safety, maintainability, and thoughtful interface details.
 - I mainly work with TypeScript, React, Vue, Vite, and Node.js.
+
+## GitHub activity
+
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/dark-mobile.svg" />
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/light-mobile.svg" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/dark.svg" />
+  <img src="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/light.svg" alt="GitHub contribution overview with a 2D snake animation, languages, and contribution types" width="100%" />
+</picture>
 
 ## Recently updated projects
 
@@ -54,5 +63,3 @@ Public repositories that are not forks or archived, ordered by their latest push
 ### Stay curious. Ship thoughtfully.
 
 </div>
-
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:06B6D4,50:2563EB,100:7C3AED&height=120&section=footer" alt="Footer" />
