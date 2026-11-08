@@ -1,0 +1,43 @@
+name: Check contribution overview
+
+on:
+  pull_request:
+    paths:
+      - "scripts/profile-activity/**"
+      - "scripts/generate-profile-activity.mjs"
+      - "output/profile-activity/**"
+      - "README*.md"
+      - ".github/workflows/check-profile-activity.yml"
+      - ".github/workflows/sync-profile-projects.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/profile-activity/**"
+      - "scripts/generate-profile-activity.mjs"
+      - "output/profile-activity/**"
+      - "README*.md"
+      - ".github/workflows/check-profile-activity.yml"
+      - ".github/workflows/sync-profile-projects.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Validate contribution overview
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22.12.0
+
+      - name: Install renderer dependencies
+        run: npm ci --prefix scripts/profile-activity --ignore-scripts
+
+      - name: Verify upstream integration
+        run: npm test --prefix scripts/profile-activity

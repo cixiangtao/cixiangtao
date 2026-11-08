@@ -1,4 +1,4 @@
-name: Sync profile projects
+name: Sync GitHub profile
 
 on:
   schedule:
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   sync:
-    name: Refresh recent projects
+    name: Refresh projects and contribution overview
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -45,6 +45,20 @@ jobs:
         with:
           node-version: 22.12.0
 
+      - name: Install contribution renderer dependencies
+        if: steps.auth.outputs.configured == 'true'
+        run: npm ci --prefix scripts/profile-activity --ignore-scripts
+
+      - name: Verify contribution renderer
+        if: steps.auth.outputs.configured == 'true'
+        run: npm test --prefix scripts/profile-activity
+
+      - name: Generate contribution overview
+        if: steps.auth.outputs.configured == 'true'
+        run: node scripts/generate-profile-activity.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
       - name: Generate recent projects
         if: steps.auth.outputs.configured == 'true'
         run: node scripts/sync-profile-projects.mjs
@@ -55,7 +69,7 @@ jobs:
         if: steps.auth.outputs.configured == 'true'
         id: changes
         run: |
-          if git diff --quiet -- README.md README.zh-CN.md; then
+          if git diff --quiet -- README.md README.zh-CN.md output/profile-activity; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -69,8 +83,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -C "$SYNC_BRANCH"
-          git add README.md README.zh-CN.md
-          git commit -m "docs(profile): refresh recent projects"
+          git add README.md README.zh-CN.md output/profile-activity
+          git commit -m "docs(profile): refresh projects and contributions"
 
           remote_sha="$(git ls-remote --heads origin "refs/heads/$SYNC_BRANCH" | cut -f1)"
           if [[ -n "$remote_sha" ]]; then
@@ -97,8 +111,8 @@ jobs:
             pr_url="$(gh pr create \
               --base main \
               --head "$SYNC_BRANCH" \
-              --title "docs(profile): refresh recent projects" \
-              --body "Daily generated update for the bilingual recent-project tables.")"
+              --title "docs(profile): refresh projects and contributions" \
+              --body "Daily generated update for the bilingual project tables and contribution overview images.")"
             pr_number="${pr_url##*/}"
           fi
 
