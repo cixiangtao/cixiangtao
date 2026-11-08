@@ -1,4 +1,4 @@
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:7C3AED,50:2563EB,100:06B6D4&height=220&section=header&text=Hi,%20I%27m%20cixiangtao&fontSize=46&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Frontend%20Engineer%20%C2%B7%20Open%20Source%20Builder&descAlignY=60&descSize=18" alt="cixiangtao header" />
+# 你好，我是 cixiangtao
 
 <div align="center">
 
@@ -19,6 +19,15 @@
 
 - 关注开发者体验、类型安全、可维护性和细致的界面体验。
 - 主要使用 TypeScript、React、Vue、Vite 和 Node.js。
+
+## 开发活动
+
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/dark-mobile.svg" />
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/light-mobile.svg" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/dark.svg" />
+  <img src="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/light.svg" alt="GitHub 贡献概览：二维贪吃蛇动画、语言分布和贡献类型" width="100%" />
+</picture>
 
 ## 最近更新的项目
 
@@ -54,5 +63,3 @@
 ### 保持好奇，认真交付。
 
 </div>
-
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:06B6D4,50:2563EB,100:7C3AED&height=120&section=footer" alt="Footer" />
