@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/yoshi389111/github-profile-3d-contrib",
+  "commit": "e235d118909be71eb7edb05482a3de4e76156df3",
+  "version": "0.9.3",
+  "files": {
+    "src/aggregate-user-info.ts": "1ee92b6b7402b6eb7e8b84addb64ded944e8b730a788a86cecc42d3e08531c65",
+    "src/create-pie-language.ts": "348220895e13f82c499a56b1f47b727cdb8c726df79eee5f81015751dff0396e",
+    "src/create-radar-contrib.ts": "d5e4d3f1999e5247cabd20fe6ac34d23e76aafaf5c62455bcc7b167efb81528e",
+    "src/create-css-colors.ts": "6b1de623c51418ce7bf8c1b2a5975e636ef70a12b4dfcfca40bbe6e1c99a3673",
+    "src/utils.ts": "4ef17d4a4b89b333491c45e8c83bd710257a11f039a7c83cb6561fe8878d1637",
+    "src/type.ts": "6b70073acad92575372092a65bc27d352f66d6d8f426799f130d073b7afc15e1",
+    "src/settings/NormalSettings.json": "f290ab75de1ea880eda89d01eebc75d2438c01435f0ad532761e2f359de83f1b",
+    "src/settings/NightGreenSettings.json": "41c03cfbe99193cf8a18b2aa01ff64221f2bbe24d935fe63d7e793f267c244cd",
+    "LICENSE": "caa1ef089455b8d6bc7c03eded3b513868a530e04930f57f2e9cd93f3edef1c6"
+  }
+}
