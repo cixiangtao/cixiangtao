@@ -1,8 +1,8 @@
 # Contribution profile: original snk + github-profile-3d-contrib
 
 This implementation composes the two upstream projects. It replaces the earlier
-handwritten snake and charts. Both profile READMEs embed the generated overview while retaining the personal
-website link, introduction, project table, and toolbox. The generator itself only
+handwritten snake and charts. Both profile READMEs focus on the personal website link, generated contribution
+overview, and automatically refreshed project table. The generator itself only
 writes the overview assets; it does not alter README content or the website.
 
 ## What is reused

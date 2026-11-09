@@ -1,26 +1,4 @@
-# Hi, I'm cixiangtao
-
-<div align="center">
-
-English | [简体中文](README.zh-CN.md)
-
-Building developer tools and open-source projects with TypeScript and React.
-
-[![GitHub followers](https://img.shields.io/github/followers/cixiangtao?style=flat-square&logo=github&label=Followers)](https://github.com/cixiangtao?tab=followers)
-![Profile views](https://komarev.com/ghpvc/?username=cixiangtao&label=Profile+views&color=7c3aed&style=flat-square)
-
-**[Personal website →](https://cixiangtao.github.io/cixiangtao/)**
-
-</div>
-
-## About
-
-I'm a frontend engineer based in Beijing. I enjoy turning complex problems into clear, reliable, and approachable products.
-
-- I care about developer experience, type safety, maintainability, and thoughtful interface details.
-- I mainly work with TypeScript, React, Vue, Vite, and Node.js.
-
-## GitHub activity
+**[Personal website →](https://cixiangtao.github.io/cixiangtao/)** · [简体中文](README.zh-CN.md)
 
 <picture>
   <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/dark-mobile.svg" />
@@ -29,9 +7,9 @@ I'm a frontend engineer based in Beijing. I enjoy turning complex problems into 
   <img src="https://raw.githubusercontent.com/cixiangtao/cixiangtao/main/output/profile-activity/light.svg" alt="GitHub contribution overview with a 2D snake animation, languages, and contribution types" width="100%" />
 </picture>
 
-## Recently updated projects
+## Projects
 
-Public repositories that are not forks or archived, ordered by their latest push. This section is refreshed automatically every day.
+Recently updated public projects. Refreshed daily.
 
 <!-- recent-projects:start -->
 | Project | What it does | Links |
@@ -49,17 +27,3 @@ Public repositories that are not forks or archived, ordered by their latest push
 | [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | One-call LocatorJS integration for Vite 5–8 and multiple UI frameworks | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
 | [skills](https://github.com/cixiangtao/skills) | Personal, opinionated Agent Skills for repeatable development workflows | [Directory](https://skills.sh/cixiangtao/skills) |
 <!-- recent-projects:end -->
-
-## Toolbox
-
-<div align="center">
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=ts,js,react,vue,nextjs,vite,nodejs,tailwind,sass,rust,git,github,vscode,figma&theme=dark&perline=14" alt="TypeScript, JavaScript, React, Vue, Next.js, Vite, Node.js, Tailwind CSS, Sass, Rust, Git, GitHub, VS Code and Figma" />
-  </a>
-</div>
-
-<div align="center">
-
-### Stay curious. Ship thoughtfully.
-
-</div>
