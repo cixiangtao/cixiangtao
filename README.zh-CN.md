@@ -14,6 +14,7 @@
 <!-- recent-projects:start -->
 | 项目 | 简介 | 链接 |
 | --- | --- | --- |
+| [i-calendar](https://github.com/cixiangtao/i-calendar) | i日历：免费无广告的Mac菜单栏日历与网页版，提供农历、节气、黄历和放假调休。 | [网站](https://cixiangtao.github.io/i-calendar/) |
 | [ikun-q](https://github.com/cixiangtao/ikun-q) | IKUN-Q：围绕同一只小鸟共同创作的角色社区与图鉴工具。代码开放协作，创作包逐步建设。 | [网站](https://ikun-q.cixiangtao.workers.dev) |
 | [codex-coco](https://github.com/cixiangtao/codex-coco) | Codex Coco — a macOS desktop companion for Codex usage, appearance, and menu bar workflows. | — |
 | [codex-project-chats](https://github.com/cixiangtao/codex-project-chats) | Browse Codex conversations by project and continue in the official Codex sidebar. | — |
@@ -25,5 +26,4 @@
 | [sprite-pet](https://github.com/cixiangtao/sprite-pet) | 用于确定性 Canvas 精灵宠物动画的框架无关 TypeScript 运行时 | [演示](https://cixiangtao.github.io/sprite-pet/) · [npm](https://www.npmjs.com/package/sprite-pet) |
 | [vite-plugin-tailwind-merge](https://github.com/cixiangtao/vite-plugin-tailwind-merge) | 在 Vite 转换阶段处理 JSX 静态与动态类名中的 Tailwind CSS 冲突 | [npm](https://www.npmjs.com/package/vite-plugin-tailwind-merge) |
 | [sticker-ui](https://github.com/cixiangtao/sticker-ui) | 手册贴纸风格的 React 与 Tailwind CSS 组件库和源码 Registry | [预览](https://sticker-ui.cixiangtao.workers.dev/) |
-| [vite-plugin-locator](https://github.com/cixiangtao/vite-plugin-locator) | 为 Vite 5–8 项目提供一次调用即可完成的 LocatorJS 集成 | [npm](https://www.npmjs.com/package/vite-plugin-locator) |
 <!-- recent-projects:end -->
